@@ -73,12 +73,12 @@ void ARespawnManager::IsDead( ElementTypes damageType )
 
 void ARespawnManager::RestartController()
 {
-	AScytherPlayerPawn* player = Cast<AScytherPlayerPawn>(UGameplayStatics::GetPlayerPawn( GetWorld(), 0 ));
-	
-	player->healthComponent->changeHealth(100.f,ElementTypes::NEUTRAL);
-
 	//Broadcast player respawn event
 	playerRespawnEvent.Broadcast();
+
+	AScytherPlayerPawn* player = Cast<AScytherPlayerPawn>(UGameplayStatics::GetPlayerPawn( GetWorld(), 0 ));
+	
+	player->healthComponent->changeHealth( player->healthComponent->maxHp,ElementTypes::NEUTRAL);
 
 	const FVector LocationSpawn = spawnPoints[0].GetLocation();
 	FHitResult HitResult;
