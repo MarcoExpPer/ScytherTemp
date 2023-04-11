@@ -147,7 +147,6 @@ private:
 	float jumpStartHeight;
 
 	//Variables to check if a jump has finished
-	bool headHit = false;
 	bool endJump = false;
 
 	//------------------------//
@@ -158,6 +157,7 @@ public:
 	float maxSlopeAngleDegrees = 21.f;
 
 	FHitResult groundedHit;
+	FHitResult headHit;
 
 	FHitResult slopeHit;
 	bool onSlope;
@@ -189,7 +189,7 @@ private:
 	/// <summary>
 	/// Check the floor below the player to know if its grounded.
 	/// </summary>
-	void CheckFloor();
+	void CheckRays();
 
 	/// <summary>
 	/// Cast a ray to check if the player is in the ground. If the ray hits, calculates if its a slope or a flat floor.
@@ -207,6 +207,10 @@ private:
 	/// </summary>
 	void UpdateGroundedRelatedStates();
 
+	/// <summary>
+	/// Check if the ray above player head is hitting something
+	/// </summary>
+	void CheckHead();
 	//------------------------//
 	// UPDATE HORIZONTAL VELOCITY
 	//------------------------//

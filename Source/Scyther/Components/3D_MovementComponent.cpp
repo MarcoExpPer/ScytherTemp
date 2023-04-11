@@ -63,7 +63,7 @@ void U3D_MovementComponent::TickComponent( float DeltaTime, ELevelTick TickType,
 void U3D_MovementComponent::updateMovement( float DeltaTime )
 {
 	//Check if the player is on the floor, on a slope, on the air or must be knocked off a curb
-	CheckFloor();
+	CheckRays();
 
 	//Update to walking/falling state depending on the previous calculations
 	UpdateGroundedRelatedStates();
@@ -83,11 +83,12 @@ void U3D_MovementComponent::updateMovement( float DeltaTime )
 }
 
 //------------------------//
-// CHECK GROUND AND SLOPES
+// CHECK GROUND, SLOPES AND HEAD
 //------------------------//
-void U3D_MovementComponent::CheckFloor()
+void U3D_MovementComponent::CheckRays()
 {
 	CheckGrounded();
+	CheckHead();
 }
 
 void U3D_MovementComponent::CheckGrounded()
@@ -129,7 +130,7 @@ void U3D_MovementComponent::CheckGrounded()
 
 	player->isGrounded = onSlope || onFlatGround;
 
-	if( !player->isGrounded && player->state == MovementState::FALLING )
+	if( !player->isGrounded && player->state == MovementState::FALLING && velocity.Z < 0 )
 	{
 		CheckDownStep();
 	}
@@ -160,7 +161,7 @@ void U3D_MovementComponent::CheckDownStep()
 
 	TArray<FHitResult> hits;
 	UKismetSystemLibrary::SphereTraceMultiForObjects( GetWorld(), sphereCenter, sphereCenter + FVector::DownVector * 4,
-		player->capsule->GetUnscaledCapsuleRadius() + 1, objects, true,
+		player->capsule->GetUnscaledCapsuleRadius(), objects, false,
 		actorsToIgnore, doDebug ? EDrawDebugTrace::ForDuration : EDrawDebugTrace::None, hits,
 		true, FLinearColor::Green, FLinearColor::Red, 2 );
 
@@ -198,7 +199,28 @@ void U3D_MovementComponent::UpdateGroundedRelatedStates()
 	}
 }
 
+void U3D_MovementComponent::CheckHead()
+{
+	headHit;
 
+	FVector const topOfTheCapsule = player->GetActorLocation() + FVector( 0, 0, player->capsule->GetUnscaledCapsuleHalfHeight() );
+	float headRayCastLength = 7;
+
+	FCollisionQueryParams CollisionParams;
+	CollisionParams.AddIgnoredActor( GetOwner() );
+
+	bool col = GetWorld()->LineTraceSingleByChannel( headHit, topOfTheCapsule,
+		topOfTheCapsule + FVector::UpVector * headRayCastLength, ECC_WorldStatic, CollisionParams );
+
+
+#if WITH_EDITOR 
+	if( groundedRaycast )
+	{
+		DrawDebugLine( GetWorld(), topOfTheCapsule, topOfTheCapsule + FVector::UpVector * headRayCastLength,
+			col ? FColor::Green : FColor::Red, false, 0, 0U, 3 );
+	}
+#endif
+}
 //------------------------//
 // UPDATE HORIZONTAL VELOCITY
 //------------------------//
@@ -390,7 +412,7 @@ void U3D_MovementComponent::UpdateJump( float DeltaTime )
 		velocity.Z = jumpSpeed * DeltaTime;
 	}
 
-	if( headHit || endJump )
+	if( headHit.bBlockingHit )
 	{
 		player->ChangeMovementState( MovementState::FALLING );
 
@@ -493,25 +515,19 @@ void U3D_MovementComponent::CheckDoMovementHit( FHitResult& hit, float DeltaTime
 			{
 				if( angleDegrees > 88 && angleDegrees < 92 )
 				{
-					GetOwner()->SetActorLocation( GetOwner()->GetActorLocation() + FVector( 0, 0, velocity.Z * overallMovementMultiplier * DeltaTime ), true, &hit );
+
 					if( player->state == MovementState::DASHING )
 					{
 						player->state = MovementState::FALLING;
 					}
 				}
-				/*Si es mayor de 90 grados, quiere decir que en la parte donde una rampa/pared y
-				el suelo bajo el jugador forman un angulo agudo, en cuyo caso el jugador debe parar de ascender ya que ha golpeado
-				contra la rampa/techo/pared */
 
-				else
-				{
-					if( player->state != MovementState::FALLING && !player->isGrounded )
-					{
-						velocity.Z = 0;
-						player->ChangeMovementState( MovementState::FALLING );
-					}
-					GetOwner()->SetActorLocation( GetOwner()->GetActorLocation() + FVector( 0, 0, velocity.Z * overallMovementMultiplier * DeltaTime ), true, &hit );
-				}
+				FVector movementDirection = velocity;
+				movementDirection.Z = 0;
+				movementDirection.Normalize();
+
+				GetOwner()->SetActorLocation( GetOwner()->GetActorLocation() + FVector( 0, 0, velocity.Z * overallMovementMultiplier * DeltaTime ) +
+					movementDirection * -1, true, &hit );
 			}
 			break;
 		}
