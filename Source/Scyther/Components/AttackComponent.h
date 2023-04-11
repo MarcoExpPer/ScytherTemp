@@ -32,7 +32,7 @@ enum class AttackDirection: uint8
 /// </summary>
 /// <seealso cref="UActorComponent" />
 UCLASS()
-class SCYTHER_API UAttackComponent : public UActorComponent
+class SCYTHER_API UAttackComponent: public UActorComponent
 {
 	GENERATED_BODY()
 
@@ -44,7 +44,7 @@ private:
 	/// <value>Targeting whitch contains all actors near of the player< / value>
 	UTargetingComponent* targetComponent;
 	/// <value>Mesh which cointains the scythe< / value>
-	UAnimInstance* meshAnimation = nullptr;	
+	UAnimInstance* meshAnimation = nullptr;
 	/// <value>  </value>
 	UBoxComponent* scytheAttackCol = nullptr;
 	/// <value> contains the actual state of the cooldown counter for the combo </value>
@@ -59,7 +59,7 @@ private:
 	FVector boxColOffset = FVector( 0, 0, 0 );
 
 
-public: 
+public:
 	/// <summary>
 	/// Return the state of the attack process, related to combo processes.
 	/// </summary>
@@ -91,15 +91,18 @@ public:
 	/// <summary>
 	/// FIRST ATTACK
 	/// </summary>
-	UPROPERTY( EditAnywhere, Category = "Design | Attack | First Attack", meta = ( 
+	UPROPERTY( EditAnywhere, Category = "Design | Attack | First Attack", meta = (
 		ToolTip = "Golpe del primer ataque" ) )
 		float firstAttackDamage = 10.f;
 	UPROPERTY( EditAnywhere, Category = "Design | Attack | First Attack", meta = (
 		ToolTip = "Alcance del primer ataque" ) )
-		float firstAttackReach = 100.f;
+		float firstAttackReach = 200.f;
+	UPROPERTY( EditAnywhere, Category = "Design | Attack | First Attack", meta = (
+		ToolTip = "Anchura del primer ataque" ) )
+		float firstAttackWidth = 150.f;
 	UPROPERTY( EditAnywhere, Category = "Design | Attack | First Attack", meta = (
 		ToolTip = "Grosor del primer ataque" ) )
-		float firstAttackThickness = 15.f;
+		float firstAttackThickness = 30.f;
 	UPROPERTY( EditAnywhere, Category = "Design | Attack | First Attack", meta = (
 		ToolTip = "Duracion de activan las colisiones para golpear en el primer golpe" ) )
 		float firstAttackCollisionDuration = 1.f;
@@ -119,10 +122,13 @@ public:
 		float secondAttackDamage = 10.f;
 	UPROPERTY( EditAnywhere, Category = "Design | Attack | Second Attack", meta = (
 		ToolTip = "Alcance del segundo ataque" ) )
-		float secondAttackReach = 100.f;
+		float secondAttackReach = 200.f;
+	UPROPERTY( EditAnywhere, Category = "Design | Attack | Second Attack", meta = (
+		ToolTip = "Anchura del segundo ataque" ) )
+		float secondAttackWidth = 150.f;
 	UPROPERTY( EditAnywhere, Category = "Design | Attack | Second Attack", meta = (
 		ToolTip = "Grosor del segundo ataque" ) )
-		float secondAttackThickness = 15.f;
+		float secondAttackThickness = 30.f;
 	UPROPERTY( EditAnywhere, Category = "Design | Attack | Second Attack", meta = (
 		ToolTip = "Duracion de activan las colisiones para golpear en el segundo golpe" ) )
 		float secondAttackCollisionDuration = 1.f;
@@ -142,10 +148,13 @@ public:
 		float finalAttackDamage = 15.f;
 	UPROPERTY( EditAnywhere, Category = "Design | Attack | Final Attack", meta = (
 		ToolTip = "Alcance del ultimo ataque" ) )
-		float finalAttackReach = 125.f;
+		float finalAttackReach = 250.f;
+	UPROPERTY( EditAnywhere, Category = "Design | Attack | Final Attack", meta = (
+		ToolTip = "Anchura del primer ataque" ) )
+		float finalAttackWidth = 200.f;
 	UPROPERTY( EditAnywhere, Category = "Design | Attack | Final Attack", meta = (
 		ToolTip = "Grosor del ultimo ataque" ) )
-		float finalAttackThickness = 15.f;
+		float finalAttackThickness = 45.f;
 	UPROPERTY( EditAnywhere, Category = "Design | Attack | Final Attack", meta = (
 		ToolTip = "Duracion de las colisiones para golpear en el ultimo golpe" ) )
 		float finalAttackCollisionDuration = 1.5f;
@@ -165,10 +174,13 @@ public:
 		float airAttackDamage = 15.f;
 	UPROPERTY( EditAnywhere, Category = "Design | Attack | Air Attack", meta = (
 		ToolTip = "Alcance del ataque aereo" ) )
-		float airAttackReach = 125.f;
+		float airAttackReach = 250.f;
+	UPROPERTY( EditAnywhere, Category = "Design | Attack | Air Attack", meta = (
+		ToolTip = "Anchura del ataque aereo" ) )
+		float airAttackWidth = 200.f;
 	UPROPERTY( EditAnywhere, Category = "Design | Attack | Air Attack", meta = (
 		ToolTip = "Grosor del ataque aereo" ) )
-		float airAttackThickness = 15.f;
+		float airAttackThickness = 45.f;
 	UPROPERTY( EditAnywhere, Category = "Design | Attack | Air Attack", meta = (
 		ToolTip = "Duracion de las colisiones para golpear en el golpe aereo" ) )
 		float airAttackCollisionDuration = 1.5f;
@@ -202,7 +214,7 @@ public:
 	/// <summary>
 	/// DESING ANIMATIONS
 	/// </summary>
-	UPROPERTY( EditAnywhere, Category = "Design | Animation", meta = ( 
+	UPROPERTY( EditAnywhere, Category = "Design | Animation", meta = (
 		ToolTip = "Duracion del primer ataque" ) )
 		float durationFirstAttackAnimation = 1.f;
 	UPROPERTY( EditAnywhere, Category = "Design | Animation", meta = (
@@ -214,7 +226,7 @@ public:
 	UPROPERTY( EditAnywhere, Category = "Design | Animation", meta = (
 		ToolTip = "Modificación a la duración de la animación del segundo ataque. Valores menores de 1 hacen que la animación se reproduzca mas lenta, valores mayores la aceleran" ) )
 		float modifSecondAttackAnimation = 1.5f;
-	UPROPERTY( EditAnywhere, Category = "Design | Animation", meta = ( 
+	UPROPERTY( EditAnywhere, Category = "Design | Animation", meta = (
 		ToolTip = "Duracion del ataque final del combo" ) )
 		float durationFinalAttackAnimation = 1.f;
 	UPROPERTY( EditAnywhere, Category = "Design | Animation", meta = (
@@ -231,20 +243,20 @@ public:
 	/// <summary>
 	/// ART ANIMATION
 	/// </summary>
-	UPROPERTY(EditAnywhere, Category = "Art | Animation", meta = (
+	UPROPERTY( EditAnywhere, Category = "Art | Animation", meta = (
 		ToolTip = "Animacion del primer ataque" ) )
 		UAnimMontage* firstAttackAnimMontage;
-	UPROPERTY(EditAnywhere, Category = "Art | Animation", meta = (
+	UPROPERTY( EditAnywhere, Category = "Art | Animation", meta = (
 		ToolTip = "Animacion del segundo ataque" ) )
 		UAnimMontage* secondAttackAnimMontage;
-	UPROPERTY( EditAnywhere, Category = "Art | Animation", meta = ( 
+	UPROPERTY( EditAnywhere, Category = "Art | Animation", meta = (
 		ToolTip = "Animacion del ataque final" ) )
 		UAnimMontage* finalComboAttackAnimMontage;
 	UPROPERTY( EditAnywhere, Category = "Art | Animation", meta = (
 		ToolTip = "Animacion del ataque aereo" ) )
 		UAnimMontage* airAttackAnimMontage;
 
-public:	
+public:
 	// Sets default values for this component's properties
 	UAttackComponent();
 
@@ -252,9 +264,9 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
 
 	void OnAttack();
 	void PlayAnimAttack();

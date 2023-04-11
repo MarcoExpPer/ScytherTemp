@@ -170,28 +170,28 @@ void UAttackComponent::PlayAnimAttack()
 	// TESTING: Se multiplica por 2.5 por ahora que es la duracion standar de la animacion que tenemos
 	switch( actualAttackCounter )
 	{
-		case 0:
-			UE_LOG( LogTemp, Warning, TEXT( "No deberías estar aqui." ) );
-		case 1:
-			state = AttackState::FIRST;
-			meshAnimation->Montage_Play( firstAttackAnimMontage, durationFirstAttackAnimation * modifFirstAttackAnimation );
-			isOnAttackAnim = true;
-			animCooldown = durationFirstAttackAnimation;
-			break;
-		case 2:
-			state = AttackState::SECOND;
-			meshAnimation->Montage_Play( secondAttackAnimMontage, durationSecondAttackAnimation * modifSecondAttackAnimation );
-			isOnAttackAnim = true;
-			animCooldown = durationSecondAttackAnimation;
-			break;
-		case 3:
-			state = AttackState::FINAL;
-			meshAnimation->Montage_Play( finalComboAttackAnimMontage, durationFinalAttackAnimation * modifFinalAttackAnimation );
-			isOnAttackAnim = true;
-			animCooldown = durationFinalAttackAnimation;
-			break;
-		default:
-			break;
+	case 0:
+		UE_LOG( LogTemp, Warning, TEXT( "No deberías estar aqui." ) );
+	case 1:
+		state = AttackState::FIRST;
+		meshAnimation->Montage_Play( firstAttackAnimMontage, durationFirstAttackAnimation * modifFirstAttackAnimation );
+		isOnAttackAnim = true;
+		animCooldown = durationFirstAttackAnimation;
+		break;
+	case 2:
+		state = AttackState::SECOND;
+		meshAnimation->Montage_Play( secondAttackAnimMontage, durationSecondAttackAnimation * modifSecondAttackAnimation );
+		isOnAttackAnim = true;
+		animCooldown = durationSecondAttackAnimation;
+		break;
+	case 3:
+		state = AttackState::FINAL;
+		meshAnimation->Montage_Play( finalComboAttackAnimMontage, durationFinalAttackAnimation * modifFinalAttackAnimation );
+		isOnAttackAnim = true;
+		animCooldown = durationFinalAttackAnimation;
+		break;
+	default:
+		break;
 	}
 }
 
@@ -205,60 +205,60 @@ void UAttackComponent::DoDamage()
 		switch( firstAttackDirection )
 		{
 		case AttackDirection::HORIZONTAL:
-			box = FVector( firstAttackReach, firstAttackReach, firstAttackThickness );
+			box = FVector( firstAttackReach / 2, firstAttackWidth / 2, firstAttackThickness / 2 );
 			break;
 		case AttackDirection::VERTICAL:
-			box = FVector( firstAttackReach, firstAttackThickness, firstAttackReach );
+			box = FVector( firstAttackReach / 2, firstAttackThickness / 2, firstAttackWidth / 2 );
 			break;
 		default:
 			break;
 		}
-		boxColOffset = FVector( firstAttackReach + 10, 0, 0 ) + firstAttackOffset;
+		boxColOffset = FVector( firstAttackReach / 2 + 10, 0, 0 ) + firstAttackOffset;
 		character->scytheAttackCol->SetBoxExtent( box );
 		break;
 	case AttackState::SECOND:
 		switch( secondAttackDirection )
 		{
 		case AttackDirection::HORIZONTAL:
-			box = FVector( secondAttackReach, secondAttackReach, secondAttackThickness );
+			box = FVector( secondAttackReach / 2, secondAttackWidth / 2, secondAttackThickness / 2 );
 			break;
 		case AttackDirection::VERTICAL:
-			box = FVector( secondAttackReach, secondAttackThickness, secondAttackReach );
+			box = FVector( secondAttackReach / 2, secondAttackThickness / 2, secondAttackWidth / 2 );
 			break;
 		default:
 			break;
 		}
-		boxColOffset = FVector( secondAttackReach + 10, 0, 0 ) + secondAttackOffset;
+		boxColOffset = FVector( secondAttackReach / 2 + 10, 0, 0 ) + secondAttackOffset;
 		character->scytheAttackCol->SetBoxExtent( box );
 		break;
 	case AttackState::FINAL:
 		switch( finalAttackDirection )
 		{
 		case AttackDirection::HORIZONTAL:
-			box = FVector( finalAttackReach, finalAttackReach, finalAttackThickness );
+			box = FVector( finalAttackReach / 2, finalAttackWidth / 2, finalAttackThickness / 2 );
 			break;
 		case AttackDirection::VERTICAL:
-			box = FVector( finalAttackReach, finalAttackThickness, finalAttackReach );
+			box = FVector( finalAttackReach / 2, finalAttackThickness / 2, finalAttackWidth / 2 );
 			break;
 		default:
 			break;
 		}
-		boxColOffset = FVector( finalAttackReach + 10, 0, 0 ) + finalAttackOffset;
+		boxColOffset = FVector( finalAttackReach / 2 + 10, 0, 0 ) + finalAttackOffset;
 		character->scytheAttackCol->SetBoxExtent( box );
 		break;
 	case AttackState::AIR:
 		switch( airAttackDirection )
 		{
 		case AttackDirection::HORIZONTAL:
-			box = FVector( airAttackReach, airAttackReach, airAttackThickness );
+			box = FVector( airAttackReach / 2, airAttackWidth / 2, airAttackThickness / 2 );
 			break;
 		case AttackDirection::VERTICAL:
-			box = FVector( airAttackReach, airAttackThickness, airAttackReach );
+			box = FVector( airAttackReach / 2, airAttackThickness / 2, airAttackWidth / 2 );
 			break;
 		default:
 			break;
 		}
-		boxColOffset = FVector( airAttackReach + 10, 0, 0 ) + airAttackOffset;
+		boxColOffset = FVector( airAttackReach / 2 + 10, 0, 0 ) + airAttackOffset;
 		character->scytheAttackCol->SetBoxExtent( box );
 		break;
 	default:
@@ -360,9 +360,9 @@ TArray<AActor*> UAttackComponent::GetEnemies( TArray<AActor*>& list )
 			{
 				TArray<UPrimitiveComponent*> DamageZone;
 				character->scytheAttackCol->GetOverlappingComponents( DamageZone );
-				for( UPrimitiveComponent* comp : DamageZone)
+				for( UPrimitiveComponent* comp : DamageZone )
 				{
-					if(comp->ComponentHasTag("DamageZone") )
+					if( comp->ComponentHasTag( "DamageZone" ) )
 					{
 						output.Add( list[i] );
 					}
@@ -373,7 +373,7 @@ TArray<AActor*> UAttackComponent::GetEnemies( TArray<AActor*>& list )
 			{
 				output.Add( list[i] );
 			}
-			
+
 		}
 	}
 	return output;
