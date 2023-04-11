@@ -22,6 +22,7 @@
 #include "../Components/TargetingComponent.h"
 #include "../Components/SkillComponent.h"
 #include "../Components/3D_MovementComponent.h"
+#include "../Components/DashComponent.h"
 #include <Scyther/Components/HealthComponent.h>
 #include "Perception/AIPerceptionStimuliSourceComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -98,6 +99,9 @@ void AScytherPlayerPawn::InitPrimitiveComponents()
 
 	grappleHookComponent = CreateDefaultSubobject<UGrappleHookComponent>( TEXT( "Grapple Hook Component" ) );
 	AddOwnedComponent( grappleHookComponent );
+
+	dashComponent = CreateDefaultSubobject<UDashComponent>( TEXT( "Dash Component" ) );
+	AddOwnedComponent( dashComponent );
 }
 
 //------------------------//
@@ -108,8 +112,6 @@ void AScytherPlayerPawn::InitPrimitiveComponents()
 void AScytherPlayerPawn::BeginPlay()
 {
 	Super::BeginPlay();
-	currentDashTime = waitForTheNextDash;
-	onDashFinished.BindUFunction( this, FName( "DashFinishedCallback" ) );
 }
 
 // Called every frame
@@ -119,17 +121,17 @@ void AScytherPlayerPawn::Tick( float DeltaTime )
 
 	CastRays();
 
-	curveTimeLine.TickTimeline( DeltaTime );
-
-	if( hasDashed && currentDashTime > 0 )
+#if WITH_EDITOR 
+	if( stateText )
 	{
-		currentDashTime -= DeltaTime;
-		if( currentDashTime < 0 )
-		{
-			hasDashed = false;
-			currentDashTime = waitForTheNextDash;
-		}
+		GEngine->AddOnScreenDebugMessage( -1, 0, FColor::Blue, GetStateAsName( state ) );
 	}
+
+	if( playerLocationText )
+	{
+		GEngine->AddOnScreenDebugMessage( -1, 0, FColor::Blue, FString::Printf( TEXT( "PlayerLocation x: %.1f, y: %.1f, z: %.1f" ), GetActorLocation().X, GetActorLocation().Y, GetActorLocation().Z ) );
+	}
+#endif
 }
 
 
@@ -282,15 +284,13 @@ void AScytherPlayerPawn::MoveForward( float Val )
 
 void AScytherPlayerPawn::OnJumpPressed()
 {
-	movementComp->JumpPressed();
+	movementComp->JumpStart();
 }
 
 void AScytherPlayerPawn::OnJumpReleased()
 {
-	movementComp->JumpDepress();
+	movementComp->JumpStop();
 }
-
-
 
 //------------------------//
 //         DASH
@@ -298,113 +298,8 @@ void AScytherPlayerPawn::OnJumpReleased()
 
 void AScytherPlayerPawn::OnDash()
 {
-	bool canDash = isGrounded || ( !isGrounded && allowDashOnAir );
-
-	if( !hasDashed && canDash )
-	{
-		hasDashed = true;
-
-		FCollisionResponseParams responseParams;
-		FCollisionQueryParams queryParam = FCollisionQueryParams::DefaultQueryParam;
-		FActorSpawnParameters spawnParam;
-
-		spawnParam.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-		queryParam.AddIgnoredActor( this );
-
-		FHitResult hitResult;
-		FVector startTrace = GetActorLocation();
-		FVector endTrace = startTrace + this->GetActorForwardVector() * dashForce;
-
-		if( GetWorld()->LineTraceSingleByChannel( hitResult, startTrace, endTrace, ECollisionChannel::ECC_Visibility, queryParam, responseParams ) )
-		{
-			UE_LOG( LogTemp, Warning, TEXT( "getHit" ) );
-			FVector hitCapsuleCollision = this->GetActorForwardVector() * capsuleRadius;
-			FVector dashDirection = hitResult.Location + hitCapsuleCollision;
-			DashExecution( dashDirection );
-			SetActorLocation( endTrace, true );
-		}
-		else
-		{
-			DashExecution( hitResult.TraceEnd );
-		}
-		//DrawDebugLine( GetWorld(), startTrace, endTrace, FColor( 255, 0, 0 ), false, 2, 0, 1.333 );
-	}
+	dashComponent->StartDash();
 }
-
-void AScytherPlayerPawn::DashExecution( FVector dashDirection )
-{
-	animationPreDash = state;
-	state = MovementState::DASHING;
-
-	firstDash = true;
-
-	SetActorLocation( GetActorLocation() + FVector( 0.0f, 0.0f, 5.f ) );
-
-	if( curveFloat )
-	{
-		if( firstDash )
-		{
-			firstDash = false;
-			timelIneProgress.BindUFunction( this, FName( "TimelineProgress" ) );
-			curveTimeLine.AddInterpFloat( curveFloat, timelIneProgress );
-		}
-		destination = dashDirection;
-		currentLocation = GetActorLocation();
-		curveTimeLine.SetPlayRate( dashRate );
-		curveTimeLine.PlayFromStart();
-		curveTimeLine.SetTimelineFinishedFunc( onDashFinished );
-	}
-}
-
-
-void AScytherPlayerPawn::DashFinishedCallback()
-{
-	state = MovementState::FALLING;
-	/*
-	UE_LOG( LogTemp, Warning, TEXT( "Termina el dash" ));
-
-	static bool firstRet = true;
-	if( curveFloat2 )
-	{
-		if( firstRet )
-		{
-			firstRet = false;
-			cameraTimelIneProgress.BindUFunction( this, FName( "CameraTimelineProgress" ) );
-			curveCameraTimeLine.AddInterpFloat( curveFloat2, cameraTimelIneProgress );
-		}
-		currentLocation = springArm->GetComponentLocation();
-		curveCameraTimeLine.SetPlayRate( dashRate /1000 );
-		curveCameraTimeLine.PlayFromStart();
-	}
-	*/
-}
-
-
-void AScytherPlayerPawn::TimelineProgress( float val )
-{
-	FVector NewLocation = FMath::Lerp( currentLocation, destination, val );
-	SetActorLocation( NewLocation );
-	/*
-	UE_LOG( LogTemp, Warning, TEXT( "%f" ), val );
-	springArm->SetWorldLocation( currentLocation );
-	FVector fv = springArm->GetComponentLocation();
-	UE_LOG( LogTemp, Warning, TEXT( "CL: %f %f %f" ), fv.X, fv.Y, fv.Z );
-	//springArm->SetRelativeLocation( FVector( 0, 0, 0 ) );
-	*/
-}
-
-void AScytherPlayerPawn::CameraTimelineProgress( float val )
-{
-	/*
-	static const FVector zero( 0, 0, 0 );
-	FVector NewLocation = FMath::Lerp( currentLocation, zero, val );
-	NewLocation.Y = 0;
-		UE_LOG( LogTemp, Warning, TEXT( "%f, %f, %f" ), NewLocation.X, NewLocation.Y, NewLocation.Z );
-	springArm->SetRelativeLocation( NewLocation );
-	UE_LOG( LogTemp, Warning, TEXT( "%f" ), val );
-	*/
-}
-
 
 //------------------------//
 //        ZTARGET
@@ -550,4 +445,15 @@ void AScytherPlayerPawn::RotateTowardsZTarget()
 void AScytherPlayerPawn::CastRays()
 {
 	
+}
+
+//------------------------//
+// AUXILIAR
+//------------------------//
+
+FString AScytherPlayerPawn::GetStateAsName( MovementState EnumValue )
+{
+	const UEnum* EnumPtr = FindObject<UEnum>( ANY_PACKAGE, TEXT( "MovementState" ), true );
+	if( !EnumPtr ) return FString( "Invalid" );
+	return EnumPtr->GetNameByValue( (int64) EnumValue ).ToString();
 }

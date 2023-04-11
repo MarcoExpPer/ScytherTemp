@@ -38,19 +38,23 @@ void U3D_MovementComponent::TickComponent( float DeltaTime, ELevelTick TickType,
 
 
 #if WITH_EDITOR 
-	if( activateDebugInformation )
+	if( movementText )
 	{
-		GEngine->AddOnScreenDebugMessage( -1, 0, FColor::Red, FString::Printf( TEXT( "Velocity x: %f, y: %f, z: %f" ), velocity.X, velocity.Y, velocity.Z ) );
-		GEngine->AddOnScreenDebugMessage( -1, 0, FColor::Red, FString::Printf( TEXT( "PlayerLocation x: %f, y: %f, z: %f" ), GetOwner()->GetActorLocation().X, GetOwner()->GetActorLocation().Y, GetOwner()->GetActorLocation().Z ) );
+		GEngine->AddOnScreenDebugMessage( -1, 0, FColor::Blue, FString::Printf( TEXT( "Velocity x: %.2f, y: %.2f, z: %.2f, Frame Velocity x: %.1f, y: %.1f, z: %.1f" ), velocity.X, velocity.Y, velocity.Z, addedVelocity.X, addedVelocity.Y, addedVelocity.Z ) );
 		GEngine->AddOnScreenDebugMessage( -1, 0, onSlope ? FColor::Green : FColor::Red, FString::Printf( TEXT( "onSlope %d" ), onSlope ) );
 		GEngine->AddOnScreenDebugMessage( -1, 0, onFlatGround ? FColor::Green : FColor::Red, FString::Printf( TEXT( "OnFlatGround %d" ), player->isGrounded ) );
-		GEngine->AddOnScreenDebugMessage( -1, 0, FColor::Red, FString::Printf( TEXT( "Frame Velocity x: %f, y: %f, z: %f" ), addedVelocity.X, addedVelocity.Y, addedVelocity.Z ) );
-		GEngine->AddOnScreenDebugMessage( -1, 0, FColor::Red, GetStateAsName( player->state ) );
-
 	}
 #endif
 
 	updateMovement( DeltaTime );
+
+
+#if WITH_EDITOR 
+	if( movementText )
+	{
+		GEngine->AddOnScreenDebugMessage( -1, 0, FColor::Blue, FString::Printf( TEXT( "--- MOVEMENT COMP ---" ) ) );
+	}
+#endif
 }
 
 //------------------------//
@@ -96,8 +100,16 @@ void U3D_MovementComponent::CheckGrounded()
 
 	bool col = GetWorld()->LineTraceSingleByChannel( groundedHit, bottomOfTheCapsule,
 		bottomOfTheCapsule + FVector::DownVector * groundRayCastLength, ECC_WorldStatic, CollisionParams );
-	//DrawDebugLine( GetWorld(), bottomOfTheCapsule, bottomOfTheCapsule + FVector::DownVector * groundRayCastLength * 4, 
-	//	col ? FColor::Green : FColor::Red, false, 0,0U, 3 );
+
+
+#if WITH_EDITOR 
+	if( groundedRaycast )
+	{
+		DrawDebugLine( GetWorld(), bottomOfTheCapsule, bottomOfTheCapsule + FVector::DownVector * groundRayCastLength,
+			col ? FColor::Green : FColor::Red, false, 0, 0U, 3 );
+	}
+#endif
+
 
 	if( col )
 	{
@@ -126,37 +138,50 @@ void U3D_MovementComponent::CheckGrounded()
 void U3D_MovementComponent::CheckDownStep()
 {
 	bool doDebug = false;
+
+
+	FVector sphereCenter = player->GetActorLocation() - FVector( 0, 0,
+		player->capsule->GetUnscaledCapsuleHalfHeight() - player->capsule->GetUnscaledCapsuleRadius() -1 );
+
 #if WITH_EDITOR 
-	if( activateRayCastInformation )
+	if( groundedRaycast )
 	{
 		doDebug = true;
 	}
 #endif
-
-	FVector sphereCenter = player->GetActorLocation() - FVector( 0, 0,
-		player->capsule->GetUnscaledCapsuleHalfHeight() - player->capsule->GetUnscaledCapsuleRadius() + 2 );
 
 	TArray<AActor*> actorsToIgnore;
 	actorsToIgnore.Add( GetOwner() );
 
 	TArray<TEnumAsByte<EObjectTypeQuery>> objects;
 	objects.Add( UEngineTypes::ConvertToObjectType( ECollisionChannel::ECC_WorldStatic ) );
+	objects.Add( UEngineTypes::ConvertToObjectType( ECollisionChannel::ECC_WorldDynamic ) );
 
-	FHitResult hit;
-	UKismetSystemLibrary::SphereTraceSingleForObjects( GetWorld(), sphereCenter, sphereCenter + FVector::DownVector,
+	TArray<FHitResult> hits;
+	UKismetSystemLibrary::SphereTraceMultiForObjects( GetWorld(), sphereCenter, sphereCenter + FVector::DownVector * 4,
 		player->capsule->GetUnscaledCapsuleRadius() + 1, objects, true,
-		actorsToIgnore, doDebug ? EDrawDebugTrace::ForDuration : EDrawDebugTrace::None, hit,
+		actorsToIgnore, doDebug ? EDrawDebugTrace::ForDuration : EDrawDebugTrace::None, hits,
 		true, FLinearColor::Green, FLinearColor::Red, 2 );
 
 	//If in a curb, move the player out;
-	if( hit.bBlockingHit )
+	for( FHitResult hit : hits )
 	{
-		FVector playerXY = player->GetActorLocation();
-		playerXY.Z = 0;
-		hit.ImpactPoint.Z = 0;
+		if( hit.bBlockingHit )
+		{
+#if WITH_EDITOR 
+			if( doDebug )
+			{
+				DrawDebugPoint( GetWorld(), hit.ImpactPoint, 10, FColor::Purple, false, 10, 5 );
+			}
+#endif
+			FVector playerXY = player->GetActorLocation();
+			playerXY.Z = 0;
+			hit.ImpactPoint.Z = 0;
 
-		player->SetActorLocation( player->GetActorLocation() + ( playerXY - hit.ImpactPoint ) );
+			player->SetActorLocation( player->GetActorLocation() + ( playerXY - hit.ImpactPoint ) );
+		}
 	}
+
 }
 
 void U3D_MovementComponent::UpdateGroundedRelatedStates()
@@ -296,6 +321,10 @@ void U3D_MovementComponent::ClampHorizontalSpeed()
 		velocity = velocity.GetClampedToSize2D( -airMaxHorizontalSpeed, airMaxHorizontalSpeed );
 		break;
 	}
+	case MovementState::DASHING:
+	{
+		return;
+	}
 	default:
 	{
 		velocity = velocity.GetClampedToSize2D( -maxHorizontalSpeed, maxHorizontalSpeed );
@@ -398,7 +427,7 @@ void U3D_MovementComponent::DoMovement( float DeltaTime )
 	FVector lastFrameLocation = GetOwner()->GetActorLocation();
 	FHitResult movementHit;
 
-	if( onSlope && player->state == MovementState::WALKING )
+	if( onSlope && ( player->state == MovementState::WALKING || player->state == MovementState::DASHING ) )
 	{
 		FVector projectedVector = FVector::VectorPlaneProject( velocity, groundedHit.Normal );
 		projectedVector.Normalize();
@@ -421,19 +450,28 @@ void U3D_MovementComponent::DoMovement( float DeltaTime )
 
 void U3D_MovementComponent::CheckDoMovementHit( FHitResult& hit, float DeltaTime )
 {
-	int const maxHitIterations = 50;
+	int const maxHitIterations = 5;
 	int hitIterations = 0;
 
-	while( hit.bBlockingHit && hitIterations <= 50 )
+	while( hit.bBlockingHit && hitIterations <= 5 )
 	{
 		hitIterations++;
+
+
+
+#if WITH_EDITOR 
+		if( stepUpRaycast )
+		{
+			DrawDebugPoint( GetWorld(), hit.ImpactPoint, 10, FColor::Red, false, 10, 5 );
+		}	
+#endif
 
 		float angleDegrees = GetHitDegreeAngle( hit );
 
 #if WITH_EDITOR 
-		if( activateDebugInformation )
+		if( movementText )
 		{
-			GEngine->AddOnScreenDebugMessage( -1, 0, FColor::Red, FString::Printf( TEXT( "Angle %f" ), angleDegrees ) );
+			GEngine->AddOnScreenDebugMessage( -1, 0, FColor::Blue, FString::Printf( TEXT( "Angle %.2f" ), angleDegrees ) );
 		}
 #endif
 
@@ -441,7 +479,7 @@ void U3D_MovementComponent::CheckDoMovementHit( FHitResult& hit, float DeltaTime
 		//Si el movimiento choca contra una cuesta que es ascendible, recoloca al player encima de la cuesta
 		if( angleDegrees <= maxSlopeAngleDegrees )
 		{
-			FVector projectedVector = FVector::VectorPlaneProject( velocity, groundedHit.Normal );
+			FVector projectedVector = FVector::VectorPlaneProject( velocity, hit.Normal );
 			projectedVector.Normalize();
 
 			GetOwner()->SetActorLocation( GetOwner()->GetActorLocation() + ( projectedVector * velocity.Size() * overallMovementMultiplier * DeltaTime ), true, &hit );
@@ -455,6 +493,10 @@ void U3D_MovementComponent::CheckDoMovementHit( FHitResult& hit, float DeltaTime
 				if( angleDegrees > 88 && angleDegrees < 92 )
 				{
 					GetOwner()->SetActorLocation( GetOwner()->GetActorLocation() + FVector( 0, 0, velocity.Z * overallMovementMultiplier * DeltaTime ), true, &hit );
+					if( player->state == MovementState::DASHING )
+					{
+						player->state = MovementState::FALLING;
+					}
 				}
 				/*Si es mayor de 90 grados, quiere decir que en la parte donde una rampa/pared y
 				el suelo bajo el jugador forman un angulo agudo, en cuyo caso el jugador debe parar de ascender ya que ha golpeado
@@ -499,11 +541,11 @@ bool U3D_MovementComponent::CheckUpStep()
 	GetWorld()->LineTraceSingleByChannel( hit, verticalStart, verticalEnd, ECC_WorldStatic, CollisionParams );
 
 #if WITH_EDITOR 
-	if( activateRayCastInformation )
+	if( stepUpRaycast )
 	{
-		DrawDebugPoint( GetWorld(), verticalStart, 10, FColor::Green, false, 20, 5 );
+		DrawDebugPoint( GetWorld(), verticalStart, 10, FColor::Green, false, 10, 5 );
 		DrawDebugLine( GetWorld(), verticalStart, verticalEnd, FColor::Blue, false, 10, 0U, 10 );
-		DrawDebugPoint( GetWorld(), hit.ImpactPoint, 10, FColor::Red, false, 20, 5 );
+		DrawDebugPoint( GetWorld(), hit.ImpactPoint, 10, FColor::Red, false, 10, 5 );
 	}
 #endif
 
@@ -520,11 +562,11 @@ bool U3D_MovementComponent::CheckUpStep()
 		GetWorld()->LineTraceSingleByChannel( hit, horizontalStart, horizontalEnd, ECC_WorldStatic, CollisionParams );
 
 #if WITH_EDITOR 
-		if( activateRayCastInformation )
+		if( stepUpRaycast )
 		{
-			DrawDebugPoint( GetWorld(), horizontalStart, 10, FColor::Emerald, false, 20, 5 );
+			DrawDebugPoint( GetWorld(), horizontalStart, 10, FColor::Emerald, false, 10, 5 );
 			DrawDebugLine( GetWorld(), horizontalStart, horizontalEnd, FColor::Cyan, false, 10, 0U, 10 );
-			DrawDebugPoint( GetWorld(), hit.ImpactPoint, 10, FColor::Purple, false, 20, 5 );
+			DrawDebugPoint( GetWorld(), hit.ImpactPoint, 10, FColor::Purple, false, 10, 5 );
 		}
 #endif
 		if( hit.bBlockingHit )
@@ -573,7 +615,7 @@ void U3D_MovementComponent::AddHorizontalMovement( FVector direction, float scal
 	}
 }
 
-void U3D_MovementComponent::JumpPressed()
+void U3D_MovementComponent::JumpStart()
 {
 	if( player->state == MovementState::WALKING )
 	{
@@ -587,7 +629,7 @@ void U3D_MovementComponent::JumpPressed()
 	}
 }
 
-void U3D_MovementComponent::JumpDepress()
+void U3D_MovementComponent::JumpStop()
 {
 	if( allowEarlyEndJump && player->state == MovementState::JUMPING )
 	{
@@ -650,9 +692,4 @@ float U3D_MovementComponent::GetHitDegreeAngle( FHitResult& hit )
 	);
 }
 
-FString U3D_MovementComponent::GetStateAsName( MovementState EnumValue )
-{
-	const UEnum* EnumPtr = FindObject<UEnum>( ANY_PACKAGE, TEXT( "MovementState" ), true );
-	if( !EnumPtr ) return FString( "Invalid" );
-	return EnumPtr->GetNameByValue( (int64) EnumValue ).ToString();
-}
+

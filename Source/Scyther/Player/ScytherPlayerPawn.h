@@ -114,6 +114,10 @@ public:
 		/// <summary><value>Grapple hook behaviour for the character .</value></summary>
 		class UGrappleHookComponent* grappleHookComponent;
 
+	UPROPERTY( EditAnywhere, BluePrintReadWrite )
+		/// <summary><value>Grapple hook behaviour for the character .</value></summary>
+		class UDashComponent* dashComponent;
+
 	//------------------------//
 	//   RAY CASTS
 	//------------------------//
@@ -121,7 +125,10 @@ public:
 	//------------------------//
 	//  PARAMETERS
 	//------------------------//
-
+	UPROPERTY( EditAnywhere, BluePrintReadWrite, Category = "Design | DEBUG " )
+		bool stateText = false;
+	UPROPERTY( EditAnywhere, BluePrintReadWrite, Category = "Design | DEBUG " )
+		bool playerLocationText = true;
 
 	UPROPERTY( VisibleAnywhere, BlueprintReadOnly )
 	MovementState state = MovementState::FALLING;
@@ -129,63 +136,13 @@ public:
 	UPROPERTY( VisibleAnywhere, BlueprintReadOnly )
 	bool isGrounded;
 
-	//Dash
-	bool firstDash = false;
-	UPROPERTY( EditAnywhere, BlueprintReadWrite, Category = "Design|Dash", meta = ( DisplayName = "DashForce" ) )
-		/// The higher, the more distance the character will be able to cover when performing a dash.
-		float dashForce = 500;
-	UPROPERTY( EditAnywhere, BlueprintReadWrite, Category = "Design|Dash", meta = ( DisplayName = "NextDashAvailabilty" ) )
-		/// Minimum number of seconds that the character has to wait from the end of a dash
-		/// to be able to start a new one.
-		float waitForTheNextDash = 3;
-	UPROPERTY( EditAnywhere, BlueprintReadWrite, Category = "Design|Dash", meta = ( DisplayName = "DashOnGround" ) )
-		/// If true, allows the player to dash while making contact with the ground
-		bool dashOnGround = true;
-	UPROPERTY( EditAnywhere, BlueprintReadWrite, Category = "Design|Dash" )
-		/// If true, allows the player to dash while making contact with the ground
-		bool allowDashOnAir = true;
-
+	UPROPERTY( EditAnywhere, BluePrintReadWrite )
 	bool isGodMode = false;
-
-	private:
-		MovementState animationPreDash;
-	public:
-	UPROPERTY( EditAnywhere, BlueprintReadWrite, Category = "Design|Dash", meta = ( DisplayName = "PlayRateOfDash" ) )
-		/// The higher it is, the more accurate the dash will be rendered in game, and the more resources it will need.
-		float dashRate = 1;
-	UPROPERTY( EditAnywhere, BlueprintReadWrite, Category = "Design|Dash", meta = ( DisplayName = "TraceDashEffect" ) )
-		/// The VFX the character will leave behind while dashing.
-		UParticleSystem* traceDashEffect;
-	UPROPERTY( EditAnywhere, BlueprintReadWrite, Category = "Design|Dash", meta = ( DisplayName = "SetCurveFloat1" ) )
-		/// The linear curve that represents the progression of the movement that the character follows when dashing.
-		UCurveFloat* curveFloat;
-	UPROPERTY( EditAnywhere, BlueprintReadWrite, Category = "Design|Dash", meta = ( DisplayName = "SetCurveFloat2" ) )
-		/// The linear curve that represents the progression of the movement that the camera follows after dashing.
-		UCurveFloat* curveFloat2;
 
 	//-- EXPERIENCE --/ /--deprecated--/
 public:
 	UPROPERTY( VisibleAnywhere, BlueprintReadOnly, Category = "Design|Experience" )
 		float currentExperience = 0;
-
-	//---Dash---//
-private:
-	/// Refers to the relative position the character will get when colliding in a dash.
-	const float capsuleRadius = -55;
-	/// Returns the remaining time of the dash that is currently being performed.
-	float currentDashTime;
-	/// Return true when time since the last dash is lower than the cooldown time.
-	bool hasDashed;
-	/// Refers to the location the character was in at the exact moment of pressing the dash button.
-	FVector currentLocation;
-	/// Refers to the location the character will be in at the exact moment of finishing a dash movement.
-	FVector destination;
-	/// Refers to the timeline that will be executed to interpolate the character position during a dash movement.
-	FTimeline curveTimeLine;
-	/// Refers to the timeline that will be executed to interpolate the camera position after a dash movement.
-	FTimeline curveCameraTimeLine;
-	/// Delegate that stores the callback function after the character finishes a dash.
-	FOnTimelineEventStatic onDashFinished;
 
 	//---Targeting---//
 public:
@@ -208,9 +165,6 @@ public:
 private:
 
 	bool enemyTargeted = false;
-
-	FOnTimelineFloat timelIneProgress;
-	FOnTimelineFloat cameraTimelIneProgress;
 
 protected:
 	// Called when the game starts or when spawned
@@ -285,38 +239,9 @@ public:
 	void OnAttack();
 
 	/// <summary>
-	/// <para>
-	/// Checks whether the player can dash or not and whether it collides against a wall or not,
-	/// then calls <see cref="DashExecution"/>.
-	/// </para>
-	/// <para>
-	/// Not finished.
-	/// </para>
+	/// Execute the dash function of the dash component
 	/// </summary>
-	/// <param name="No params"/>
-	/// <returns>
-	/// This function returns no value.
-	/// </returns>
 	void OnDash();
-
-	/// <summary>
-	/// <para>
-	/// Executes the dash animation and logic for the player.
-	/// </para>
-	/// <para>
-	/// Not finished.
-	/// </para>
-	/// </summary>
-	/// <param name="dashDirection">Vector containing the direction and speed of the movement.</param>
-	/// <returns>
-	/// This function returns no value.
-	/// </returns>
-	void DashExecution( FVector dashDirection );
-
-	UFUNCTION()
-		void TimelineProgress( float val );
-	UFUNCTION()
-		void CameraTimelineProgress( float val );
 
 	/// <summary>
 	/// <para>
@@ -356,12 +281,17 @@ private:
 
 	void RotateTowardsZTarget();
 
-	UFUNCTION()
-		void DashFinishedCallback();
-
-
 	void InitComponents();
 	void InitPrimitiveComponents();
 
 	void CastRays();
+
+//------------------------//
+// AUXILIAR
+//------------------------//
+
+	/// <summary>
+	/// Returns a string with the name of a movementState shared as parameter
+	/// </summary>
+	FString GetStateAsName( MovementState EnumValue );
 };

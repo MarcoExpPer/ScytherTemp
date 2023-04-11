@@ -31,11 +31,14 @@ class SCYTHER_API U3D_MovementComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:
-	UPROPERTY( EditAnywhere, BlueprintReadWrite)
-		bool activateDebugInformation = false;
+	UPROPERTY( EditAnywhere, BlueprintReadWrite, Category = "Movement Component | DEBUG " )
+		bool movementText = true;
 
-	UPROPERTY( EditAnywhere, BlueprintReadWrite )
-		bool activateRayCastInformation = true;
+	UPROPERTY( EditAnywhere, BlueprintReadWrite, Category = "Movement Component | DEBUG " )
+		bool stepUpRaycast = false;
+
+	UPROPERTY( EditAnywhere, BlueprintReadWrite, Category = "Movement Component | DEBUG " )
+		bool groundedRaycast = true;
 
 private:
 	class AScytherPlayerPawn* player;
@@ -272,13 +275,13 @@ public:
 	/// Check if the player can start a jump (because it's grounded or coyote time is available) and initiate the jump
 	/// </summary>
 	UFUNCTION( BlueprintCallable )
-	void JumpPressed();
+	void JumpStart();
 
 	/// <summary>
 	/// Change player state to apex or to falling depending on parameters.
 	/// </summary>
 	UFUNCTION( BlueprintCallable )
-	void JumpDepress();
+	void JumpStop();
 
 	/// <summary>
 	/// Starts the player jump changing its state, updating the coyote time and the Z velocity
@@ -308,10 +311,4 @@ private:
 	/// Returns the Degree Angle between the hit normal and the down vector
 	/// </summary>
 	float GetHitDegreeAngle( FHitResult& hit );
-
-public:
-	/// <summary>
-	/// Returns a string with the name of a movementState shared as parameter
-	/// </summary>
-	FString GetStateAsName( MovementState EnumValue );
 };
