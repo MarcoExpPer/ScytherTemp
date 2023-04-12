@@ -118,6 +118,10 @@ public:
 		/// <summary><value>Grapple hook behaviour for the character .</value></summary>
 		class UDashComponent* dashComponent;
 
+	//UPROPERTY( EditAnywhere, BlueprintReadWrite )
+		/// <summary><value>Player will Traverse on giving spawn point in the world.
+		//class UTransverseComponent* transverseComponent;
+
 	//------------------------//
 	//   RAY CASTS
 	//------------------------//
@@ -269,6 +273,13 @@ public:
 	/// Enableds the grapple hook.
 	/// </summary>
 	void ActivateGrappleHook();
+
+	/// <summary>
+	/// Traverse on Spawn points on Left or Right
+	// </summary>
+	//void MoveToTheNextPos( FTransform pos );
+	//void MoveToThePreviousPos( FTransform pos );
+
 
 	void ActivateGODMode();
 

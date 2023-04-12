@@ -65,6 +65,9 @@ public:
 
 	void CallGODModePressed();
 
+	//void MoveToTheNextPos();
+	//void MoveToThePreviousPos();
+
 	UPROPERTY( BlueprintReadOnly, Category = "HUD" )
 		//TSubclassOf<class AHUD> hudClass;
 		class AScytherHUD* hud;

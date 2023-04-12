@@ -25,6 +25,7 @@
 #include "../Components/DashComponent.h"
 #include <Scyther/Components/HealthComponent.h>
 #include "Perception/AIPerceptionStimuliSourceComponent.h"
+#include <Scyther/Components/TransverseComponent.h>
 #include "GameFramework/CharacterMovementComponent.h"
 
 //------------------------//
@@ -102,6 +103,9 @@ void AScytherPlayerPawn::InitPrimitiveComponents()
 
 	dashComponent = CreateDefaultSubobject<UDashComponent>( TEXT( "Dash Component" ) );
 	AddOwnedComponent( dashComponent );
+
+	//transverseComponent = CreateDefaultSubobject<UTransverseComponent>( TEXT( "Traverse Component" ) );
+	//AddOwnedComponent( transverseComponent );
 }
 
 //------------------------//
@@ -372,6 +376,19 @@ void AScytherPlayerPawn::ActivateGrappleHook()
 {
 	grappleHookComponent->ActivateGrappleHook();
 }
+/*
+//------------------------//
+//     Traverse Mode
+//------------------------//
+void AScytherPlayerPawn::MoveToTheNextPos( FTransform x )
+{
+	transverseComponent->MoveToTheNextPos( x );
+}
+
+void AScytherPlayerPawn::MoveToThePreviousPos( FTransform x )
+{
+	transverseComponent->MoveToThePreviousPos( x );
+}*/
 
 //------------------------//
 //     GOD Mode

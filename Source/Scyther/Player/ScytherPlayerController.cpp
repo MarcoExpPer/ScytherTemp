@@ -82,9 +82,25 @@ void AScytherPlayerController::SetupInputComponent()
 	//GOD Mode
 	InputComponent->BindAction( "GODMode", IE_Pressed, this, &AScytherPlayerController::CallGODModePressed );
 
+	//Next Spawn
+	//InputComponent->BindAction( "NextCheckPoint", IE_Pressed, this, &AScytherPlayerController::MoveToTheNextPos );
+
+	//Previous Spawn
+	//InputComponent->BindAction( "LastCheckPoint", IE_Pressed, this, &AScytherPlayerController::MoveToThePreviousPos );
+}
+/*
+void AScytherPlayerController::MoveToTheNextPos()
+{
+	UE_LOG( LogTemp, Display, TEXT( "MoveToTheNextPos" ) );
+
+	scytherPlayer->MoveToTheNextPos( scytherPlayer->GetActorTransform() );
 }
 
-
+void AScytherPlayerController::MoveToThePreviousPos()
+{
+	UE_LOG( LogTemp, Display, TEXT( "MoveToThePreviousPos" ) );
+	scytherPlayer->MoveToThePreviousPos( scytherPlayer->GetActorTransform() );
+}*/
 
 void AScytherPlayerController::CallMoveRight( float value )
 {

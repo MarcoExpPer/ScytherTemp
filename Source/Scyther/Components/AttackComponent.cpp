@@ -197,6 +197,7 @@ void UAttackComponent::PlayAnimAttack()
 
 void UAttackComponent::DoDamage()
 {
+
 	FVector box = FVector( 0, 0, 0 );
 
 	switch( state )
@@ -205,60 +206,60 @@ void UAttackComponent::DoDamage()
 		switch( firstAttackDirection )
 		{
 		case AttackDirection::HORIZONTAL:
-			box = FVector( firstAttackReach / 2, firstAttackWidth / 2, firstAttackThickness / 2 );
+			box = FVector( firstAttackReach, firstAttackReach, firstAttackThickness );
 			break;
 		case AttackDirection::VERTICAL:
-			box = FVector( firstAttackReach / 2, firstAttackThickness / 2, firstAttackWidth / 2 );
+			box = FVector( firstAttackReach, firstAttackThickness, firstAttackReach );
 			break;
 		default:
 			break;
 		}
-		boxColOffset = FVector( firstAttackReach / 2 + 10, 0, 0 ) + firstAttackOffset;
+		boxColOffset = FVector( firstAttackReach + 10, 0, 0 ) + firstAttackOffset;
 		character->scytheAttackCol->SetBoxExtent( box );
 		break;
 	case AttackState::SECOND:
 		switch( secondAttackDirection )
 		{
 		case AttackDirection::HORIZONTAL:
-			box = FVector( secondAttackReach / 2, secondAttackWidth / 2, secondAttackThickness / 2 );
+			box = FVector( secondAttackReach, secondAttackReach, secondAttackThickness );
 			break;
 		case AttackDirection::VERTICAL:
-			box = FVector( secondAttackReach / 2, secondAttackThickness / 2, secondAttackWidth / 2 );
+			box = FVector( secondAttackReach, secondAttackThickness, secondAttackReach );
 			break;
 		default:
 			break;
 		}
-		boxColOffset = FVector( secondAttackReach / 2 + 10, 0, 0 ) + secondAttackOffset;
+		boxColOffset = FVector( secondAttackReach + 10, 0, 0 ) + secondAttackOffset;
 		character->scytheAttackCol->SetBoxExtent( box );
 		break;
 	case AttackState::FINAL:
 		switch( finalAttackDirection )
 		{
 		case AttackDirection::HORIZONTAL:
-			box = FVector( finalAttackReach / 2, finalAttackWidth / 2, finalAttackThickness / 2 );
+			box = FVector( finalAttackReach, finalAttackReach, finalAttackThickness );
 			break;
 		case AttackDirection::VERTICAL:
-			box = FVector( finalAttackReach / 2, finalAttackThickness / 2, finalAttackWidth / 2 );
+			box = FVector( finalAttackReach, finalAttackThickness, finalAttackReach );
 			break;
 		default:
 			break;
 		}
-		boxColOffset = FVector( finalAttackReach / 2 + 10, 0, 0 ) + finalAttackOffset;
+		boxColOffset = FVector( finalAttackReach + 10, 0, 0 ) + finalAttackOffset;
 		character->scytheAttackCol->SetBoxExtent( box );
 		break;
 	case AttackState::AIR:
 		switch( airAttackDirection )
 		{
 		case AttackDirection::HORIZONTAL:
-			box = FVector( airAttackReach / 2, airAttackWidth / 2, airAttackThickness / 2 );
+			box = FVector( airAttackReach, airAttackReach, airAttackThickness );
 			break;
 		case AttackDirection::VERTICAL:
-			box = FVector( airAttackReach / 2, airAttackThickness / 2, airAttackWidth / 2 );
+			box = FVector( airAttackReach, airAttackThickness, airAttackReach );
 			break;
 		default:
 			break;
 		}
-		boxColOffset = FVector( airAttackReach / 2 + 10, 0, 0 ) + airAttackOffset;
+		boxColOffset = FVector( airAttackReach + 10, 0, 0 ) + airAttackOffset;
 		character->scytheAttackCol->SetBoxExtent( box );
 		break;
 	default:
@@ -279,26 +280,54 @@ void UAttackComponent::DoDamage()
 			UE_LOG( LogTemp, Error, TEXT( "No se ha podido obtener el componente de vida del enemigo %s." ), *damagedEnemies[i]->GetName() );
 			return;
 		}
-		switch( state )
+
+		if( isGodMode )
 		{
-		case AttackState::FIRST:
-			healthComp->receiveDamage( firstAttackDamage );
-			break;
+			switch( state )
+			{
+			case AttackState::FIRST:
+				healthComp->receiveDamage( 100000.0f );
+				break;
 
-		case AttackState::SECOND:
-			healthComp->receiveDamage( secondAttackDamage );
-			break;
+			case AttackState::SECOND:
+				healthComp->receiveDamage( 100000.0f );
+				break;
 
-		case AttackState::FINAL:
-			healthComp->receiveDamage( finalAttackDamage );
-			break;
+			case AttackState::FINAL:
+				healthComp->receiveDamage( 100000.0f );
+				break;
 
-		case AttackState::AIR:
-			healthComp->receiveDamage( airAttackDamage );
-			break;
+			case AttackState::AIR:
+				healthComp->receiveDamage( 100000.0f );
+				break;
 
-		default:
-			break;
+			default:
+				break;
+			}
+		}
+		else
+		{
+			switch( state )
+			{
+			case AttackState::FIRST:
+				healthComp->receiveDamage( firstAttackDamage );
+				break;
+
+			case AttackState::SECOND:
+				healthComp->receiveDamage( secondAttackDamage );
+				break;
+
+			case AttackState::FINAL:
+				healthComp->receiveDamage( finalAttackDamage );
+				break;
+
+			case AttackState::AIR:
+				healthComp->receiveDamage( airAttackDamage );
+				break;
+
+			default:
+				break;
+			}
 		}
 	}
 

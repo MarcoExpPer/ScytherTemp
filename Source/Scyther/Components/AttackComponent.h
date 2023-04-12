@@ -87,6 +87,10 @@ public:
 	/// </summary>
 	//TArray<AActor*> enemiesHit;
 
+	/// <summary>
+	/// Activate or desactivate the GOD Mode 
+	/// </summary>
+	bool isGodMode = false;
 
 	/// <summary>
 	/// FIRST ATTACK
