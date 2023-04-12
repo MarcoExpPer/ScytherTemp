@@ -25,7 +25,7 @@
 #include "../Components/DashComponent.h"
 #include <Scyther/Components/HealthComponent.h>
 #include "Perception/AIPerceptionStimuliSourceComponent.h"
-#include <Scyther/Components/TransverseComponent.h>
+//#include <Scyther/Components/TransverseComponent.h>
 #include "GameFramework/CharacterMovementComponent.h"
 
 //------------------------//
@@ -411,8 +411,8 @@ void AScytherPlayerPawn::ActivateGODMode()
 		//No Gasto mana
 		skillComponent->isGodMode = false;
 
-		// Infinitedamage
-		// attackComponent -> isGodMode = false;
+		//Infinitedamage
+		attackComponent -> isGodMode = false;
 		//endGodMode();
 	}
 	else
@@ -427,8 +427,8 @@ void AScytherPlayerPawn::ActivateGODMode()
 		//No Gasto mana
 		skillComponent->isGodMode = true;
 
-		// Infinitedamage
-		// attackComponent -> isGodMode = true;
+		//Infinitedamage
+		attackComponent -> isGodMode = true;
 		//startGodMode();
 	}
 }

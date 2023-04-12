@@ -197,7 +197,6 @@ void UAttackComponent::PlayAnimAttack()
 
 void UAttackComponent::DoDamage()
 {
-
 	FVector box = FVector( 0, 0, 0 );
 
 	switch( state )
@@ -206,60 +205,60 @@ void UAttackComponent::DoDamage()
 		switch( firstAttackDirection )
 		{
 		case AttackDirection::HORIZONTAL:
-			box = FVector( firstAttackReach, firstAttackReach, firstAttackThickness );
+			box = FVector( firstAttackReach / 2, firstAttackWidth / 2, firstAttackThickness / 2 );
 			break;
 		case AttackDirection::VERTICAL:
-			box = FVector( firstAttackReach, firstAttackThickness, firstAttackReach );
+			box = FVector( firstAttackReach / 2, firstAttackThickness / 2, firstAttackWidth / 2 );
 			break;
 		default:
 			break;
 		}
-		boxColOffset = FVector( firstAttackReach + 10, 0, 0 ) + firstAttackOffset;
+		boxColOffset = FVector( firstAttackReach / 2 + 10, 0, 0 ) + firstAttackOffset;
 		character->scytheAttackCol->SetBoxExtent( box );
 		break;
 	case AttackState::SECOND:
 		switch( secondAttackDirection )
 		{
 		case AttackDirection::HORIZONTAL:
-			box = FVector( secondAttackReach, secondAttackReach, secondAttackThickness );
+			box = FVector( secondAttackReach / 2, secondAttackWidth / 2, secondAttackThickness / 2 );
 			break;
 		case AttackDirection::VERTICAL:
-			box = FVector( secondAttackReach, secondAttackThickness, secondAttackReach );
+			box = FVector( secondAttackReach / 2, secondAttackThickness / 2, secondAttackWidth / 2 );
 			break;
 		default:
 			break;
 		}
-		boxColOffset = FVector( secondAttackReach + 10, 0, 0 ) + secondAttackOffset;
+		boxColOffset = FVector( secondAttackReach / 2 + 10, 0, 0 ) + secondAttackOffset;
 		character->scytheAttackCol->SetBoxExtent( box );
 		break;
 	case AttackState::FINAL:
 		switch( finalAttackDirection )
 		{
 		case AttackDirection::HORIZONTAL:
-			box = FVector( finalAttackReach, finalAttackReach, finalAttackThickness );
+			box = FVector( finalAttackReach / 2, finalAttackWidth / 2, finalAttackThickness / 2 );
 			break;
 		case AttackDirection::VERTICAL:
-			box = FVector( finalAttackReach, finalAttackThickness, finalAttackReach );
+			box = FVector( finalAttackReach / 2, finalAttackThickness / 2, finalAttackWidth / 2 );
 			break;
 		default:
 			break;
 		}
-		boxColOffset = FVector( finalAttackReach + 10, 0, 0 ) + finalAttackOffset;
+		boxColOffset = FVector( finalAttackReach / 2 + 10, 0, 0 ) + finalAttackOffset;
 		character->scytheAttackCol->SetBoxExtent( box );
 		break;
 	case AttackState::AIR:
 		switch( airAttackDirection )
 		{
 		case AttackDirection::HORIZONTAL:
-			box = FVector( airAttackReach, airAttackReach, airAttackThickness );
+			box = FVector( airAttackReach / 2, airAttackWidth / 2, airAttackThickness / 2 );
 			break;
 		case AttackDirection::VERTICAL:
-			box = FVector( airAttackReach, airAttackThickness, airAttackReach );
+			box = FVector( airAttackReach / 2, airAttackThickness / 2, airAttackWidth / 2 );
 			break;
 		default:
 			break;
 		}
-		boxColOffset = FVector( airAttackReach + 10, 0, 0 ) + airAttackOffset;
+		boxColOffset = FVector( airAttackReach / 2 + 10, 0, 0 ) + airAttackOffset;
 		character->scytheAttackCol->SetBoxExtent( box );
 		break;
 	default:
@@ -280,7 +279,6 @@ void UAttackComponent::DoDamage()
 			UE_LOG( LogTemp, Error, TEXT( "No se ha podido obtener el componente de vida del enemigo %s." ), *damagedEnemies[i]->GetName() );
 			return;
 		}
-
 		if( isGodMode )
 		{
 			switch( state )
