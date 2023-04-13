@@ -105,7 +105,7 @@ void AWormPawn::HorizontalAttack(  FVector EnemyPosition )
 
 		//
 
-		wormBody->AddImpulse( *( new FVector( XEnemy*1.7f, YEnemy*1.7f, 650 ) )	, "", true );
+		wormBody->AddImpulse( *( new FVector( XEnemy*1.7f, YEnemy*1.7f, 650 ) ), "", true );
 
 		FTimerHandle UnusedHandle;
 		GetWorldTimerManager().SetTimer(
