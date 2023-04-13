@@ -156,8 +156,6 @@ void U3D_MovementComponent::CheckDownStep()
 
 	TArray<TEnumAsByte<EObjectTypeQuery>> objects;
 	objects.Add( UEngineTypes::ConvertToObjectType( ECollisionChannel::ECC_WorldStatic ) );
-	objects.Add( UEngineTypes::ConvertToObjectType( ECollisionChannel::ECC_WorldDynamic ) );
-	objects.Add( UEngineTypes::ConvertToObjectType( ECollisionChannel::ECC_PhysicsBody ) );
 
 	TArray<FHitResult> hits;
 	UKismetSystemLibrary::SphereTraceMultiForObjects( GetWorld(), sphereCenter, sphereCenter + FVector::DownVector * 4,
