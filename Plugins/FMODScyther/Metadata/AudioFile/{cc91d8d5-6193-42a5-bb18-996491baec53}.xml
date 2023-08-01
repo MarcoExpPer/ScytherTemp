@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{cc91d8d5-6193-42a5-bb18-996491baec53}">
+		<property name="assetPath">
+			<value>Music/transition_1.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>8.7272708333333338</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{d38651de-9c61-4b2e-9305-d4b75f132259}</destination>
+		</relationship>
+	</object>
+</objects>

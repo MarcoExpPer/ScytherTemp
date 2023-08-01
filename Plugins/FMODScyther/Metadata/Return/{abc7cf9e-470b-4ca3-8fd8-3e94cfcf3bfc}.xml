@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="MixerReturn" id="{abc7cf9e-470b-4ca3-8fd8-3e94cfcf3bfc}">
+		<property name="volume">
+			<value>-80</value>
+		</property>
+		<property name="name">
+			<value>CaveBox04</value>
+		</property>
+		<relationship name="effectChain">
+			<destination>{7f79c818-6772-491f-8fac-7229f0df6033}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{b7e2d095-7c5e-4ccb-bff7-484a8befd79d}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{0f527c9f-e284-4c5a-9c27-031e9520a722}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{7f79c818-6772-491f-8fac-7229f0df6033}">
+		<relationship name="effects">
+			<destination>{31ff9a5b-a2be-4067-bf7c-4f65e754e2e0}</destination>
+			<destination>{653fe6c7-774e-4ed6-bc64-a887e6928a6a}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{b7e2d095-7c5e-4ccb-bff7-484a8befd79d}" />
+	<object class="MixerBusFader" id="{31ff9a5b-a2be-4067-bf7c-4f65e754e2e0}" />
+	<object class="SFXReverbEffect" id="{653fe6c7-774e-4ed6-bc64-a887e6928a6a}" />
+</objects>

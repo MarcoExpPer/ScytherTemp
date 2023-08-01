@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="MixerGroup" id="{da718321-4a2e-41b4-80cc-e5023d2628a8}">
+		<property name="name">
+			<value>CheckpointUI</value>
+		</property>
+		<relationship name="masters">
+			<destination>{2251626b-f760-48d1-af1f-d7d315538e7f}</destination>
+		</relationship>
+		<relationship name="effectChain">
+			<destination>{94ac2746-3248-48a8-af5d-7716d1321e3a}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{3461dff3-3fad-40b5-b84a-42e9821f5e1b}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{d97e04ba-3d99-4e0c-87d4-ce0acdc7873d}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{94ac2746-3248-48a8-af5d-7716d1321e3a}">
+		<relationship name="effects">
+			<destination>{787012cd-8e5f-41bb-867d-09bb20f3df5e}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{3461dff3-3fad-40b5-b84a-42e9821f5e1b}" />
+	<object class="MixerBusFader" id="{787012cd-8e5f-41bb-867d-09bb20f3df5e}" />
+</objects>

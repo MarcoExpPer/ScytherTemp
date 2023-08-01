@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{30c73a95-c286-4b29-bb15-e7dcbf09b32c}">
+		<property name="assetPath">
+			<value>WormInitialShout.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>2.2808958333333331</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{d38651de-9c61-4b2e-9305-d4b75f132259}</destination>
+		</relationship>
+	</object>
+</objects>

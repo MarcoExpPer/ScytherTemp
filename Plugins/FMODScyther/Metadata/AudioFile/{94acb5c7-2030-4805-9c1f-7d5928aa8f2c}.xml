@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{94acb5c7-2030-4805-9c1f-7d5928aa8f2c}">
+		<property name="assetPath">
+			<value>explosion_gusano_2.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>2.4598866213151926</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{d38651de-9c61-4b2e-9305-d4b75f132259}</destination>
+		</relationship>
+	</object>
+</objects>

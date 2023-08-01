@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{9fd9559c-635d-403f-a289-d1e8ce088b1f}">
+		<property name="assetPath">
+			<value>ruptura minerales 2.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.40987499999999999</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{d38651de-9c61-4b2e-9305-d4b75f132259}</destination>
+		</relationship>
+	</object>
+</objects>

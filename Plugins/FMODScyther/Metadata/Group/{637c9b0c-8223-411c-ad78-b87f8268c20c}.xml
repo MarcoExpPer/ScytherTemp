@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="MixerGroup" id="{637c9b0c-8223-411c-ad78-b87f8268c20c}">
+		<property name="name">
+			<value>Scyther</value>
+		</property>
+		<relationship name="effectChain">
+			<destination>{0b5089cf-faa7-48ee-b007-63cda4c91d35}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{656004e9-f7e9-437a-b32a-d4e175edf82e}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{8a41289c-3915-4f35-96d2-aa5c68fd67c8}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{0b5089cf-faa7-48ee-b007-63cda4c91d35}">
+		<relationship name="effects">
+			<destination>{a4337a00-85b9-441d-8852-59c06a1d5f51}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{656004e9-f7e9-437a-b32a-d4e175edf82e}" />
+	<object class="MixerBusFader" id="{a4337a00-85b9-441d-8852-59c06a1d5f51}" />
+</objects>

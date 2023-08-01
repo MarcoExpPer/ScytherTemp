@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{2c98a0db-3b00-4076-a24c-7d939987c235}">
+		<property name="name">
+			<value>Recinto</value>
+		</property>
+		<relationship name="folder">
+			<destination>{ddaed144-19fb-447e-bd81-ef701b11c4a4}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{48e59b6e-373c-4560-a518-e85933e646fa}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{48e59b6e-373c-4560-a518-e85933e646fa}">
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

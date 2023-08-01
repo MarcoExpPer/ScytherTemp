@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="MixerGroup" id="{7e409edb-8104-4243-931f-010b974b3f66}">
+		<property name="color">
+			<value>Yellow</value>
+		</property>
+		<property name="name">
+			<value>GameMusic</value>
+		</property>
+		<relationship name="masters">
+			<destination>{8b9455c3-bee8-4fd2-a560-e9c7ef811549}</destination>
+		</relationship>
+		<relationship name="effectChain">
+			<destination>{cc1c0c29-c1b3-48e0-b3ee-ed29c757192d}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{88c284e5-03ed-498a-90f7-8e707524fea3}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{5ab9122c-ae96-48a3-b453-de3d824e3056}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{cc1c0c29-c1b3-48e0-b3ee-ed29c757192d}">
+		<relationship name="effects">
+			<destination>{06fc90ec-aad3-47ce-aabc-b07eec7b7814}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{88c284e5-03ed-498a-90f7-8e707524fea3}" />
+	<object class="MixerBusFader" id="{06fc90ec-aad3-47ce-aabc-b07eec7b7814}" />
+</objects>

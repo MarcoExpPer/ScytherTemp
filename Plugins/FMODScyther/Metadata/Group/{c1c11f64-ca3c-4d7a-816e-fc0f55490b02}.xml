@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="MixerGroup" id="{c1c11f64-ca3c-4d7a-816e-fc0f55490b02}">
+		<property name="name">
+			<value>Respawn</value>
+		</property>
+		<relationship name="masters">
+			<destination>{2251626b-f760-48d1-af1f-d7d315538e7f}</destination>
+		</relationship>
+		<relationship name="effectChain">
+			<destination>{9cbce3eb-3856-4bb6-9731-630ae9be5907}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{adf9c16f-c436-4ddb-bbb0-a7807a41fe9a}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{d97e04ba-3d99-4e0c-87d4-ce0acdc7873d}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{9cbce3eb-3856-4bb6-9731-630ae9be5907}">
+		<relationship name="effects">
+			<destination>{2ede6aab-aedc-4f77-ae8a-f168fff66346}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{adf9c16f-c436-4ddb-bbb0-a7807a41fe9a}" />
+	<object class="MixerBusFader" id="{2ede6aab-aedc-4f77-ae8a-f168fff66346}" />
+</objects>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="MixerGroup" id="{e82991ac-3c96-49ed-83cf-75fca98f5940}">
+		<property name="color">
+			<value>Purple</value>
+		</property>
+		<property name="name">
+			<value>GameSFX</value>
+		</property>
+		<relationship name="masters">
+			<destination>{2251626b-f760-48d1-af1f-d7d315538e7f}</destination>
+		</relationship>
+		<relationship name="effectChain">
+			<destination>{43a33a2b-dcf8-44fd-a6a9-975001b1c8ef}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{bc961213-be70-44f5-a872-87c5dd2da25d}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{5ab9122c-ae96-48a3-b453-de3d824e3056}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{43a33a2b-dcf8-44fd-a6a9-975001b1c8ef}">
+		<relationship name="effects">
+			<destination>{d33303a7-05b6-44c5-a129-4063026b485e}</destination>
+			<destination>{d8eab7f1-1f75-4aa0-a033-2b66105b4dba}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{bc961213-be70-44f5-a872-87c5dd2da25d}" />
+	<object class="MixerBusFader" id="{d33303a7-05b6-44c5-a129-4063026b485e}" />
+	<object class="MixerSend" id="{d8eab7f1-1f75-4aa0-a033-2b66105b4dba}">
+		<property name="level">
+			<value>0</value>
+		</property>
+		<property name="inputFormat">
+			<value>2</value>
+		</property>
+		<relationship name="mixerReturn">
+			<destination>{abc7cf9e-470b-4ca3-8fd8-3e94cfcf3bfc}</destination>
+		</relationship>
+	</object>
+</objects>

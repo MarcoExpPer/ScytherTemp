@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{28c62a33-34b4-44ff-a938-320c1db93f6f}">
+		<property name="name">
+			<value>TipoAmbiente</value>
+		</property>
+		<relationship name="folder">
+			<destination>{ddaed144-19fb-447e-bd81-ef701b11c4a4}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{fe73dcfa-9c3b-4688-bcc7-ab4ac678ca1a}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{fe73dcfa-9c3b-4688-bcc7-ab4ac678ca1a}">
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+		<property name="seekSpeed">
+			<value>0.19999998807907104</value>
+		</property>
+		<property name="seekSpeedDescending">
+			<value>0.25</value>
+		</property>
+		<property name="seekSpeedAsymmetric">
+			<value>true</value>
+		</property>
+	</object>
+</objects>

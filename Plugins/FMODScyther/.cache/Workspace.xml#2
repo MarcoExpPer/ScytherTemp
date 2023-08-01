@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="Workspace" id="{3d7b058b-eca2-452e-92ca-0e487316e08a}">
+		<property name="builtBanksOutputDirectory">
+			<value>../../../Perforce/diegimen_ws_00/Grupo5/Scyther/Content/FMOD/Desktop</value>
+		</property>
+		<relationship name="masterEventFolder">
+			<destination>{35468561-a022-4016-ad6d-fcdcb8249337}</destination>
+		</relationship>
+		<relationship name="masterTagFolder">
+			<destination>{86776e77-0a50-4918-9ead-0e2c4069ab00}</destination>
+		</relationship>
+		<relationship name="masterEffectPresetFolder">
+			<destination>{a8fa5a46-504c-46cd-96dc-4662c74cdd66}</destination>
+		</relationship>
+		<relationship name="masterParameterPresetFolder">
+			<destination>{ddaed144-19fb-447e-bd81-ef701b11c4a4}</destination>
+		</relationship>
+		<relationship name="masterBankFolder">
+			<destination>{9f51a3d5-cb5b-49e6-a651-b473fccf2ea2}</destination>
+		</relationship>
+		<relationship name="masterSandboxFolder">
+			<destination>{d2ec37df-0039-4b30-b5ee-378de6b7ae9a}</destination>
+		</relationship>
+		<relationship name="masterAssetFolder">
+			<destination>{d38651de-9c61-4b2e-9305-d4b75f132259}</destination>
+		</relationship>
+		<relationship name="mixer">
+			<destination>{8bc21db5-ce5b-4ada-8f2b-e41b95360efb}</destination>
+		</relationship>
+		<relationship name="profilerSessionFolder">
+			<destination>{b85bd312-4343-4922-8b26-5971520f0e42}</destination>
+		</relationship>
+		<relationship name="platforms">
+			<destination>{3653a818-03ea-4377-b305-f47986a2857f}</destination>
+		</relationship>
+	</object>
+</objects>

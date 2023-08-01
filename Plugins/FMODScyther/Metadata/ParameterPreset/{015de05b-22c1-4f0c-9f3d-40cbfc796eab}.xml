@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{015de05b-22c1-4f0c-9f3d-40cbfc796eab}">
+		<property name="name">
+			<value>Cambiar Volumen</value>
+		</property>
+		<relationship name="folder">
+			<destination>{ddaed144-19fb-447e-bd81-ef701b11c4a4}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{6df82abd-c178-4b63-b727-fd0b12a88469}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{6df82abd-c178-4b63-b727-fd0b12a88469}">
+		<property name="parameterType">
+			<value>2</value>
+		</property>
+		<property name="maximum">
+			<value>2</value>
+		</property>
+		<property name="enumerationLabels">
+			<value>Value A</value>
+			<value>Value B</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+		<property name="seekSpeed">
+			<value>0.37999999523162842</value>
+		</property>
+	</object>
+</objects>

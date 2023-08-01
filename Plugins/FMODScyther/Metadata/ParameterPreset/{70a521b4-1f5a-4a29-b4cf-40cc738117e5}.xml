@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{70a521b4-1f5a-4a29-b4cf-40cc738117e5}">
+		<property name="name">
+			<value>HitsVariety</value>
+		</property>
+		<relationship name="folder">
+			<destination>{ddaed144-19fb-447e-bd81-ef701b11c4a4}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{47d1a06a-f056-4449-8d47-98fd34a4b8ae}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{47d1a06a-f056-4449-8d47-98fd34a4b8ae}">
+		<property name="parameterType">
+			<value>2</value>
+		</property>
+		<property name="maximum">
+			<value>7</value>
+		</property>
+		<property name="enumerationLabels">
+			<value>BodyEnemy</value>
+			<value>ArmorEnemy</value>
+			<value>Wood</value>
+			<value>Crystal</value>
+			<value>Stone</value>
+			<value>Flower</value>
+			<value>Avalanche</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

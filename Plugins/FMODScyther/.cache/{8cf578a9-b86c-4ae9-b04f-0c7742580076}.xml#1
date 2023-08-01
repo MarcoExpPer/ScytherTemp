@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="Bank" id="{8cf578a9-b86c-4ae9-b04f-0c7742580076}">
+		<property name="name">
+			<value>SFX Worm</value>
+		</property>
+		<relationship name="folder">
+			<destination>{9f51a3d5-cb5b-49e6-a651-b473fccf2ea2}</destination>
+		</relationship>
+	</object>
+</objects>

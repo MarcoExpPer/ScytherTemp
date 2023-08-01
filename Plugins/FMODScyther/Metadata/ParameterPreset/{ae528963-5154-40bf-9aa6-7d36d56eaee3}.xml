@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{ae528963-5154-40bf-9aa6-7d36d56eaee3}">
+		<property name="name">
+			<value>BreakingSounds</value>
+		</property>
+		<relationship name="folder">
+			<destination>{ddaed144-19fb-447e-bd81-ef701b11c4a4}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{863425e3-5620-4a7e-ab86-8699efa609c3}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{863425e3-5620-4a7e-ab86-8699efa609c3}">
+		<property name="parameterType">
+			<value>2</value>
+		</property>
+		<property name="maximum">
+			<value>4</value>
+		</property>
+		<property name="enumerationLabels">
+			<value>BreakingStones</value>
+			<value>BreakingBarrels</value>
+			<value>CaracolDestruction</value>
+			<value>BreakablePlatforms</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>
