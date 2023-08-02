@@ -6,9 +6,14 @@ pipeline {
         stage('Check changes') { 
             steps {
 				script{
-					N_COMMITS = currentBuild.changeSets.size();
+					N_COMMITS = currentBuild.changeSets.size(); 
 					echo "Amount of commits -> ${N_COMMITS}"
 					echo "${WORKSPACE}"
+					
+					if(FORCE_BUILD){
+						N_COMMITS = 1;
+						echo "Forcing build"
+					}
 				}
             }
         }
@@ -18,6 +23,16 @@ pipeline {
 					if(N_COMMITS > 0){
 						echo "Send Building and compiling to -> ${env.DISCORD_HOOK}"
 						echo "Building and compiling"
+						
+						def UEpath = "C:\\Program Files\\Epic Games\\UE_4.27" 
+						
+						bat "\"${UEpath}\\Engine\\Binaries\\DotNET\\UnrealBuildTool.exe\" -projectfiles -project=\"${WORKSPACE}\\Scyther.uproject\" -game -rocket -progress"
+						bat "\"${UEpath}/Engine/Binaries/DotNET/UnrealBuildTool.exe\" Scyther development Win64 -project=\"${WORKSPACE}\\Scyther.uproject\" -rocket -editorrecompile -progress -noubtmakefiles -NoHotReloadFromIDE -2019"
+						
+						bat "if not exist \"${WORKSPACE}/temp/x64\" mkdir \"${WORKSPACE}/temp/x64\""
+							
+						bat "\"${UEpath}\\Engine\\Build\\BatchFiles\\RunUAT.bat\" BuildCookRun -project=\"${WORKSPACE}\\Scyther.uproject\" -noP4 -platform=Win64 -clientconfig=Development -cook -allmaps -build -stage %USE_PAK% -archive -archivedirectory=\"${WORKSPACE}/temp/x64\""
+
 					}
 				}
 			}
