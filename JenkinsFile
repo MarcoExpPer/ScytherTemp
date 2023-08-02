@@ -1,0 +1,56 @@
+def N_COMMITS = 0
+
+pipeline {
+    agent any 
+    stages {
+        stage('Check changes') { 
+            steps {
+				script{
+					N_COMMITS = currentBuild.changeSets.size();
+					echo "Amount of commits -> ${N_COMMITS}"
+					echo "${WORKSPACE}"
+				}
+            }
+        }
+		stage('Build and compile'){
+			steps{
+				script{
+					if(N_COMMITS > 0){
+						echo "Send Building and compiling to -> ${env.DISCORD_HOOK}"
+						echo "Building and compiling"
+					}
+				}
+			}
+		}
+		stage('Automatic testing'){
+			steps{
+				script{
+					if(N_COMMITS > 0){
+						echo "Send Doing tests to -> ${env.DISCORD_HOOK}"
+						echo "Doing tests"
+					}
+				}
+			}
+		}
+    }
+	post{
+        success{
+            script{
+               	if(N_COMMITS > 0){
+					echo "Send success to -> ${env.DISCORD_HOOK}"
+				}else{
+					echo "No changes"
+				}
+            }
+        }
+        failure {
+            script{
+               	if(N_COMMITS > 0){
+					echo "Send failure to -> ${env.DISCORD_HOOK}"
+				}else{
+					echo "Send failure when no new commits to -> ${env.DISCORD_HOOK}"
+				}
+            }
+        }
+    }
+}
