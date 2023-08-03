@@ -1,4 +1,4 @@
-// Copyright (c), Firelight Technologies Pty, Ltd. 2012-2022.
+// Copyright (c), Firelight Technologies Pty, Ltd. 2012-2023.
 
 #pragma once
 
@@ -163,8 +163,11 @@ public:
     /** Set active locale. Locale must be the locale name of one of the configured project locales */
     virtual bool SetLocale(const FString& Locale) = 0;
 
-    /** Get ative locale. */
+    /** Get active locale. */
     virtual FString GetLocale() = 0;
+
+    /** Get default locale. */
+    virtual FString GetDefaultLocale() = 0;
 
 
 #if WITH_EDITOR
