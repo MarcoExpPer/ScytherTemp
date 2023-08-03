@@ -43,39 +43,57 @@ public:
 
 
 	//Input methods
-
+	UFUNCTION( BlueprintCallable )
 	void CallMoveRight( float value );
 
+	UFUNCTION( BlueprintCallable )
 	void CallMoveUp( float value );
 
+	UFUNCTION( BlueprintCallable )
 	void CallMoveCameraUpDown( float value );
 
+	UFUNCTION( BlueprintCallable )
 	void CallTargetSwitchRight( float value );
+	UFUNCTION( BlueprintCallable )
 	void CallTargetSwitchUp( float value );
 
+	UFUNCTION( BlueprintCallable )
 	void CallJumpPressed();
+	UFUNCTION( BlueprintCallable )
 	void CallJumpReleased();
 
+	UFUNCTION( BlueprintCallable )
 	void CallAttackPressed();
 
+	UFUNCTION( BlueprintCallable )
 	void CallDashPressed(); 
 
+	UFUNCTION( BlueprintCallable )
 	void CallBloodRecoverPressed();
 
+	UFUNCTION( BlueprintCallable )
 	void CallPausePressed();
 
+	UFUNCTION( BlueprintCallable )
 	void CallTargetPressed();
 
+	UFUNCTION( BlueprintCallable )
 	void CallSkillAPressed();
+	UFUNCTION( BlueprintCallable )
 	void CallSkillBPressed();
 
+	UFUNCTION( BlueprintCallable )
 	void CallGrappleHookPressed();
 
+	UFUNCTION( BlueprintCallable )
 	void CallGODModePressed();
 
+	UFUNCTION( BlueprintCallable )
 	void MoveToTheNextPos();
+	UFUNCTION( BlueprintCallable )
 	void MoveToThePreviousPos();
 
+	UFUNCTION( BlueprintCallable )
 	void RespawnPlayer();
 
 	UPROPERTY( BlueprintReadOnly, Category = "HUD" )
