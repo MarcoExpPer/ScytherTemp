@@ -1,4 +1,4 @@
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudioEditor\Private\Sequencer\FMODEventControlTrackEditor.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudioEditor\Private\Sequencer\FMODEventControlTrackEditor.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Slate\Public\Framework/MultiBox/MultiBoxBuilder.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Slate\Public\Framework/MultiBox/MultiBoxExtender.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Slate\Public\Framework/SlateDelegates.h
@@ -372,19 +372,19 @@ C:\Program Files\Epic Games\UE_4.27\Engine\Source\Editor\UnrealEd\Public\Compone
 C:\Program Files\Epic Games\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UnrealEd\ComponentVisualizer.generated.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Editor\UnrealEd\Public\ComponentVisualizerManager.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UnrealEd\UnrealEdEngine.generated.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Private\Sequencer/FMODEventControlSection.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Private\Sequencer/FMODEventControlSection.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\MovieScene\Public\MovieSceneClipboard.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\MovieScene\Public\Channels/MovieSceneByteChannel.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\MovieScene\MovieSceneByteChannel.generated.h
-C:\jWorkspace\Plugins\FMODStudio\Intermediate\Build\Win64\UE4Editor\Inc\FMODStudio\FMODEventControlSection.generated.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Private\Sequencer/FMODEventControlTrack.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Intermediate\Build\Win64\UE4Editor\Inc\FMODStudio\FMODEventControlSection.generated.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Private\Sequencer/FMODEventControlTrack.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\MovieScene\Public\MovieSceneNameableTrack.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\MovieScene\MovieSceneNameableTrack.generated.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\MovieScene\Public\Compilation/IMovieSceneTrackTemplateProducer.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\MovieScene\IMovieSceneTrackTemplateProducer.generated.h
-C:\jWorkspace\Plugins\FMODStudio\Intermediate\Build\Win64\UE4Editor\Inc\FMODStudio\FMODEventControlTrack.generated.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Classes\FMODAmbientSound.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Classes\FMODAudioComponent.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Intermediate\Build\Win64\UE4Editor\Inc\FMODStudio\FMODEventControlTrack.generated.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Classes\FMODAmbientSound.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Classes\FMODAudioComponent.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Engine\Classes\Sound/SoundAttenuation.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Engine\Classes\Engine/Attenuation.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Engine\Classes\Curves/CurveFloat.h
@@ -500,20 +500,20 @@ C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Engine\Public\AudioVir
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Engine\Public\ActiveSound.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Engine\Public\Audio/AudioDebug.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\SignalProcessing\Public\DSP/VolumeFader.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMODStudioModule.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMODUtils.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_studio.hpp
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_studio_common.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_common.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_codec.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_dsp.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_dsp_effects.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_output.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_studio.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod.hpp
-C:\jWorkspace\Plugins\FMODStudio\Intermediate\Build\Win64\UE4Editor\Inc\FMODStudio\FMODAudioComponent.generated.h
-C:\jWorkspace\Plugins\FMODStudio\Intermediate\Build\Win64\UE4Editor\Inc\FMODStudio\FMODAmbientSound.generated.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMODStudioModule.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMODUtils.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_studio.hpp
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_studio_common.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_common.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_codec.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_dsp.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_dsp_effects.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_output.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_studio.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod.hpp
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Intermediate\Build\Win64\UE4Editor\Inc\FMODStudio\FMODAudioComponent.generated.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Intermediate\Build\Win64\UE4Editor\Inc\FMODStudio\FMODAmbientSound.generated.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Editor\MovieSceneTools\Public\CommonMovieSceneTools.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\MovieScene\Public\Channels/MovieSceneChannelProxy.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\MovieScene\Public\Channels/MovieSceneChannelEditorDataEntry.h

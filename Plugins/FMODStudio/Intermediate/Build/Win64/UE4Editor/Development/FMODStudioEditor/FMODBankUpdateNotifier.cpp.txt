@@ -1,10 +1,10 @@
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudioEditor\Private\FMODBankUpdateNotifier.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Classes\FMODSettings.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_common.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_codec.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_dsp.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_dsp_effects.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_output.h
-C:\jWorkspace\Plugins\FMODStudio\Intermediate\Build\Win64\UE4Editor\Inc\FMODStudio\FMODSettings.generated.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudioEditor\Private\FMODBankUpdateNotifier.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Classes\FMODSettings.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_common.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_codec.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_dsp.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_dsp_effects.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_output.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Intermediate\Build\Win64\UE4Editor\Inc\FMODStudio\FMODSettings.generated.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\HAL/FileManager.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\GenericPlatform/GenericPlatformFile.h

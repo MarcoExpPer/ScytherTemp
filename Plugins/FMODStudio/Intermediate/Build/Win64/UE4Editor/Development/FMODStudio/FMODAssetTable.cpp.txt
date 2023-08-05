@@ -1,39 +1,39 @@
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Private\FMODAssetTable.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Private\FMODAssetTable.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/GCObject.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Private\FMODAssetLookup.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Private\FMODAssetLookup.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Engine\Classes\Engine/DataTable.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Engine\Public\DataTableUtils.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DataTable.generated.h
-C:\jWorkspace\Plugins\FMODStudio\Intermediate\Build\Win64\UE4Editor\Inc\FMODStudio\FMODAssetLookup.generated.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Classes\FMODEvent.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Classes\FMODAsset.h
-C:\jWorkspace\Plugins\FMODStudio\Intermediate\Build\Win64\UE4Editor\Inc\FMODStudio\FMODAsset.generated.h
-C:\jWorkspace\Plugins\FMODStudio\Intermediate\Build\Win64\UE4Editor\Inc\FMODStudio\FMODEvent.generated.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Classes\FMODSnapshot.h
-C:\jWorkspace\Plugins\FMODStudio\Intermediate\Build\Win64\UE4Editor\Inc\FMODStudio\FMODSnapshot.generated.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Classes\FMODSnapshotReverb.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Intermediate\Build\Win64\UE4Editor\Inc\FMODStudio\FMODAssetLookup.generated.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Classes\FMODEvent.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Classes\FMODAsset.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Intermediate\Build\Win64\UE4Editor\Inc\FMODStudio\FMODAsset.generated.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Intermediate\Build\Win64\UE4Editor\Inc\FMODStudio\FMODEvent.generated.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Classes\FMODSnapshot.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Intermediate\Build\Win64\UE4Editor\Inc\FMODStudio\FMODSnapshot.generated.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Classes\FMODSnapshotReverb.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Engine\Classes\Sound/ReverbEffect.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\ReverbEffect.generated.h
-C:\jWorkspace\Plugins\FMODStudio\Intermediate\Build\Win64\UE4Editor\Inc\FMODStudio\FMODSnapshotReverb.generated.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Classes\FMODBank.h
-C:\jWorkspace\Plugins\FMODStudio\Intermediate\Build\Win64\UE4Editor\Inc\FMODStudio\FMODBank.generated.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Private\FMODBankLookup.h
-C:\jWorkspace\Plugins\FMODStudio\Intermediate\Build\Win64\UE4Editor\Inc\FMODStudio\FMODBankLookup.generated.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Classes\FMODBus.h
-C:\jWorkspace\Plugins\FMODStudio\Intermediate\Build\Win64\UE4Editor\Inc\FMODStudio\FMODBus.generated.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Classes\FMODVCA.h
-C:\jWorkspace\Plugins\FMODStudio\Intermediate\Build\Win64\UE4Editor\Inc\FMODStudio\FMODVCA.generated.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMODUtils.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_studio.hpp
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_studio_common.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_common.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_codec.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_dsp.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_dsp_effects.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_output.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_studio.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod.hpp
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Intermediate\Build\Win64\UE4Editor\Inc\FMODStudio\FMODSnapshotReverb.generated.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Classes\FMODBank.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Intermediate\Build\Win64\UE4Editor\Inc\FMODStudio\FMODBank.generated.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Private\FMODBankLookup.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Intermediate\Build\Win64\UE4Editor\Inc\FMODStudio\FMODBankLookup.generated.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Classes\FMODBus.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Intermediate\Build\Win64\UE4Editor\Inc\FMODStudio\FMODBus.generated.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Classes\FMODVCA.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Intermediate\Build\Win64\UE4Editor\Inc\FMODStudio\FMODVCA.generated.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMODUtils.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_studio.hpp
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_studio_common.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_common.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_codec.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_dsp.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_dsp_effects.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_output.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_studio.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod.hpp
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Engine\Classes\Engine/Engine.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Engine\Classes\Engine/World.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/CoreOnlineFwd.h
@@ -335,10 +335,10 @@ C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\RHI\Public\RHIUtilitie
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\RHI\Public\RHICommandList.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\RHI\Public\RHICommandList.inl
 C:\Program Files\Epic Games\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\Engine.generated.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMODStudioModule.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMODStudioModule.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\Modules/ModuleManager.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\Modules/Boilerplate/ModuleBoilerplate.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Classes\FMODSettings.h
-C:\jWorkspace\Plugins\FMODStudio\Intermediate\Build\Win64\UE4Editor\Inc\FMODStudio\FMODSettings.generated.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Private\FMODFileCallbacks.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Classes\FMODSettings.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Intermediate\Build\Win64\UE4Editor\Inc\FMODStudio\FMODSettings.generated.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Private\FMODFileCallbacks.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\HAL/FileManager.h

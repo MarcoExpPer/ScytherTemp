@@ -1223,10 +1223,10 @@ float U3D_MovementComponent::GetHitDegreeAngle( FHitResult& hit )
 {
 	hit.Normal.Normalize();
 
-	return FMath::Abs(
+	return FMath::RoundToFloat( FMath::Abs(
 		FMath::Acos( FVector::DotProduct( hit.Normal, FVector::DownVector ) ) *
 		180 / PI - 180
-	);
+	));
 }
 
 void U3D_MovementComponent::timerHandleFinished()

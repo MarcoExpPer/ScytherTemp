@@ -1,5 +1,5 @@
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudioEditor\Private\SFMODEventEditorPanel.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudioEditor\Private\FMODEventEditor.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudioEditor\Private\SFMODEventEditorPanel.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudioEditor\Private\FMODEventEditor.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Editor\UnrealEd\Public\Toolkits/AssetEditorToolkit.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Slate\Public\Framework/Docking/TabManager.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Slate\Public\SlateFwd.h
@@ -373,20 +373,20 @@ C:\Program Files\Epic Games\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\In
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Editor\UnrealEd\Public\Subsystems/AssetEditorSubsystem.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Editor\UnrealEd\Public\Tools/Modes.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UnrealEd\AssetEditorSubsystem.generated.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_studio_common.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_common.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_codec.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_dsp.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_dsp_effects.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_output.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMODStudioModule.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_studio_common.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_common.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_codec.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_dsp.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_dsp_effects.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_output.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMODStudioModule.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\Modules/ModuleManager.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\Modules/Boilerplate/ModuleBoilerplate.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMODUtils.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_studio.hpp
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_studio.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod.hpp
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMODUtils.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_studio.hpp
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod_studio.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudio\Public\FMOD\fmod.hpp
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Slate\Public\Widgets/Input/SNumericEntryBox.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Slate\Public\Widgets/Input/SEditableText.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Slate\Public\Widgets/Text/ISlateEditableTextWidget.h

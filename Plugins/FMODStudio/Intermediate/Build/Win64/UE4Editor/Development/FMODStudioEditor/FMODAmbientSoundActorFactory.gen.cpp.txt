@@ -1,7 +1,7 @@
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/GeneratedCppIncludes.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/MetaData.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/TextProperty.h
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudioEditor/Classes/FMODAmbientSoundActorFactory.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudioEditor/Classes/FMODAmbientSoundActorFactory.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Editor\UnrealEd\Classes\ActorFactories/ActorFactory.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Engine\Classes\Engine/World.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/CoreOnlineFwd.h
@@ -167,4 +167,4 @@ C:\Program Files\Epic Games\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\In
 C:\Program Files\Epic Games\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\CollisionProfile.generated.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\World.generated.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UnrealEd\ActorFactory.generated.h
-C:\jWorkspace\Plugins\FMODStudio\Intermediate\Build\Win64\UE4Editor\Inc\FMODStudioEditor\FMODAmbientSoundActorFactory.generated.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Intermediate\Build\Win64\UE4Editor\Inc\FMODStudioEditor\FMODAmbientSoundActorFactory.generated.h

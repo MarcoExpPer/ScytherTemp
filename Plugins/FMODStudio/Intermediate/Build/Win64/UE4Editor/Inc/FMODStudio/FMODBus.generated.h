@@ -13,10 +13,10 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #endif
 #define FMODSTUDIO_FMODBus_generated_h
 
-#define jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_SPARSE_DATA
-#define jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_RPC_WRAPPERS
-#define jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_RPC_WRAPPERS_NO_PURE_DECLS
-#define jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_INCLASS_NO_PURE_DECLS \
+#define ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_SPARSE_DATA
+#define ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_RPC_WRAPPERS
+#define ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_RPC_WRAPPERS_NO_PURE_DECLS
+#define ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUFMODBus(); \
 	friend struct Z_Construct_UClass_UFMODBus_Statics; \
@@ -25,7 +25,7 @@ public: \
 	DECLARE_SERIALIZER(UFMODBus)
 
 
-#define jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_INCLASS \
+#define ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_INCLASS \
 private: \
 	static void StaticRegisterNativesUFMODBus(); \
 	friend struct Z_Construct_UClass_UFMODBus_Statics; \
@@ -34,7 +34,7 @@ public: \
 	DECLARE_SERIALIZER(UFMODBus)
 
 
-#define jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_STANDARD_CONSTRUCTORS \
+#define ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API UFMODBus(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UFMODBus) \
@@ -47,7 +47,7 @@ private: \
 public:
 
 
-#define jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_ENHANCED_CONSTRUCTORS \
+#define ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_ENHANCED_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API UFMODBus(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()) : Super(ObjectInitializer) { }; \
 private: \
@@ -60,28 +60,28 @@ public: \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UFMODBus)
 
 
-#define jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_PRIVATE_PROPERTY_OFFSET
-#define jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_11_PROLOG
-#define jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_GENERATED_BODY_LEGACY \
+#define ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_PRIVATE_PROPERTY_OFFSET
+#define ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_11_PROLOG
+#define ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_PRIVATE_PROPERTY_OFFSET \
-	jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_SPARSE_DATA \
-	jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_RPC_WRAPPERS \
-	jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_INCLASS \
-	jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_STANDARD_CONSTRUCTORS \
+	ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_PRIVATE_PROPERTY_OFFSET \
+	ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_SPARSE_DATA \
+	ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_RPC_WRAPPERS \
+	ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_INCLASS \
+	ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-#define jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_GENERATED_BODY \
+#define ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_PRIVATE_PROPERTY_OFFSET \
-	jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_SPARSE_DATA \
-	jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_RPC_WRAPPERS_NO_PURE_DECLS \
-	jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_INCLASS_NO_PURE_DECLS \
-	jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_ENHANCED_CONSTRUCTORS \
+	ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_PRIVATE_PROPERTY_OFFSET \
+	ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_SPARSE_DATA \
+	ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_RPC_WRAPPERS_NO_PURE_DECLS \
+	ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_INCLASS_NO_PURE_DECLS \
+	ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h_14_ENHANCED_CONSTRUCTORS \
 static_assert(false, "Unknown access specifier for GENERATED_BODY() macro in class FMODBus."); \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -89,7 +89,7 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 template<> FMODSTUDIO_API UClass* StaticClass<class UFMODBus>();
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h
+#define CURRENT_FILE_ID ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODBus_h
 
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

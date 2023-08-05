@@ -1,4 +1,4 @@
-C:\jWorkspace\Plugins\FMODStudio\Source\FMODStudioEditor\Private\FMODStudioStyle.h
+C:\Users\Marco\Documents\GitHub\ScytherTemp\Plugins\FMODStudio\Source\FMODStudioEditor\Private\FMODStudioStyle.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Editor\EditorStyle/Public/EditorStyleSet.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\SlateCore\Public\Styling/StyleDefaults.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\Misc/Paths.h

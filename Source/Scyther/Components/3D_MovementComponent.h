@@ -425,6 +425,7 @@ public:
 		void DisableMovementForXSeconds( float seconds, FVector locationToFixPlayer );
 
 
+	static float GetHitDegreeAngle( FHitResult& hit );
 
 private:
 
@@ -433,7 +434,7 @@ private:
 	/// <summary>
 	/// Returns the Degree Angle between the hit normal and the down vector
 	/// </summary>
-	float GetHitDegreeAngle( FHitResult& hit );
+
 
 	void timerHandleFinished();
 

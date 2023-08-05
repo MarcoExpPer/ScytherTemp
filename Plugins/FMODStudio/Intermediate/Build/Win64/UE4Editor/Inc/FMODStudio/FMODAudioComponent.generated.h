@@ -14,21 +14,21 @@ class UFMODEvent;
 #endif
 #define FMODSTUDIO_FMODAudioComponent_generated_h
 
-#define jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_90_GENERATED_BODY \
+#define ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_90_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FFMODOcclusionDetails_Statics; \
 	FMODSTUDIO_API static class UScriptStruct* StaticStruct();
 
 
 template<> FMODSTUDIO_API UScriptStruct* StaticStruct<struct FFMODOcclusionDetails>();
 
-#define jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_67_GENERATED_BODY \
+#define ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_67_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FFMODAttenuationDetails_Statics; \
 	FMODSTUDIO_API static class UScriptStruct* StaticStruct();
 
 
 template<> FMODSTUDIO_API UScriptStruct* StaticStruct<struct FFMODAttenuationDetails>();
 
-#define jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_116_DELEGATE \
+#define ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_116_DELEGATE \
 struct _Script_FMODStudio_eventOnTimelineBeat_Parms \
 { \
 	int32 Bar; \
@@ -51,7 +51,7 @@ static inline void FOnTimelineBeat_DelegateWrapper(const FMulticastScriptDelegat
 }
 
 
-#define jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_113_DELEGATE \
+#define ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_113_DELEGATE \
 struct _Script_FMODStudio_eventOnTimelineMarker_Parms \
 { \
 	FString Name; \
@@ -66,22 +66,22 @@ static inline void FOnTimelineMarker_DelegateWrapper(const FMulticastScriptDeleg
 }
 
 
-#define jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_111_DELEGATE \
+#define ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_111_DELEGATE \
 static inline void FOnSoundStopped_DelegateWrapper(const FMulticastScriptDelegate& OnSoundStopped) \
 { \
 	OnSoundStopped.ProcessMulticastDelegate<UObject>(NULL); \
 }
 
 
-#define jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_109_DELEGATE \
+#define ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_109_DELEGATE \
 static inline void FOnEventStopped_DelegateWrapper(const FMulticastScriptDelegate& OnEventStopped) \
 { \
 	OnEventStopped.ProcessMulticastDelegate<UObject>(NULL); \
 }
 
 
-#define jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_SPARSE_DATA
-#define jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_RPC_WRAPPERS \
+#define ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_SPARSE_DATA
+#define ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_RPC_WRAPPERS \
  \
 	DECLARE_FUNCTION(execSetProgrammerSoundName); \
 	DECLARE_FUNCTION(execGetTimelinePosition); \
@@ -103,7 +103,7 @@ static inline void FOnEventStopped_DelegateWrapper(const FMulticastScriptDelegat
 	DECLARE_FUNCTION(execSetEvent);
 
 
-#define jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_RPC_WRAPPERS_NO_PURE_DECLS \
+#define ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_RPC_WRAPPERS_NO_PURE_DECLS \
  \
 	DECLARE_FUNCTION(execSetProgrammerSoundName); \
 	DECLARE_FUNCTION(execGetTimelinePosition); \
@@ -125,7 +125,7 @@ static inline void FOnEventStopped_DelegateWrapper(const FMulticastScriptDelegat
 	DECLARE_FUNCTION(execSetEvent);
 
 
-#define jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_INCLASS_NO_PURE_DECLS \
+#define ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUFMODAudioComponent(); \
 	friend struct Z_Construct_UClass_UFMODAudioComponent_Statics; \
@@ -134,7 +134,7 @@ public: \
 	DECLARE_SERIALIZER(UFMODAudioComponent)
 
 
-#define jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_INCLASS \
+#define ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_INCLASS \
 private: \
 	static void StaticRegisterNativesUFMODAudioComponent(); \
 	friend struct Z_Construct_UClass_UFMODAudioComponent_Statics; \
@@ -143,7 +143,7 @@ public: \
 	DECLARE_SERIALIZER(UFMODAudioComponent)
 
 
-#define jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_STANDARD_CONSTRUCTORS \
+#define ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API UFMODAudioComponent(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UFMODAudioComponent) \
@@ -156,7 +156,7 @@ private: \
 public:
 
 
-#define jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_ENHANCED_CONSTRUCTORS \
+#define ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_ENHANCED_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API UFMODAudioComponent(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()) : Super(ObjectInitializer) { }; \
 private: \
@@ -169,28 +169,28 @@ public: \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UFMODAudioComponent)
 
 
-#define jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_PRIVATE_PROPERTY_OFFSET
-#define jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_136_PROLOG
-#define jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_GENERATED_BODY_LEGACY \
+#define ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_PRIVATE_PROPERTY_OFFSET
+#define ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_136_PROLOG
+#define ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_PRIVATE_PROPERTY_OFFSET \
-	jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_SPARSE_DATA \
-	jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_RPC_WRAPPERS \
-	jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_INCLASS \
-	jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_STANDARD_CONSTRUCTORS \
+	ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_PRIVATE_PROPERTY_OFFSET \
+	ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_SPARSE_DATA \
+	ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_RPC_WRAPPERS \
+	ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_INCLASS \
+	ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-#define jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_GENERATED_BODY \
+#define ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_PRIVATE_PROPERTY_OFFSET \
-	jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_SPARSE_DATA \
-	jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_RPC_WRAPPERS_NO_PURE_DECLS \
-	jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_INCLASS_NO_PURE_DECLS \
-	jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_ENHANCED_CONSTRUCTORS \
+	ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_PRIVATE_PROPERTY_OFFSET \
+	ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_SPARSE_DATA \
+	ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_RPC_WRAPPERS_NO_PURE_DECLS \
+	ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_INCLASS_NO_PURE_DECLS \
+	ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h_139_ENHANCED_CONSTRUCTORS \
 static_assert(false, "Unknown access specifier for GENERATED_BODY() macro in class FMODAudioComponent."); \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -198,7 +198,7 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 template<> FMODSTUDIO_API UClass* StaticClass<class UFMODAudioComponent>();
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID jWorkspace_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h
+#define CURRENT_FILE_ID ScytherTemp_Plugins_FMODStudio_Source_FMODStudio_Classes_FMODAudioComponent_h
 
 
 #define FOREACH_ENUM_EFMODEVENTPROPERTY(op) \
