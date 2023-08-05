@@ -48,9 +48,15 @@ pipeline {
 						echo "Doing tests"
 						
 						try{
-							bat "\"${UE_PATH}Engine\\Binaries\\Win64\\UE4Editor-Cmd.exe\" ${WORKSPACE}\\${PROJECT_NAME}.uproject -nosplash -unattended -nocontentbrowser -nosound -nopause -nullrhi -ExecCmds=\"Automation RunTests Slate.FastPath.InvalidationWidgetList.AddBuildRemove\" -testexit=\"Automation Test Queue Empty\" -log -log=RunTests.log -ReportOutputPath=\"${WORKSPACE}\\Saved\\AutomationTestResults\"" 
+							bat "\"${UE_PATH}Engine\\Binaries\\Win64\\UE4Editor-Cmd.exe\" ${WORKSPACE}\\${PROJECT_NAME}.uproject -nosplash -unattended -nocontentbrowser -nosound -nopause -nullrhi -ExecCmds=\"Automation RunTests Slate.FastPath.InvalidationWidgetList.AddBuildRemove\" -testexit=\"Automation Test Queue Empty\" -log -log=RunTests.log -ReportOutputPath=\"${WORKSPACE}\\Saved\\AutomationTestResults\\UnrealUnitTests\"" 
 						}catch( Exception e){
-							echo "${e.getMessage()}"
+							echo "Error while doing UE automatic UnitTest -> ${e.getMessage()}"
+						}
+
+						try{
+							bat "\"${UE_PATH}Engine\\Binaries\\Win64\\UE4Editor-Cmd.exe\" ${WORKSPACE}\\${PROJECT_NAME}.uproject -nosplash -unattended -nocontentbrowser -nosound -nopause -nullrhi -ExecCmds=\"Automation RunTests Project.UnitTest.HitAngleTest\" -testexit=\"Automation Test Queue Empty\" -log -log=RunTests.log -ReportOutputPath=\"${WORKSPACE}\\Saved\\AutomationTestResults\\ProjectUnitTests\"" 
+						}catch( Exception e){
+							echo "Error while doing Project automatic UnitTest -> ${e.getMessage()}"
 						}
 					}
 				}
