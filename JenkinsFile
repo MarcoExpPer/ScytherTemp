@@ -1,4 +1,12 @@
+import groovy.json.JsonSlurper
+
 def N_COMMITS = 0
+def ERROR_MSG = "";
+
+def ATEST_RESULT_STRING = new StringBuffer();
+def ALL_AT_PASSED = true;
+
+
 
 pipeline {
     agent {
@@ -20,6 +28,13 @@ pipeline {
 					}
 				}
 			}
+			post{
+				failure {
+					script{
+						errorMsg = "Check changes";
+					}
+				}
+			}
 		}
 		stage('Build and compile'){
 			steps{
@@ -27,7 +42,7 @@ pipeline {
 					if(N_COMMITS > 0){
 
 						echo "Building and compiling"
-
+						//*
 						build job: 'Discord-Notify', parameters: [
 							string(name: 'TITLE', value: "${PROJECT_NAME}"),
 							string(name: 'MESSAGE', value: "Building and Compiling"),
@@ -35,7 +50,7 @@ pipeline {
 							string(name: "DISCORD_HOOK", value: env.DISCORD_HOOK)
 						]
 
-						//*
+						
 						bat "\"${UE_PATH}\\Engine\\Binaries\\DotNET\\UnrealBuildTool.exe\" -projectfiles -project=\"${WORKSPACE}\\${PROJECT_NAME}.uproject\" -game -rocket -progress"
 						bat "\"${UE_PATH}/Engine/Binaries/DotNET/UnrealBuildTool.exe\" ${PROJECT_NAME} development Win64 -project=\"${WORKSPACE}\\${PROJECT_NAME}.uproject\" -rocket -editorrecompile -progress -noubtmakefiles -NoHotReloadFromIDE -2019"
 						
@@ -46,6 +61,13 @@ pipeline {
 					}
 				}
 			}
+			post{
+				failure {
+					script{
+						errorMsg = "Building and compiling failed";
+					}
+				}
+			}
 		}
 		stage('Automatic testing'){
 			steps{
@@ -53,6 +75,7 @@ pipeline {
 					if(N_COMMITS > 0){
 						echo "Doing tests"
 
+						//*
 						build job: 'Discord-Notify', parameters: [
 							string(name: 'TITLE', value: "${PROJECT_NAME}"),
 							string(name: 'MESSAGE', value: "Doing Tests"),
@@ -65,10 +88,50 @@ pipeline {
 						}catch( Exception e){
 							echo "Error while doing automatic testing UnitTest -> ${e.getMessage()}"
 						}
+						/**/
+					}
+				}
+			}
+			post{
+				failure {
+					script{
+						errorMsg = "Doing tests failed";
 					}
 				}
 			}
 		}
+		stage('Parse results'){
+			steps{
+				script{
+					if(N_COMMITS > 0){
+						echo "Parse results"	
+						ALL_AT_PASSED = true;
+
+						JsonSlurper jsonSlurper = new JsonSlurper()	
+						Map parsedJson = jsonSlurper.parse(new File("${WORKSPACE}\\Saved\\AutomationTestResults\\index.json"))
+
+						for(def test : parsedJson.tests) {
+							if(test.state == "Success"){
+								ATEST_RESULT_STRING.append(":white_check_mark: ${test.testDisplayName} -> ${test.state} \n")
+							}else{
+								ALL_AT_PASSED = false;
+
+								ATEST_RESULT_STRING.append(":X: ${test.testDisplayName} -> ${test.state} \n")
+								
+							}
+    					}
+					}
+				}
+			}
+			post{
+				failure {
+					script{
+						errorMsg = "Parse results failed";
+						}
+					}
+			}
+		}
+
 	}
 	post{
 		success{
@@ -76,12 +139,25 @@ pipeline {
 				if(N_COMMITS > 0){
 					echo "SUCCESS"
 
-					build job: 'Discord-Notify', parameters: [
-						string(name: 'TITLE', value: "${PROJECT_NAME}"),
-						string(name: 'MESSAGE', value: "SUCCESS"),
-						string(name: "RESULT", value: "SUCCESS"),
-						string(name: "DISCORD_HOOK", value: env.DISCORD_HOOK)
-					]
+					if(ALL_AT_PASSED){
+
+						build job: 'Discord-Notify', parameters: [
+							string(name: 'TITLE', value: "${PROJECT_NAME} SUCCESS"),
+							string(name: 'MESSAGE', value: "\n ${ATEST_RESULT_STRING}"),
+							string(name: "RESULT", value: "SUCCESS"),
+							string(name: "DISCORD_HOOK", value: env.DISCORD_HOOK)
+						]
+
+					}else{
+						echo "AT TEST FAILURE"
+
+						build job: 'Discord-Notify', parameters: [
+							string(name: 'TITLE', value: "${PROJECT_NAME} AT TEST FAILURE"),
+							string(name: 'MESSAGE', value: "\n ${ATEST_RESULT_STRING}"),
+							string(name: "RESULT", value: "FAILURE"),
+							string(name: "DISCORD_HOOK", value: env.DISCORD_HOOK)
+						]
+					}
 
 				}else{
 					echo "No changes"
@@ -94,8 +170,8 @@ pipeline {
 					echo "FAILURE"
 
 					build job: 'Discord-Notify', parameters: [
-						string(name: 'TITLE', value: "${PROJECT_NAME}"),
-						string(name: 'MESSAGE', value: "FAILURE"),
+						string(name: 'TITLE', value: "${PROJECT_NAME} ERROR"),
+						string(name: 'MESSAGE', value: "\n ${errorMsg}"),
 						string(name: "RESULT", value: "FAILURE"),
 						string(name: "DISCORD_HOOK", value: env.DISCORD_HOOK)
 					]
@@ -104,8 +180,8 @@ pipeline {
 					echo "FAILURE IN THE JENKINS PIPELINE"
 					
 					build job: 'Discord-Notify', parameters: [
-						string(name: 'TITLE', value: "${PROJECT_NAME}"),
-						string(name: 'MESSAGE', value: "FAILURE IN THE JENKINS PIPELINE"),
+						string(name: 'TITLE', value: "${PROJECT_NAME} ERROR"),
+						string(name: 'MESSAGE', value: "${errorMsg} \n - FAILURE IN THE JENKINS PIPELINE"),
 						string(name: "RESULT", value: "FAILURE"),
 						string(name: "DISCORD_HOOK", value: env.DISCORD_HOOK)
 					]
