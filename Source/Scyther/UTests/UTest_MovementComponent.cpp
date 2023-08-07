@@ -7,7 +7,7 @@
 
 #if WITH_DEV_AUTOMATION_TESTS
 
-IMPLEMENT_SIMPLE_AUTOMATION_TEST( FHitAngleTest, "Project.UnitTest.HitAngleTest", EAutomationTestFlags::ApplicationContextMask | EAutomationTestFlags::SmokeFilter )
+IMPLEMENT_SIMPLE_AUTOMATION_TEST( FHitAngleTest, "Project.UnitTests.HitAngleTest", EAutomationTestFlags::ApplicationContextMask | EAutomationTestFlags::SmokeFilter )
 
 
 bool FHitAngleTest::RunTest( const FString& Parameters )

@@ -54,10 +54,13 @@ pipeline {
 						bat "\"${UE_PATH}\\Engine\\Binaries\\DotNET\\UnrealBuildTool.exe\" -projectfiles -project=\"${WORKSPACE}\\${PROJECT_NAME}.uproject\" -game -rocket -progress"
 						bat "\"${UE_PATH}/Engine/Binaries/DotNET/UnrealBuildTool.exe\" ${PROJECT_NAME} development Win64 -project=\"${WORKSPACE}\\${PROJECT_NAME}.uproject\" -rocket -editorrecompile -progress -noubtmakefiles -NoHotReloadFromIDE -2019"
 						
-						bat "if not exist \"${WORKSPACE}/Builds/\" mkdir \"${WORKSPACE}/Builds\""
+						bat "if not exist \"${WORKSPACE}/Compiled_Builds/\" mkdir \"${WORKSPACE}/Compiled_Builds\""
 							
-						bat "\"${UE_PATH}\\Engine\\Build\\BatchFiles\\RunUAT.bat\" BuildCookRun -project=\"${WORKSPACE}\\${PROJECT_NAME}.uproject\" -noP4 -platform=Win64 -clientconfig=Development -cook -allmaps -build -stage %USE_PAK% -archive -archivedirectory=\"${WORKSPACE}/Builds\""
+						bat "\"${UE_PATH}\\Engine\\Build\\BatchFiles\\RunUAT.bat\" BuildCookRun -project=\"${WORKSPACE}\\${PROJECT_NAME}.uproject\" -noP4 -platform=Win64 -clientconfig=Development -cook -allmaps -build -stage %USE_PAK% -archive -archivedirectory=\"${WORKSPACE}/Compiled_Builds\""
 						/**/
+
+						bat "tar -cvzf ./workspace.tar.gz ./DerivedDataCache ./Intermediate ./Script ./Binaries"						
+						archiveArtifacts artifacts: 'workspace.tar.gz', fingerprint: true
 					}
 				}
 			}
@@ -69,28 +72,61 @@ pipeline {
 				}
 			}
 		}
-		stage('Automatic testing'){
-			steps{
-				script{
-					if(N_COMMITS > 0){
-						echo "Doing tests"
 
-						//*
-						build job: 'Discord-Notify', parameters: [
-							string(name: 'TITLE', value: "${PROJECT_NAME}"),
-							string(name: 'MESSAGE', value: "Doing Tests"),
-							string(name: "RESULT", value: "UNSTABLE"),
-							string(name: "DISCORD_HOOK", value: env.DISCORD_HOOK)
-						]
+		stage('Automatic testing') {
+			parallel {
+			stage('Send notify') {
+				steps {
+					script{
+						if(N_COMMITS > 0){
+							echo "Doing tests"
 
-						try{
-							bat "\"${UE_PATH}Engine\\Binaries\\Win64\\UE4Editor-Cmd.exe\" ${WORKSPACE}\\${PROJECT_NAME}.uproject -nosplash -unattended -nocontentbrowser -nosound -nopause ${SHOW_EDITOR == true ? "" : "-nullrhi"} -ExecCmds=\"Automation RunTests Project\" -testexit=\"Automation Test Queue Empty\" -log -log=RunTests.log -ReportOutputPath=\"${WORKSPACE}\\Saved\\AutomationTestResults\"" 
-						}catch( Exception e){
-							echo "Error while doing automatic testing UnitTest -> ${e.getMessage()}"
+							build job: 'Discord-Notify', parameters: [
+								string(name: 'TITLE', value: "${PROJECT_NAME}"),
+								string(name: 'MESSAGE', value: "Doing Tests"),
+								string(name: "RESULT", value: "UNSTABLE"),
+								string(name: "DISCORD_HOOK", value: env.DISCORD_HOOK)
+							]
 						}
-						/**/
 					}
 				}
+			}
+			stage('Unit Test') {
+				steps {
+					script{
+						if(N_COMMITS > 0){
+							//*
+							try{
+								bat "\"${UE_PATH}Engine\\Binaries\\Win64\\UE4Editor-Cmd.exe\" ${WORKSPACE}\\${PROJECT_NAME}.uproject -nosplash -unattended -nocontentbrowser -nosound -nopause ${SHOW_EDITOR == true ? "" : "-nullrhi"} -ExecCmds=\"Automation RunTests Project.UnitTests\" -testexit=\"Automation Test Queue Empty\" -log -log=RunTests.log -ReportOutputPath=\"${WORKSPACE}\\Saved\\AutomationTestResults\\UnitTests\"" 
+							}catch( Exception e){
+								echo "Error while doing automatic testing UnitTest -> ${e.getMessage()}"
+							}
+							/**/
+						}
+					}
+				}
+			}
+			stage('Functional test') {
+				agent { node {
+					label "Laptop" 
+					customWorkspace "C:\\JenkinsWorkspaces\\${PROJECT_NAME}"}
+				}
+				steps {
+					script{
+						if(N_COMMITS > 0){
+							
+							copyArtifacts filter: 'workspace.tar.gz', fingerprintArtifacts: true, projectName: env.JOB_NAME, selector: specific(env.BUILD_NUMBER)
+                			bat "tar -xvzf workspace.tar.gz"
+
+							try{
+								bat "\"${UE_PATH}Engine\\Binaries\\Win64\\UE4Editor-Cmd.exe\" ${WORKSPACE}\\${PROJECT_NAME}.uproject -nosplash -unattended -nocontentbrowser -nosound -nopause ${SHOW_EDITOR == true ? "" : "-nullrhi"} -ExecCmds=\"Automation RunTests Project.Functional\" -testexit=\"Automation Test Queue Empty\" -log -log=RunTests.log -ReportOutputPath=\"${WORKSPACE}\\Saved\\AutomationTestResults\\FunctionalTests\"" 
+							}catch( Exception e){
+								echo "Error while doing automatic testing Functional tests -> ${e.getMessage()}"
+							}
+						}
+					}
+				}
+			}
 			}
 			post{
 				failure {
@@ -104,6 +140,7 @@ pipeline {
 			steps{
 				script{
 					if(N_COMMITS > 0){
+						/*
 						echo "Parse results"	
 						ALL_AT_PASSED = true;
 
@@ -120,6 +157,8 @@ pipeline {
 								
 							}
     					}
+
+						/**/
 					}
 				}
 			}
