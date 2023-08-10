@@ -1,13 +1,6 @@
 import groovy.json.JsonSlurper
 
-def N_COMMITS = 0
-def ERROR_MSG = "";
-
 def ATEST_RESULT_STRING = new StringBuffer();
-def ALL_AT_PASSED = true;
-
-def commitURL;
-def lastSuccesfullCommit; 
 
 pipeline {
     agent {
@@ -15,275 +8,250 @@ pipeline {
 			label 'master'
 			customWorkspace "C:\\JenkinsWorkspaces\\${PROJECT_NAME}"
     }}
+	environment {
+        N_COMMITS = 0
+		ERROR_MSG = ''
+
+		ALL_AT_PASSED = true
+		CURRENT_COMMIT_URL = ''
+		LAST_SUCCESFULL_COMMIT_URL = ''
+
+    }
 	stages {
-		stage('Check changes') { 
-			steps {
+    stage('CHECK CHANGES'){
+        steps{
+            script{
+				N_COMMITS = currentBuild.changeSets.size(); 
+
+                if(params.FORCE_BUILD == true){
+                    N_COMMITS = 1;
+                    echo 'Forcing build'
+                }
+
+                def userURL = env.GIT_URL.substring(0, env.GIT_URL.length() - 4)
+
+                LAST_SUCCESFULL_COMMIT_URL = "${userURL}/commit/${GIT_PREVIOUS_SUCCESSFUL_COMMIT}"
+                CURRENT_COMMIT_URL = "${userURL}/commit/${GIT_COMMIT}"
+            }
+        }
+        post{
+            failure {
+                script{
+                    ERROR_MSG = 'Check changes failed';
+                }
+            }
+        }
+    }
+    stage('Build'){
+        when {
+            expression {
+                N_COMMITS > 0
+            }
+        }
+        steps{
+            script{
+                //*
+                build job: 'Discord-Notify', parameters: [
+                    string(name: 'TITLE', value: params.PROJECT_NAME),
+                    string(name: 'MESSAGE', value: 'Building and Compiling'),
+                    string(name: 'RESULT', value: 'UNSTABLE'),
+                    string(name: 'DISCORD_HOOK', value: env.DISCORD_HOOK)
+                ]
+
+                
+                bat "\"${UE_PATH}\\Engine\\Binaries\\DotNET\\UnrealBuildTool.exe\" -projectfiles -project=\"${WORKSPACE}\\${PROJECT_NAME}.uproject\" -game -rocket -progress"
+                bat "\"${UE_PATH}/Engine/Binaries/DotNET/UnrealBuildTool.exe\" ${PROJECT_NAME} development Win64 -project=\"${WORKSPACE}\\${PROJECT_NAME}.uproject\" -rocket -editorrecompile -progress -noubtmakefiles -NoHotReloadFromIDE -2019"
+                
+                bat "if not exist \"${WORKSPACE}/Compiled_Builds/\" mkdir \"${WORKSPACE}/Compiled_Builds\""
+                    
+                bat "\"${UE_PATH}\\Engine\\Build\\BatchFiles\\RunUAT.bat\" BuildCookRun -project=\"${WORKSPACE}\\${PROJECT_NAME}.uproject\" -noP4 -platform=Win64 -clientconfig=Development -cook -allmaps -build -stage %USE_PAK% -archive -archivedirectory=\"${WORKSPACE}/Compiled_Builds\""
+                
+                /**/
+            }
+        }
+		post{
+			success{
 				script{
-					N_COMMITS = currentBuild.changeSets.size(); 
-					echo "Amount of commits -> ${N_COMMITS}"
-					echo "${WORKSPACE}"
-					
-					if(params.FORCE_BUILD == true){
-						N_COMMITS = 1;
-						echo "Forcing build"
-					}
-
-					def gitURL = "${GIT_URL}"
-					def userURL = gitURL.substring(0, gitURL.length() - 4)
-
-					lastSuccesfullCommit = "${userURL}/commit/${GIT_PREVIOUS_SUCCESSFUL_COMMIT}"
-					commitURL = "${userURL}/commit/${GIT_COMMIT}"
+					//Save compiled game files to send to slaves in order to parallel the testing
+					bat 'tar -cvzf ./workspace.tar.gz ./DerivedDataCache ./Intermediate ./Script ./Binaries'						
+					archiveArtifacts artifacts: 'workspace.tar.gz', fingerprint: true
 				}
 			}
-			post{
-				failure {
-					script{
-						errorMsg = "Check changes";
-					}
-				}
-			}
-		}
-		stage('Build, Compile and Zip'){
-			when {
-                expression {
-                    N_COMMITS > 0
-                }
-            }
-			stages{
-			stage("Build and compile"){
-				steps{
-					script{
-						echo "Building and compiling"
-						/*
-						build job: 'Discord-Notify', parameters: [
-							string(name: 'TITLE', value: "${PROJECT_NAME}"),
-							string(name: 'MESSAGE', value: "Building and Compiling"),
-							string(name: "RESULT", value: "UNSTABLE"),
-							string(name: "DISCORD_HOOK", value: env.DISCORD_HOOK)
-						]
-
-						
-						bat "\"${UE_PATH}\\Engine\\Binaries\\DotNET\\UnrealBuildTool.exe\" -projectfiles -project=\"${WORKSPACE}\\${PROJECT_NAME}.uproject\" -game -rocket -progress"
-						bat "\"${UE_PATH}/Engine/Binaries/DotNET/UnrealBuildTool.exe\" ${PROJECT_NAME} development Win64 -project=\"${WORKSPACE}\\${PROJECT_NAME}.uproject\" -rocket -editorrecompile -progress -noubtmakefiles -NoHotReloadFromIDE -2019"
-						
-						bat "if not exist \"${WORKSPACE}/Compiled_Builds/\" mkdir \"${WORKSPACE}/Compiled_Builds\""
-							
-						bat "\"${UE_PATH}\\Engine\\Build\\BatchFiles\\RunUAT.bat\" BuildCookRun -project=\"${WORKSPACE}\\${PROJECT_NAME}.uproject\" -noP4 -platform=Win64 -clientconfig=Development -cook -allmaps -build -stage %USE_PAK% -archive -archivedirectory=\"${WORKSPACE}/Compiled_Builds\""
-						
-						/**/
-					}
-				}
-				post{
-				failure {
-					script{
-						errorMsg = "Building and compiling failed";
-					}
-				}
-			}
-			}
-			stage("Zipping and tarring the game"){
-				steps{
-					script{
-							echo "Zipping and tarring the game"
-							//*
-							bat "tar -cvzf ./workspace.tar.gz ./DerivedDataCache ./Intermediate ./Script ./Binaries"						
-							archiveArtifacts artifacts: 'workspace.tar.gz', fingerprint: true
-							
-
-							bat "tar -a -c -f ${PROJECT_NAME}_windows.zip ./Compiled_Builds"
-							archiveArtifacts artifacts: "${PROJECT_NAME}_windows.zip", fingerprint: true
-							
-							/**/
-					}
-				}
-				post{
-				failure {
-					script{
-						errorMsg = "Zipping and tarring the game failed";
-					}
-				}
-			}
-			}
-			}
-		}
-		stage('Automatic testing') {
-			when {
-                expression {
-                    N_COMMITS > 0
-                }
-            }
-			parallel {
-			stage('Send notify') {
-				steps {
-					script{				
-						echo "Doing tests"
-
-						build job: 'Discord-Notify', parameters: [
-							string(name: 'TITLE', value: "${PROJECT_NAME}"),
-							string(name: 'MESSAGE', value: "Doing Tests"),
-							string(name: "RESULT", value: "UNSTABLE"),
-							string(name: "DISCORD_HOOK", value: env.DISCORD_HOOK)
-						]
-					}
-				}
-			}
-			stage('Unit Test') {
-				steps {
-					script{
-						echo "unit test"
-						/*
-						try{
-							bat "\"${UE_PATH}Engine\\Binaries\\Win64\\UE4Editor-Cmd.exe\" ${WORKSPACE}\\${PROJECT_NAME}.uproject -nosplash -unattended -nocontentbrowser -nosound -nopause ${SHOW_EDITOR == true ? "" : "-nullrhi"} -ExecCmds=\"Automation RunTests Project.UnitTests\" -testexit=\"Automation Test Queue Empty\" -log -log=RunTests.log -ReportOutputPath=\"${WORKSPACE}\\Saved\\AutomationTestResults\\UnitTests\"" 
-						}catch( Exception e){
-							echo "Error while doing automatic testing UnitTest -> ${e.getMessage()}"
-						}
-						/**/
-					}
-				}
-			}
-			stage('Functional test') {
-				agent { node {
-					label "Laptop" 
-					customWorkspace "C:\\JenkinsWorkspaces\\${PROJECT_NAME}"}
-				}
-				steps {
-					script{	
-						echo "fun test"				
-						/*
-						copyArtifacts filter: 'workspace.tar.gz', fingerprintArtifacts: true, projectName: env.JOB_NAME, selector: specific(env.BUILD_NUMBER)
-						bat "tar -xvzf workspace.tar.gz"
-
-						try{
-							bat "\"${UE_PATH}Engine\\Binaries\\Win64\\UE4Editor-Cmd.exe\" ${WORKSPACE}\\${PROJECT_NAME}.uproject -nosplash -unattended -nocontentbrowser -nosound -nopause ${SHOW_EDITOR == true ? "" : "-nullrhi"} -ExecCmds=\"Automation RunTests Project.Functional\" -testexit=\"Automation Test Queue Empty\" -log -log=RunTests.log -ReportOutputPath=\"${WORKSPACE}\\Saved\\AutomationTestResults\\FunctionalTests\"" 
-						}catch( Exception e){
-							echo "Error while doing automatic testing Functional tests -> ${e.getMessage()}"
-						}
-
-						archiveArtifacts artifacts: "Saved\\AutomationTestResults\\FunctionalTests\\index.json", fingerprint: true
-						/**/
-					}
-				}
-			}
-			}
-			post{
-				failure {
-					script{
-						errorMsg = "Doing tests failed";
-					}
-				}
-			}
-		}
-		stage('Parse results'){
-			when {
-                expression {
-                    N_COMMITS > 0
-                }
-            }
-			steps{
+			failure {
 				script{
-					echo "Parse results"
-					/*
+					ERROR_MSG = 'Build failed';
+				}
+			}
+    	}
+    }
+    stage('TEST'){
+        when {
+            expression {
+                N_COMMITS > 0
+            }
+        }
+        parallel {
+            stage('Unit test') {
+                steps{
+                    script{
+                        build job: 'Discord-Notify', parameters: [
+                            string(name: 'TITLE', value: params.PROJECT_NAME),
+                            string(name: 'MESSAGE', value: 'Doing Tests'),
+                            string(name: 'RESULT', value: 'UNSTABLE'),
+                            string(name: 'DISCORD_HOOK', value: env.DISCORD_HOOK)
+                        ]
+
+                        //*
+                        try{
+                            bat "\"${UE_PATH}Engine\\Binaries\\Win64\\UE4Editor-Cmd.exe\" ${WORKSPACE}\\${PROJECT_NAME}.uproject -nosplash -unattended -nocontentbrowser -nosound -nopause ${SHOW_EDITOR == true ? "" : "-nullrhi"} -ExecCmds=\"Automation RunTests Project.UnitTests\" -testexit=\"Automation Test Queue Empty\" -log -log=RunTests.log -ReportOutputPath=\"${WORKSPACE}\\Saved\\AutomationTestResults\\UnitTests\"" 
+                        }catch( Exception e){
+                            echo "Error while doing automatic testing UnitTest -> ${e.getMessage()}"
+                        }
+                        /**/
+                    }
+                }
+            }
+            stage('Functional test') {
+                agent { 
+                    node {
+				        label 'Laptop' 
+				        customWorkspace "C:\\JenkinsWorkspaces\\${PROJECT_NAME}"
+                }}
+                steps{
+                    script{
+                        copyArtifacts filter: 'workspace.tar.gz', fingerprintArtifacts: true, projectName: env.JOB_NAME, selector: specific(env.BUILD_NUMBER)
+                        bat 'tar -xvzf workspace.tar.gz'
+
+                        try{
+                            bat "\"${UE_PATH}Engine\\Binaries\\Win64\\UE4Editor-Cmd.exe\" ${WORKSPACE}\\${PROJECT_NAME}.uproject -nosplash -unattended -nocontentbrowser -nosound -nopause ${SHOW_EDITOR == true ? "" : "-nullrhi"} -ExecCmds=\"Automation RunTests Project.Functional\" -testexit=\"Automation Test Queue Empty\" -log -log=RunTests.log -ReportOutputPath=\"${WORKSPACE}\\Saved\\AutomationTestResults\\FunctionalTests\"" 
+                        }catch( Exception e){
+                            echo "Error while doing automatic testing Functional tests -> ${e.getMessage()}"
+                        }
+
+                        archiveArtifacts artifacts: 'Saved\\AutomationTestResults\\FunctionalTests\\index.json', fingerprint: true    
+                    }
+                }
+            }
+        }
+		post{
+			success{
+				script{
+					//Copy to main workspace the fuctional test results
 					copyArtifacts filter: 'Saved\\AutomationTestResults\\FunctionalTests\\index.json', fingerprintArtifacts: true, projectName: env.JOB_NAME, selector: specific(env.BUILD_NUMBER)
-
-					
-					echo "Parse results"	
-					ALL_AT_PASSED = true;
-
-					//Parse functional tests
-					JsonSlurper jsonSlurper = new JsonSlurper()	
-					Map parsedJson = jsonSlurper.parse(new File("${WORKSPACE}\\Saved\\AutomationTestResults\\FunctionalTests\index.json"))
-
-					for(def test : parsedJson.tests) {
-						if(test.state == "Success"){
-							ATEST_RESULT_STRING.append(":white_check_mark: ${test.testDisplayName} -> ${test.state} \n")
-						}else{
-							ALL_AT_PASSED = false;
-
-							ATEST_RESULT_STRING.append(":X: ${test.testDisplayName} -> ${test.state} \n")
-							
-						}
-					}
-
-					//Parse unit tests
-					Map parsedJson = jsonSlurper.parse(new File("${WORKSPACE}\\Saved\\AutomationTestResults\\UnitTests\index.json"))
-					for(def test : parsedJson.tests) {
-						if(test.state == "Success"){
-							ATEST_RESULT_STRING.append(":white_check_mark: ${test.testDisplayName} -> ${test.state} \n")
-						}else{
-							ALL_AT_PASSED = false;
-
-							ATEST_RESULT_STRING.append(":X: ${test.testDisplayName} -> ${test.state} \n")
-							
-						}
-					}
-					/**/
+					//TODO CLEAR FUNNTIONAL TESTS ARTIFACTS AND workspace.tar.gz artifact and file
 				}
 			}
-			post{
-				failure {
-					script{
-						errorMsg = "Parse results failed";
-						}
-					}
+			failure {
+				script{
+					ERROR_MSG = 'Tests failed';
+				}
 			}
-		}
+    	}
+    }
+    stage('OBTAIN RESULTS'){
+        when {
+            expression {
+                N_COMMITS > 0
+            }
+        }
+        steps{
+            script{
+                JsonSlurper jsonSlurper = new JsonSlurper()	
+                Map parsedJson = jsonSlurper.parse(new File("${WORKSPACE}\\Saved\\AutomationTestResults\\FunctionalTests\\index.json"))
 
+                ATEST_RESULT_STRING.append('**Functional Tests** \n\n')
+
+                for(def test : parsedJson.tests) {
+                    if(test.state == 'Success'){
+                        ATEST_RESULT_STRING.append(":white_check_mark: ${test.testDisplayName} -> ${test.state} \n")
+                    }else{
+                        ALL_AT_PASSED = false;
+
+                        ATEST_RESULT_STRING.append(":X: ${test.testDisplayName} -> ${test.state} \n")
+                        
+                    }
+                }
+
+                //Parse unit tests
+                parsedJson = jsonSlurper.parse(new File("${WORKSPACE}\\Saved\\AutomationTestResults\\UnitTests\\index.json"))
+               
+                ATEST_RESULT_STRING.append('\n**Simple Unit Tests** \n\n')
+                
+                for(def test : parsedJson.tests) {
+                    if(test.state == 'Success'){
+                        ATEST_RESULT_STRING.append(":white_check_mark: ${test.testDisplayName} -> ${test.state} \n")
+                    }else{
+                        ALL_AT_PASSED = false;
+                        ATEST_RESULT_STRING.append(":X: ${test.testDisplayName} -> ${test.state} \n")
+                    }
+                }
+            }
+        }
+		post{
+			failure {
+				script{
+					ERROR_MSG = 'Obtain results failed';
+				}
+			}
+    	}
+    }
+    
 	}
-	post{
-		success{
+    post{
+        success{
+            script{
+                if(N_COMMITS > 0){
+                    if(ALL_AT_PASSED){  
+                        
+                        //Save the full game ready to play in a zip in order to send it trought discord
+                        bat "tar -a -c -f ${PROJECT_NAME}_windows.zip ./Compiled_Builds"
+                        archiveArtifacts artifacts: "${PROJECT_NAME}_windows.zip", fingerprint: true
+
+                        build job: 'Discord-Notify', parameters: [
+                            string(name: 'TITLE', value: "${PROJECT_NAME} SUCCESS"),
+                            string(name: 'MESSAGE', value: "Commit: \"${CURRENT_COMMIT_URL}\" \n\nTESTS: ${ATEST_RESULT_STRING}"),
+                            string(name: 'RESULT', value: 'SUCCESS'),
+                            string(name: 'DISCORD_HOOK', value: env.DISCORD_HOOK),
+                            string(name: 'FILE_NAME', value: "${PROJECT_NAME}_windows.zip")
+                        ]
+
+                        //TODO REMOVE THE ARTIFACT AND THE FILE
+
+                    }else{
+                        echo "AT TEST FAILURE"
+
+                        build job: 'Discord-Notify', parameters: [
+                            string(name: 'TITLE', value: "${PROJECT_NAME} AT TEST FAILURE"),
+                            string(name: 'MESSAGE', value: "Failure between the last succesfull commit\n${LAST_SUCCESFULL_COMMIT_URL} \nand the commit \"${CURRENT_COMMIT_URL}\"\n\n${ATEST_RESULT_STRING}"),
+                            string(name: 'RESULT', value: 'FAILURE'),
+                            string(name: 'DISCORD_HOOK', value: env.DISCORD_HOOK)
+                        ]
+                    }
+
+                }else{
+                    echo "No changes"
+                }
+            } 
+        }
+        failure {
 			script{
 				if(N_COMMITS > 0){
-					echo "SUCCESS"
-
-					if(ALL_AT_PASSED){
-							
-						build job: 'Discord-Notify', parameters: [
-							string(name: 'TITLE', value: "${PROJECT_NAME} SUCCESS"),
-							string(name: 'MESSAGE', value: "Commit: \"${commitURL}\" \n\n\n${ATEST_RESULT_STRING}"),
-							string(name: "RESULT", value: "SUCCESS"),
-							string(name: "DISCORD_HOOK", value: env.DISCORD_HOOK),
-							string(name: "FILE_NAME", value: "${PROJECT_NAME}_windows.zip")
-						]
-
-					}else{
-						echo "AT TEST FAILURE"
-
-						build job: 'Discord-Notify', parameters: [
-							string(name: 'TITLE', value: "${PROJECT_NAME} AT TEST FAILURE"),
-							string(name: 'MESSAGE', value: "Failure between the last succesfull commit\n${lastSuccesfullCommit} \nand the commit \"${commitURL}\"\n\n\n${ATEST_RESULT_STRING}"),
-							string(name: "RESULT", value: "FAILURE"),
-							string(name: "DISCORD_HOOK", value: env.DISCORD_HOOK)
-						]
-					}
-
-				}else{
-					echo "No changes"
-				}
-			}
-		}
-		failure {
-			script{
-				if(N_COMMITS > 0){
-					echo "FAILURE"
-
 					build job: 'Discord-Notify', parameters: [
 						string(name: 'TITLE', value: "${PROJECT_NAME} ERROR"),
-						string(name: 'MESSAGE', value: "Failure between the last succesfull commit\n${lastSuccesfullCommit}\nand the commit \"${commitURL}\"\n\n\n${errorMsg}"),
-						string(name: "RESULT", value: "FAILURE"),
-						string(name: "DISCORD_HOOK", value: env.DISCORD_HOOK)
+						string(name: 'MESSAGE', value: "Failure between the last succesfull commit\n${LAST_SUCCESFULL_COMMIT_URL}\nand the commit \"${CURRENT_COMMIT_URL}\"\n\n${ERROR_MSG}"),
+						string(name: 'RESULT', value: 'FAILURE'),
+						string(name: 'DISCORD_HOOK', value: env.DISCORD_HOOK)
 					]
 
 				}else{
-					echo "FAILURE IN THE JENKINS PIPELINE"
-					
 					build job: 'Discord-Notify', parameters: [
 						string(name: 'TITLE', value: "${PROJECT_NAME} ERROR"),
-						string(name: 'MESSAGE', value: "${errorMsg} \n - FAILURE IN THE JENKINS PIPELINE"),
-						string(name: "RESULT", value: "FAILURE"),
-						string(name: "DISCORD_HOOK", value: env.DISCORD_HOOK)
+						string(name: 'MESSAGE', value: "${ERROR_MSG} \n - FAILURE IN THE JENKINS PIPELINE"),
+						string(name: 'RESULT', value: 'FAILURE'),
+						string(name: 'DISCORD_HOOK', value: env.DISCORD_HOOK)
 					]
 				}
 			}
 		}
-	}
+    }
 }
