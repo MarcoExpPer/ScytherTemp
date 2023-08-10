@@ -6,7 +6,8 @@ def ERROR_MSG = "";
 def ATEST_RESULT_STRING = new StringBuffer();
 def ALL_AT_PASSED = true;
 
-
+def commitURL;
+def lastSuccesfullCommit; 
 
 pipeline {
     agent {
@@ -26,6 +27,17 @@ pipeline {
 						N_COMMITS = 1;
 						echo "Forcing build"
 					}
+
+					def gitURL = "${GIT_URL}"
+					def userURL = gitURL.substring(0, gitURL.length() - 4)
+
+					echo "${userURL}"
+
+					lastSuccesfullCommit = "${userURL}/commit/${GIT_PREVIOUS_SUCCESSFUL_COMMIT}"
+					commitURL = "${userURL}/commit/${GIT_COMMIT}"
+
+
+					echo "${commitURL}"
 				}
 			}
 			post{
@@ -42,7 +54,7 @@ pipeline {
 					if(N_COMMITS > 0){
 
 						echo "Building and compiling"
-						//*
+						/*
 						build job: 'Discord-Notify', parameters: [
 							string(name: 'TITLE', value: "${PROJECT_NAME}"),
 							string(name: 'MESSAGE', value: "Building and Compiling"),
@@ -57,10 +69,14 @@ pipeline {
 						bat "if not exist \"${WORKSPACE}/Compiled_Builds/\" mkdir \"${WORKSPACE}/Compiled_Builds\""
 							
 						bat "\"${UE_PATH}\\Engine\\Build\\BatchFiles\\RunUAT.bat\" BuildCookRun -project=\"${WORKSPACE}\\${PROJECT_NAME}.uproject\" -noP4 -platform=Win64 -clientconfig=Development -cook -allmaps -build -stage %USE_PAK% -archive -archivedirectory=\"${WORKSPACE}/Compiled_Builds\""
-						/**/
+						
 
 						bat "tar -cvzf ./workspace.tar.gz ./DerivedDataCache ./Intermediate ./Script ./Binaries"						
 						archiveArtifacts artifacts: 'workspace.tar.gz', fingerprint: true
+						/**/
+
+						bat "tar -a -c -f ${PROJECT_NAME}_windows.zip ${WORKSPACE}\\Compiled_Builds\\"
+						archiveArtifacts artifacts: '${PROJECT_NAME}_windows.zip', fingerprint: true
 					}
 				}
 			}
@@ -95,7 +111,7 @@ pipeline {
 				steps {
 					script{
 						if(N_COMMITS > 0){
-							//*
+							/*
 							try{
 								bat "\"${UE_PATH}Engine\\Binaries\\Win64\\UE4Editor-Cmd.exe\" ${WORKSPACE}\\${PROJECT_NAME}.uproject -nosplash -unattended -nocontentbrowser -nosound -nopause ${SHOW_EDITOR == true ? "" : "-nullrhi"} -ExecCmds=\"Automation RunTests Project.UnitTests\" -testexit=\"Automation Test Queue Empty\" -log -log=RunTests.log -ReportOutputPath=\"${WORKSPACE}\\Saved\\AutomationTestResults\\UnitTests\"" 
 							}catch( Exception e){
@@ -114,7 +130,7 @@ pipeline {
 				steps {
 					script{
 						if(N_COMMITS > 0){
-							
+							/*
 							copyArtifacts filter: 'workspace.tar.gz', fingerprintArtifacts: true, projectName: env.JOB_NAME, selector: specific(env.BUILD_NUMBER)
                 			bat "tar -xvzf workspace.tar.gz"
 
@@ -123,6 +139,9 @@ pipeline {
 							}catch( Exception e){
 								echo "Error while doing automatic testing Functional tests -> ${e.getMessage()}"
 							}
+
+							archiveArtifacts artifacts: "Saved\\AutomationTestResults\\FunctionalTests\\index.json", fingerprint: true
+							/**/
 						}
 					}
 				}
@@ -140,12 +159,17 @@ pipeline {
 			steps{
 				script{
 					if(N_COMMITS > 0){
+
 						/*
+						copyArtifacts filter: 'Saved\\AutomationTestResults\\FunctionalTests\\index.json', fingerprintArtifacts: true, projectName: env.JOB_NAME, selector: specific(env.BUILD_NUMBER)
+
+						
 						echo "Parse results"	
 						ALL_AT_PASSED = true;
 
+						//Parse functional tests
 						JsonSlurper jsonSlurper = new JsonSlurper()	
-						Map parsedJson = jsonSlurper.parse(new File("${WORKSPACE}\\Saved\\AutomationTestResults\\index.json"))
+						Map parsedJson = jsonSlurper.parse(new File("${WORKSPACE}\\Saved\\AutomationTestResults\\FunctionalTests\index.json"))
 
 						for(def test : parsedJson.tests) {
 							if(test.state == "Success"){
@@ -158,7 +182,21 @@ pipeline {
 							}
     					}
 
+						//Parse unit tests
+						Map parsedJson = jsonSlurper.parse(new File("${WORKSPACE}\\Saved\\AutomationTestResults\\UnitTests\index.json"))
+						for(def test : parsedJson.tests) {
+							if(test.state == "Success"){
+								ATEST_RESULT_STRING.append(":white_check_mark: ${test.testDisplayName} -> ${test.state} \n")
+							}else{
+								ALL_AT_PASSED = false;
+
+								ATEST_RESULT_STRING.append(":X: ${test.testDisplayName} -> ${test.state} \n")
+								
+							}
+    					}
 						/**/
+
+						
 					}
 				}
 			}
@@ -179,10 +217,10 @@ pipeline {
 					echo "SUCCESS"
 
 					if(ALL_AT_PASSED){
-
+							
 						build job: 'Discord-Notify', parameters: [
 							string(name: 'TITLE', value: "${PROJECT_NAME} SUCCESS"),
-							string(name: 'MESSAGE', value: "\n ${ATEST_RESULT_STRING}"),
+							string(name: 'MESSAGE', value: "Commit: \"${commitULR}\" \n\n\n${ATEST_RESULT_STRING}"),
 							string(name: "RESULT", value: "SUCCESS"),
 							string(name: "DISCORD_HOOK", value: env.DISCORD_HOOK)
 						]
@@ -192,7 +230,7 @@ pipeline {
 
 						build job: 'Discord-Notify', parameters: [
 							string(name: 'TITLE', value: "${PROJECT_NAME} AT TEST FAILURE"),
-							string(name: 'MESSAGE', value: "\n ${ATEST_RESULT_STRING}"),
+							string(name: 'MESSAGE', value: "Failure between the last succesfull commit\n${lastSuccesfullCommit} \nand the commit \"${commitURL}\"\n\n\n${ATEST_RESULT_STRING}"),
 							string(name: "RESULT", value: "FAILURE"),
 							string(name: "DISCORD_HOOK", value: env.DISCORD_HOOK)
 						]
@@ -210,7 +248,7 @@ pipeline {
 
 					build job: 'Discord-Notify', parameters: [
 						string(name: 'TITLE', value: "${PROJECT_NAME} ERROR"),
-						string(name: 'MESSAGE', value: "\n ${errorMsg}"),
+						string(name: 'MESSAGE', value: "Failure between the last succesfull commit\n${lastSuccesfullCommit}\nand the commit \"${commitURL}\"\n\n\n${errorMsg}"),
 						string(name: "RESULT", value: "FAILURE"),
 						string(name: "DISCORD_HOOK", value: env.DISCORD_HOOK)
 					]
