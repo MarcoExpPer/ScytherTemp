@@ -64,11 +64,6 @@ void UHealthComponent::changeHealth( float healthOffset, DamageModes type, bool 
 	{
 		healthChangedEvent.Broadcast( oldHp, currentHp, type );
 	}
-
-#if WITH_EDITOR 
-	UE_LOG( LogTemp, Warning, TEXT( "Entidad recibe %f cambio de vida. Ahora tiene %f vida" ), healthOffset, currentHp );
-#endif
-
 }
 
 void UHealthComponent::receiveDamage( float damage, DamageModes type, bool sendEvent)

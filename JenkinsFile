@@ -167,7 +167,7 @@ pipeline {
                     }else{
                         ALL_AT_PASSED = false;
 
-                        ATEST_RESULT_STRING.append(":X: ${test.testDisplayName} -> ${test.state} \n")
+                        ATEST_RESULT_STRING.append(":x: ${test.testDisplayName} -> ${test.state} \n")
                         
                     }
                 }
@@ -182,7 +182,7 @@ pipeline {
                         ATEST_RESULT_STRING.append(":white_check_mark: ${test.testDisplayName} -> ${test.state} \n")
                     }else{
                         ALL_AT_PASSED = false;
-                        ATEST_RESULT_STRING.append(":X: ${test.testDisplayName} -> ${test.state} \n")
+                        ATEST_RESULT_STRING.append(":x: ${test.testDisplayName} -> ${test.state} \n")
                     }
                 }
             }
@@ -222,7 +222,7 @@ pipeline {
 
                         build job: 'Discord-Notify', parameters: [
                             string(name: 'TITLE', value: "${PROJECT_NAME} AT TEST FAILURE"),
-                            string(name: 'MESSAGE', value: "Failure between the last succesfull commit\n${LAST_SUCCESFULL_COMMIT_URL} \nand the commit \"${CURRENT_COMMIT_URL}\"\n\n${ATEST_RESULT_STRING}"),
+                            string(name: 'MESSAGE', value: "Failure between the last succesfull commit\n${LAST_SUCCESFULL_COMMIT_URL} \nand the commit ${CURRENT_COMMIT_URL}\"\n\n${ATEST_RESULT_STRING}"),
                             string(name: 'RESULT', value: 'FAILURE'),
                             string(name: 'DISCORD_HOOK', value: env.DISCORD_HOOK)
                         ]
@@ -238,7 +238,7 @@ pipeline {
 				if(N_COMMITS > 0){
 					build job: 'Discord-Notify', parameters: [
 						string(name: 'TITLE', value: "${PROJECT_NAME} ERROR"),
-						string(name: 'MESSAGE', value: "Failure between the last succesfull commit\n${LAST_SUCCESFULL_COMMIT_URL}\nand the commit \"${CURRENT_COMMIT_URL}\"\n\n${ERROR_MSG}"),
+						string(name: 'MESSAGE', value: "Failure between the last succesfull commit\n${LAST_SUCCESFULL_COMMIT_URL}\nand the commit ${CURRENT_COMMIT_URL}\"\n\n${ERROR_MSG}"),
 						string(name: 'RESULT', value: 'FAILURE'),
 						string(name: 'DISCORD_HOOK', value: env.DISCORD_HOOK)
 					]
