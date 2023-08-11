@@ -12,7 +12,6 @@ void AScytherGameModeBase::BeginPlay()
 	Super::BeginPlay();
 
 	FActorSpawnParameters spawn;
-	manaPool = GetWorld()->SpawnActor<AManadropPool>( spawn );
 	respawnMan = GetWorld()->SpawnActor<ARespawnManager>( spawn );
 
 	respawnMan->SpawnPoints.Add( UGameplayStatics::GetPlayerPawn( GetWorld(), 0 )->GetTransform() );

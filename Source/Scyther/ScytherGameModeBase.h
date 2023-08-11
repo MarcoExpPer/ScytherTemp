@@ -16,10 +16,6 @@ class SCYTHER_API AScytherGameModeBase : public AGameModeBase
 	GENERATED_BODY()
 		//Variables
 public:
-	//-- POOLS --//
-	UPROPERTY( EditAnywhere, BlueprintReadWrite)
-	class AManadropPool *manaPool;
-
 	//-- MANAGERS --//
 	UPROPERTY( EditAnywhere, BlueprintReadWrite)
 	class ARespawnManager *respawnMan;
