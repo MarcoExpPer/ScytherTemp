@@ -42,7 +42,7 @@ pipeline {
             }
         }
     }
-    stage('Build'){
+    stage('BUILD'){
         when {
             expression {
                 N_COMMITS > 0

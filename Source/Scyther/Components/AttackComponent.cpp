@@ -57,6 +57,10 @@ void UAttackComponent::BeginPlay()
 		return;
 	}
 
+	//Player controller. If null it may means that an AI controler is controlling it
+	controllerP = Cast<APlayerController>( character->GetController());
+
+
 	//Skill Component
 	skillComponent = character->skillComponent;
 	if( !skillComponent )
@@ -878,7 +882,11 @@ void UAttackComponent::PlayAirAnimAttack()
 void UAttackComponent::StopDrop()
 {
 	//Play ForceFeedback
-	( (APlayerController*) character->GetController() )->ClientPlayForceFeedback( airGroundHitForceFeedbackEffect );
+	if( controllerP )
+	{
+		controllerP->ClientPlayForceFeedback( airGroundHitForceFeedbackEffect );
+	}
+
 	//Stop animation
 	isDroping = false;
 	meshAnimation->Montage_Resume( nullptr );
@@ -1016,25 +1024,40 @@ void UAttackComponent::HitEnemy( AActor* target )
 		switch( state )
 		{
 		case AttackState::FIRST:
-			( (APlayerController*) character->GetController() )->ClientPlayForceFeedback( firstAttackForceFeedbackEffect );
+			if( controllerP )
+			{
+				controllerP->ClientPlayForceFeedback( firstAttackForceFeedbackEffect );
+			}
 			healthComp->receiveDamage( firstAttackDamage );
 			hittedEnemyEvent.Broadcast( target->GetName(), character->GetActorLocation(), AttackState::FIRST );
 			break;
 
 		case AttackState::SECOND:
-			( (APlayerController*) character->GetController() )->ClientPlayForceFeedback( secondAttackForceFeedbackEffect );
+			if( controllerP )
+			{
+				controllerP->ClientPlayForceFeedback( secondAttackForceFeedbackEffect );
+			}
+
 			healthComp->receiveDamage( secondAttackDamage );
 			hittedEnemyEvent.Broadcast( target->GetName(), character->GetActorLocation(), AttackState::SECOND );
 			break;
 
 		case AttackState::THIRD:
-			( (APlayerController*) character->GetController() )->ClientPlayForceFeedback( finalAttackForceFeedbackEffect );
+			if( controllerP )
+			{
+				controllerP->ClientPlayForceFeedback( finalAttackForceFeedbackEffect );
+			}
+
 			healthComp->receiveDamage( finalAttackDamage );
 			hittedEnemyEvent.Broadcast( target->GetName(), character->GetActorLocation(), AttackState::THIRD );
 			break;
 
 		case AttackState::AIR:
-			( (APlayerController*) character->GetController() )->ClientPlayForceFeedback( airAttackForceFeedbackEffect );
+			if( controllerP )
+			{
+				controllerP->ClientPlayForceFeedback( airAttackForceFeedbackEffect );
+			}
+
 			healthComp->receiveDamage( airAttackDamage );
 			hittedEnemyEvent.Broadcast( target->GetName(), character->GetActorLocation(), AttackState::AIR );
 			break;

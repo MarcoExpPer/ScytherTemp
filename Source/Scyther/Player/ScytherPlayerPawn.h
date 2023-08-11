@@ -221,6 +221,7 @@ public:
 	/// <returns>
 	/// This function returns no value.
 	/// </returns>
+	UFUNCTION( BlueprintCallable )
 	void MoveRight( float Val );
 
 	/// <summary>
@@ -231,7 +232,7 @@ public:
 	/// <param name="Val">Input value for the vertical axis.</param>
 	/// <returns>
 	/// This function returns no value.
-	/// </returns>
+	UFUNCTION( BlueprintCallable )
 	void MoveForward( float Val );
 
 	/// <summary>
@@ -243,6 +244,7 @@ public:
 	/// <returns>
 	/// This function returns no value.
 	/// </returns>
+	UFUNCTION( BlueprintCallable )
 	void OnJumpPressed();
 
 	/// <summary>
@@ -254,6 +256,7 @@ public:
 	/// <returns>
 	/// This function returns no value.
 	/// </returns>
+	UFUNCTION( BlueprintCallable )
 	void OnJumpReleased();
 
 	/// <summary>
@@ -268,11 +271,13 @@ public:
 	/// <returns>
 	/// This function returns no value.
 	/// </returns>
+	UFUNCTION( BlueprintCallable )
 	void OnAttack();
 
 	/// <summary>
 	/// Execute the dash function of the dash component
 	/// </summary>
+	UFUNCTION( BlueprintCallable )
 	void OnDash();
 
 	/// <summary>
@@ -291,6 +296,7 @@ public:
 	/// <summary>
 	/// Enableds the skill a.
 	/// </summary>
+	UFUNCTION(BlueprintCallable)
 	void EnabledSkillA();
 	/// <summary>
 	/// Enableds the skill b.
@@ -323,13 +329,6 @@ private:
 
 	void InitComponents();
 	void InitPrimitiveComponents();
-
-	void ScytheBeginCollision( UPrimitiveComponent* OverlappedComp,
-								AActor* OtherActor,
-								UPrimitiveComponent* OtherComp,
-								int32 OtherBodyIndex,
-								bool bFromSweep,
-								const FHitResult& SweepResult );
 
 //------------------------//
 // AUXILIAR

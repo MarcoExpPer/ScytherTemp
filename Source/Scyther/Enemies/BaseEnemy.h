@@ -169,8 +169,9 @@ public:
 
 	bool isHiteable = true;
 
-private:
+	UPROPERTY( EditAnywhere, BlueprintReadWrite)
 	bool isDead = false;
+private:
 
 	bool isHitted = false;
 	bool isMoving = false;

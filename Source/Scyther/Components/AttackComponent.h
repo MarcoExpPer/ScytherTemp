@@ -95,6 +95,9 @@ private:
 	// ATTACK DEBUG TOOLS
 private:
 	bool isDoingDamage = false;
+
+	APlayerController *controllerP;
+
 public:
 
 	UPROPERTY( EditAnywhere, BlueprintReadWrite, Category = "Design | DEBUG " )
