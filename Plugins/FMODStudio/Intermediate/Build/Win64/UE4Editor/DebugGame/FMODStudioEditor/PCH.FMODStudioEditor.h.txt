@@ -11,8 +11,8 @@ C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\GenericPla
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\GenericPlatform/GenericPlatform.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\Windows/WindowsPlatformCodeAnalysis.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\Windows/WindowsPlatform.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\sal.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\concurrencysal.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\sal.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\concurrencysal.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\MSVC/MSVCPlatform.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\Windows/WindowsPlatformCompilerSetup.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\ProfilingDebugging/UMemoryDefines.h
@@ -21,15 +21,15 @@ C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\Misc/CoreD
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\CoreFwd.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\Containers/ContainersFwd.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\Traits/IsContiguousContainer.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\initializer_list
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\yvals_core.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\vcruntime.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\vadefs.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\xkeycheck.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\cstddef
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\initializer_list
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\yvals_core.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\vcruntime.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\vadefs.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\xkeycheck.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\cstddef
 C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\ucrt\stddef.h
 C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\ucrt\corecrt.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\xtr1common
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\xtr1common
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\UObject/UObjectHierarchyFwd.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\Misc/VarArgs.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\Logging/LogVerbosity.h
@@ -39,34 +39,34 @@ C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\Templates\
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\Templates/AndOrNot.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\Templates/IsArrayOrRefOfType.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\HAL/PlatformCrt.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\new
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\exception
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\yvals.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\new
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\exception
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\yvals.h
 C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\ucrt\crtdbg.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\vcruntime_new_debug.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\vcruntime_new.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\crtdefs.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\use_ansi.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\type_traits
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\cstdint
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\stdint.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\xstddef
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\cstdlib
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\vcruntime_new_debug.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\vcruntime_new.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\crtdefs.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\use_ansi.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\type_traits
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\cstdint
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\stdint.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\xstddef
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\cstdlib
 C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\ucrt\math.h
 C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\ucrt\corecrt_math.h
 C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\ucrt\stdlib.h
 C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\ucrt\corecrt_malloc.h
 C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\ucrt\corecrt_search.h
 C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\ucrt\corecrt_wstdlib.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\limits.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\limits.h
 C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\ucrt\malloc.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\vcruntime_exception.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\eh.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\vcruntime_exception.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\eh.h
 C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\ucrt\corecrt_terminate.h
 C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\ucrt\wchar.h
 C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\ucrt\corecrt_memcpy_s.h
 C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\ucrt\errno.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\vcruntime_string.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\vcruntime_string.h
 C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\ucrt\corecrt_wconio.h
 C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\ucrt\corecrt_stdio_config.h
 C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\ucrt\corecrt_wctype.h
@@ -80,7 +80,7 @@ C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\ucrt\corecrt_wtime.h
 C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\ucrt\sys/stat.h
 C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\ucrt\sys/types.h
 C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\ucrt\stdio.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\stdarg.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\stdarg.h
 C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\ucrt\math.h
 C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\ucrt\float.h
 C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\ucrt\string.h
@@ -95,20 +95,20 @@ C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\GenericPla
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\Windows/WindowsPlatformMemory.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\Windows/WindowsSystemIncludes.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\Windows/MinimalWindowsApi.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\intrin.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\intrin0.inl.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\setjmp.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\immintrin.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\wmmintrin.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\nmmintrin.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\smmintrin.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\tmmintrin.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\pmmintrin.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\emmintrin.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\xmmintrin.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\mmintrin.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\zmmintrin.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\ammintrin.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\intrin.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\intrin0.inl.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\setjmp.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\immintrin.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\wmmintrin.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\nmmintrin.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\smmintrin.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\tmmintrin.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\pmmintrin.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\emmintrin.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\xmmintrin.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\mmintrin.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\zmmintrin.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\ammintrin.h
 C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\ucrt\tchar.h
 C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\shared\intsafe.h
 C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\shared\winapifamily.h
@@ -255,9 +255,11 @@ C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\Algo/Rever
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\Containers/Map.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\Templates/Tuple.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\Delegates/IntegerSequence.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\tuple
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\__msvc_iter_core.hpp
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\utility
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\tuple
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\xutility
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\climits
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\cstring
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\utility
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\Math/ColorList.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\Math/IntPoint.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\Math/IntVector.h
@@ -432,8 +434,8 @@ C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\Serializat
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\String/BytesToHex.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\String/HexToBytes.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\Templates/RefCounting.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\typeinfo
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\vcruntime_typeinfo.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\typeinfo
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\vcruntime_typeinfo.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\Templates/Greater.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/LazyObjectPtr.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/PersistentObjectPtr.h
@@ -517,14 +519,12 @@ C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\Misc/Timec
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\ProfilingDebugging/CsvProfiler.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\Containers/Queue.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\Core\Public\ProfilingDebugging/CsvProfilerTrace.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\atomic
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\cstring
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\xatomic.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\intrin0.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\xthreads.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\climits
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\xtimec.h
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.35.32215\INCLUDE\ctime
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\atomic
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\xatomic.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\intrin0.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\xthreads.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\xtimec.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\INCLUDE\ctime
 C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\ucrt\time.h
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\RHI\Public\RHICommandList.inl
 C:\Program Files\Epic Games\UE_4.27\Engine\Source\Runtime\RHI\Public\GpuProfilerTrace.h

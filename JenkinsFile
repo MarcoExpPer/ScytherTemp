@@ -30,7 +30,10 @@ pipeline {
 
                 def userURL = env.GIT_URL.substring(0, env.GIT_URL.length() - 4)
 
-                LAST_SUCCESFULL_COMMIT_URL = "${userURL}/commit/${GIT_PREVIOUS_SUCCESSFUL_COMMIT}"
+                if(env.GIT_PREVIOUS_SUCCESSFUL_COMMIT){
+                    LAST_SUCCESFULL_COMMIT_URL = "${userURL}/commit/${GIT_PREVIOUS_SUCCESSFUL_COMMIT}"
+                }
+                
                 CURRENT_COMMIT_URL = "${userURL}/commit/${GIT_COMMIT}"
             }
         }
@@ -89,7 +92,15 @@ pipeline {
     stage('TEST'){
         when {
             expression {
-                N_COMMITS > 0
+				anyOf{
+					expression{
+						N_COMMITS > 0
+					}
+					expression{
+						${FORCE_TEST} == true
+					}
+				}
+                
             }
         }
         parallel {
@@ -153,9 +164,14 @@ pipeline {
     }
     stage('OBTAIN RESULTS'){
         when {
-            expression {
-                N_COMMITS > 0
-            }
+			anyOf{
+				expression{
+					N_COMMITS > 0
+				}
+				expression{
+					${FORCE_TEST} == true
+				}
+			}
         }
         steps{
             script{

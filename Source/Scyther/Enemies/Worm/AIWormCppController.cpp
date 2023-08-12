@@ -99,7 +99,11 @@ EPathFollowingRequestResult::Type AAIWormCppController::moveToPosition( FVector 
 
 bool AAIWormCppController::DoBasicAttack( FVector targetPosition )
 {
-	NiagaraComp->ActivateSystem( false );
+	if( NiagaraComp->IsValidLowLevel() )
+	{
+		NiagaraComp->ActivateSystem( false );
+	}
+	
 	UBlackboardComponent* BlackboardComponent = BrainComponent->GetBlackboardComponent();
 	if( worm != nullptr )
 	{
