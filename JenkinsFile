@@ -212,7 +212,7 @@ pipeline {
 
                         build job: 'Discord-Notify', parameters: [
                             string(name: 'TITLE', value: "${PROJECT_NAME} SUCCESS"),
-                            string(name: 'MESSAGE', value: "Commit: \"${CURRENT_COMMIT_URL}\" \n\nTESTS: ${ATEST_RESULT_STRING}"),
+                            string(name: 'MESSAGE', value: "Commit: ${CURRENT_COMMIT_URL} \n\nTESTS: ${ATEST_RESULT_STRING}"),
                             string(name: 'RESULT', value: 'SUCCESS'),
                             string(name: 'DISCORD_HOOK', value: env.DISCORD_HOOK),
                             string(name: 'FILE_NAME', value: "${PROJECT_NAME}_windows.zip")
@@ -245,7 +245,7 @@ pipeline {
 				if(N_COMMITS > 0){
 					build job: 'Discord-Notify', parameters: [
 						string(name: 'TITLE', value: "${PROJECT_NAME} ERROR"),
-						string(name: 'MESSAGE', value: "Failure between the last succesfull commit\n${LAST_SUCCESFULL_COMMIT_URL}\nand the commit ${CURRENT_COMMIT_URL}\"\n\n${ERROR_MSG}"),
+						string(name: 'MESSAGE', value: "Failure between the last succesfull commit\n${LAST_SUCCESFULL_COMMIT_URL}\nand the commit ${CURRENT_COMMIT_URL}\n\n${ERROR_MSG}"),
 						string(name: 'RESULT', value: 'FAILURE'),
 						string(name: 'DISCORD_HOOK', value: env.DISCORD_HOOK)
 					]
