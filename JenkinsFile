@@ -73,7 +73,7 @@ pipeline {
 			success{
 				script{
 					//Save compiled game files to send to slaves in order to parallel the testing
-					bat 'tar -cvzf ./workspace.tar.gz ./DerivedDataCache ./Intermediate ./Script ./Binaries'						
+					bat 'tar -cvzf ./workspace.tar.gz ./DerivedDataCache ./Intermediate ./Binaries'						
 					archiveArtifacts artifacts: 'workspace.tar.gz', fingerprint: true
 					
 					bat "del workspace.tar.gz"
@@ -171,7 +171,19 @@ pipeline {
                         ALL_AT_PASSED = false;
 
                         ATEST_RESULT_STRING.append(":x: ${test.testDisplayName} -> ${test.state} \n")
-                        
+						
+						for(def entrie : test.entries){
+							entrie.eachWithIndex { event, index ->
+								if(index == 0){
+									def entrieData = event.getValue()
+									
+									ATEST_RESULT_STRING.append("\t ${entrieData.type} -> ${entrieData.message} \n")
+								}
+							}
+						}
+		
+			
+						ATEST_RESULT_STRING.append("\n")
                     }
                 }
 
