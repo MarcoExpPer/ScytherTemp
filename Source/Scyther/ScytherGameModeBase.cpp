@@ -6,6 +6,7 @@
 #include <Kismet/GameplayStatics.h>
 #include "Items/LootableItem.h"
 #include "Items/ManadropPool.h"
+#include <Scyther/Player/ScytherPlayerPawn.h>
 
 void AScytherGameModeBase::BeginPlay()
 {

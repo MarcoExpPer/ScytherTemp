@@ -27,6 +27,9 @@ public:
 	UPROPERTY( EditAnywhere, BlueprintReadWrite, Category = "Class tags, dont touch" )
 	TSubclassOf<class ALootableItem> healthLooteableBPClass;
 
+	UPROPERTY( EditAnywhere, BlueprintReadWrite, Category = "Class tags, dont touch" )
+	TSubclassOf<class AScytherPlayerPawn> aiPlayerBPClass;
+
 private:
 	FTransform spawnPoint;
 	TArray<ABaseEnemyCtrl*> enemyList;

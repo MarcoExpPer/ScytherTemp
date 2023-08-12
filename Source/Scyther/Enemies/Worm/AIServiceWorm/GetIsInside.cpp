@@ -8,7 +8,7 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Scyther/Player/ScytherPlayerPawn.h"
-
+#include <Scyther/ScytherGameModeBase.h>
 
 UGetIsInside::UGetIsInside()
 {
@@ -21,11 +21,18 @@ void UGetIsInside::TickNode(UBehaviorTreeComponent& ownerComp, uint8* NodeMemory
 	Super::TickNode(ownerComp, NodeMemory, DeltaSeconds);
 	UBlackboardComponent* PBlackBoardComponent;
 	UNavigationSystemV1* NavSys = Cast< UNavigationSystemV1>( GetWorld()->GetNavigationSystem() );
-	APawn* playerPawn = UGameplayStatics::GetPlayerPawn( GetWorld(), 0 );
+
+	AScytherGameModeBase* gm = Cast<AScytherGameModeBase>( UGameplayStatics::GetGameMode( GetWorld() ) );
 	
-	if( IsValid(playerPawn))
+	APawn* targetPawn = Cast<APawn>( UGameplayStatics::GetActorOfClass( GetWorld(), gm->aiPlayerBPClass ) );
+	if( targetPawn == nullptr )
 	{
-		if( !NavSys || !playerPawn )
+		targetPawn = UGameplayStatics::GetPlayerPawn( GetWorld(), 0 );
+	}
+	
+	if( IsValid( targetPawn ))
+	{
+		if( !NavSys || !targetPawn )
 		{
 			PBlackBoardComponent = ownerComp.GetBlackboardComponent();
 			PBlackBoardComponent->SetValueAsBool( PlayerInside.SelectedKeyName, false );
@@ -33,7 +40,7 @@ void UGetIsInside::TickNode(UBehaviorTreeComponent& ownerComp, uint8* NodeMemory
 		}
 		else
 		{
-			const ANavigationData* NavData = NavSys->GetNavDataForProps( playerPawn->GetNavAgentPropertiesRef() );
+			const ANavigationData* NavData = NavSys->GetNavDataForProps( targetPawn->GetNavAgentPropertiesRef() );
 			if( !NavData )
 			{
 				PBlackBoardComponent = ownerComp.GetBlackboardComponent();
@@ -45,22 +52,22 @@ void UGetIsInside::TickNode(UBehaviorTreeComponent& ownerComp, uint8* NodeMemory
 				ABaseEnemyCtrl* ctrl = Cast<ABaseEnemyCtrl>( ownerComp.GetOwner() );
 				
 				//Query para saber si a traves de la posicion del player esta dentro o fuera de la navmesh
-				FPathFindingQuery Query( playerPawn, *NavData, playerPawn->GetActorLocation(), ctrl->GetPawn()->GetNavAgentLocation() );
+				FPathFindingQuery Query( targetPawn, *NavData, targetPawn->GetActorLocation(), ctrl->GetPawn()->GetNavAgentLocation() );
 				//la siguientes lineas hasta el if es codigo defensivo
 				FVector normal1( 500.f, 0.f, 0.f );
 				FVector normal2( 0.f, 500.f, 0.f );
-				FPathFindingQuery Query1( playerPawn, *NavData, playerPawn->GetActorLocation(), ctrl->GetPawn()->GetNavAgentLocation() + normal1 + normal2 );
-				FPathFindingQuery Query2( playerPawn, *NavData, playerPawn->GetActorLocation(), ctrl->GetPawn()->GetNavAgentLocation() + normal1 - normal2 );
-				FPathFindingQuery Query3( playerPawn, *NavData, playerPawn->GetActorLocation(), ctrl->GetPawn()->GetNavAgentLocation() - normal1 + normal2 );
-				FPathFindingQuery Query4( playerPawn, *NavData, playerPawn->GetActorLocation(), ctrl->GetPawn()->GetNavAgentLocation() - normal1 - normal2 );
+				FPathFindingQuery Query1( targetPawn, *NavData, targetPawn->GetActorLocation(), ctrl->GetPawn()->GetNavAgentLocation() + normal1 + normal2 );
+				FPathFindingQuery Query2( targetPawn, *NavData, targetPawn->GetActorLocation(), ctrl->GetPawn()->GetNavAgentLocation() + normal1 - normal2 );
+				FPathFindingQuery Query3( targetPawn, *NavData, targetPawn->GetActorLocation(), ctrl->GetPawn()->GetNavAgentLocation() - normal1 + normal2 );
+				FPathFindingQuery Query4( targetPawn, *NavData, targetPawn->GetActorLocation(), ctrl->GetPawn()->GetNavAgentLocation() - normal1 - normal2 );
 				FNavPathQueryDelegate prueba;
 				if( NavSys->TestPathSync( Query)  )
 				{
-					if((Cast<AScytherPlayerPawn>(playerPawn)->state != MovementState::JUMPING && Cast<AScytherPlayerPawn>( playerPawn )->state != MovementState::FALLING && Cast<AScytherPlayerPawn>( playerPawn )->state != MovementState::INAPEX ))
+					if((Cast<AScytherPlayerPawn>( targetPawn )->state != MovementState::JUMPING && Cast<AScytherPlayerPawn>( targetPawn )->state != MovementState::FALLING && Cast<AScytherPlayerPawn>( targetPawn )->state != MovementState::INAPEX ))
 					{ 
 						CanSet = false;
 						APawn* enemy = ctrl->GetPawn();
-						Cast<AWormPawn>( enemy )->SetZDefault(playerPawn->GetActorLocation().Z-169.f);
+						Cast<AWormPawn>( enemy )->SetZDefault( targetPawn->GetActorLocation().Z-169.f);
 					}
 					PBlackBoardComponent = ctrl->GetBlackboardComponent();
 					//PBlackBoardComponent = ownerComp.GetBlackboardComponent();
@@ -80,8 +87,8 @@ void UGetIsInside::TickNode(UBehaviorTreeComponent& ownerComp, uint8* NodeMemory
 				}
 				else
 				{
-					FPathFindingQuery Query5( playerPawn, *NavData, playerPawn->GetNavAgentLocation(), ctrl->GetPawn()->GetNavAgentLocation() );
-					if( NavSys->TestPathSync( Query5 ) && Cast<AScytherPlayerPawn>( playerPawn )->state != MovementState::WALKING )
+					FPathFindingQuery Query5( targetPawn, *NavData, targetPawn->GetNavAgentLocation(), ctrl->GetPawn()->GetNavAgentLocation() );
+					if( NavSys->TestPathSync( Query5 ) && Cast<AScytherPlayerPawn>( targetPawn )->state != MovementState::WALKING )
 					{
 						PBlackBoardComponent = ctrl->GetBlackboardComponent();
 						PBlackBoardComponent->SetValueAsBool( PlayerInside.SelectedKeyName, true );
