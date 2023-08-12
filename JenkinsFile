@@ -75,6 +75,8 @@ pipeline {
 					//Save compiled game files to send to slaves in order to parallel the testing
 					bat 'tar -cvzf ./workspace.tar.gz ./DerivedDataCache ./Intermediate ./Script ./Binaries'						
 					archiveArtifacts artifacts: 'workspace.tar.gz', fingerprint: true
+					
+					bat "del workspace.tar.gz"
 				}
 			}
 			failure {
@@ -121,7 +123,8 @@ pipeline {
                     script{
                         copyArtifacts filter: 'workspace.tar.gz', fingerprintArtifacts: true, projectName: env.JOB_NAME, selector: specific(env.BUILD_NUMBER)
                         bat 'tar -xvzf workspace.tar.gz'
-
+						bat "del workspace.tar.gz"
+						
                         try{
                             bat "\"${UE_PATH}Engine\\Binaries\\Win64\\UE4Editor-Cmd.exe\" ${WORKSPACE}\\${PROJECT_NAME}.uproject -nosplash -unattended -nocontentbrowser -nosound -nopause ${SHOW_EDITOR == true ? "" : "-nullrhi"} -ExecCmds=\"Automation RunTests Project.Functional\" -testexit=\"Automation Test Queue Empty\" -log -log=RunTests.log -ReportOutputPath=\"${WORKSPACE}\\Saved\\AutomationTestResults\\FunctionalTests\"" 
                         }catch( Exception e){
@@ -138,7 +141,7 @@ pipeline {
 				script{
 					//Copy to main workspace the fuctional test results
 					copyArtifacts filter: 'Saved\\AutomationTestResults\\FunctionalTests\\index.json', fingerprintArtifacts: true, projectName: env.JOB_NAME, selector: specific(env.BUILD_NUMBER)
-					//TODO CLEAR FUNNTIONAL TESTS ARTIFACTS AND workspace.tar.gz artifact and file
+					bat "del ${JENKINS_HOME}\\jobs\\${JOB_NAME}\\builds\\${BUILD_ID}\\archive\\workspace.tar.gz"
 				}
 			}
 			failure {
@@ -215,8 +218,9 @@ pipeline {
                             string(name: 'FILE_NAME', value: "${PROJECT_NAME}_windows.zip")
                         ]
 
-                        //TODO REMOVE THE ARTIFACT AND THE FILE
-
+						bat "del ${PROJECT_NAME}_windows.zip"
+						bat "del ${JENKINS_HOME}\\jobs\\${JOB_NAME}\\builds\\${BUILD_ID}\\archive\\${PROJECT_NAME}_windows.zip"
+						
                     }else{
                         echo "AT TEST FAILURE"
 
@@ -227,6 +231,9 @@ pipeline {
                             string(name: 'DISCORD_HOOK', value: env.DISCORD_HOOK)
                         ]
                     }
+					
+					
+					
 
                 }else{
                     echo "No changes"
