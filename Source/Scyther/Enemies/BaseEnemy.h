@@ -117,7 +117,10 @@ public:
 
 private:
 	bool originalLightMode = true;
+
 public:
+	UPROPERTY( EditAnywhere, BlueprintReadWrite)
+	bool is_AI_Active = false;
 
 	UPROPERTY( EditAnywhere, BlueprintReadWrite, Category = "Base Enemy | Balance" )
 		bool changeToDarkModeAfterSomeTime = false;

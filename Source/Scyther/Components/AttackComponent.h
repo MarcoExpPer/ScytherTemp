@@ -51,6 +51,9 @@ enum class ShiftType: uint8
 };
 
 UDELEGATE( BlueprintAuthorityOnly )
+DECLARE_DYNAMIC_MULTICAST_DELEGATE( FAttackFinished );
+
+UDELEGATE( BlueprintAuthorityOnly )
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams( FHittedEnemy, FString, enemyName, FVector, characterLocation, AttackState, typeAttack );
 
 /// <summary>
@@ -79,6 +82,8 @@ private:
 	class ABaseEnemy* enemyToShiftTo = nullptr;
 	ShiftType shiftState = ShiftType::NO_SHIFT;
 
+	
+
 	///
 	float actualComboCooldown = 1.f;
 	/// 
@@ -99,6 +104,8 @@ private:
 	APlayerController *controllerP;
 
 public:
+	UPROPERTY( BlueprintAssignable)
+	FAttackFinished attackFinishedEvent;
 
 	UPROPERTY( EditAnywhere, BlueprintReadWrite, Category = "Design | DEBUG " )
 		bool attack1AreaDebug = false;

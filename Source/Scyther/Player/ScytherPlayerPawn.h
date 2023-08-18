@@ -301,11 +301,13 @@ public:
 	/// <summary>
 	/// Enableds the skill b.
 	/// </summary>
+	UFUNCTION( BlueprintCallable )
 	void EnabledSkillB();
 
 	/// <summary>
 	/// Enableds the grapple hook.
 	/// </summary>
+	UFUNCTION( BlueprintCallable )
 	void ActivateGrappleHook();
 
 	/// <summary>

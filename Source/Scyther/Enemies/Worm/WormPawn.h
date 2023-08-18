@@ -107,6 +107,10 @@ public:
 
 	bool Damage = false;
 	float DefaultMaxSpeed;
+
+	float currentImplosionTimer;
+	float maxImplosionTimer = 5;
+
 //Functions
 
 protected:

@@ -161,8 +161,6 @@ void ABaseEnemy::whenHpGoesTo0( DamageModes type )
 
 void ABaseEnemy::spawn( FTransform spawnTransform )
 {
-	isDead = false;
-
 	SetActorTransform( spawnTransform );
 
 	if(this->GetOwner()->GetClass() != AWormPawn::StaticClass())
@@ -178,7 +176,6 @@ void ABaseEnemy::spawn( FTransform spawnTransform )
 
 void ABaseEnemy::deSpawn()
 {
-	isDead = true;
 	if( changeToDarkTimerHandle.IsValid() )
 	{
 		GetWorldTimerManager().ClearTimer( changeToDarkTimerHandle );
@@ -298,6 +295,9 @@ void ABaseEnemy::bindToRoundStart( ACombatRoundPoint* round )
 
 void ABaseEnemy::toggleAI(bool activate)
 {
+	is_AI_Active = activate;
+	isDead = !activate;
+
 	// Stops the Actor from ticking
 	SetActorTickEnabled( activate );
 

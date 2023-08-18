@@ -163,10 +163,12 @@ public:
 	/// <summary>
 	/// Use it to activate this component god mode. Making the user inmune to dasheable and inevitable attacks
 	/// </summary>
+	UFUNCTION( BlueprintCallable )
 	void becomeGod();
 	/// <summary>
 	/// Use it to remove this component god mode. Making the user vulnerable to dasheable and inevitable attacks
 	/// </summary>
+	UFUNCTION( BlueprintCallable )
 	void becomeMortal();
 
 	/// <summary>

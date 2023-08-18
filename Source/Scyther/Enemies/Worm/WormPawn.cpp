@@ -54,12 +54,27 @@ void AWormPawn::BeginPlay()
 	turnDarkEvent.AddDynamic( this, &AWormPawn::ZonesDark );*/
 	DefaultMaxSpeed = this->FloatingPawnMovement->GetMaxSpeed();
 	MakeInvulnerable();
+
+	isDead = true;
 }
 
 void AWormPawn::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
 	CheckDamageArea();
+
+	if( is_AI_Active )
+	{
+		currentImplosionTimer += DeltaTime;
+
+		if( currentImplosionTimer > maxImplosionTimer ){
+
+			healthComp->becomeMortal();
+			healthComp->receiveDamage( 999 );
+		}
+	}
+
+	GEngine->AddOnScreenDebugMessage( -1, 0, FColor::Blue, FString("%d is dead"), is_AI_Active );
 }
 
 

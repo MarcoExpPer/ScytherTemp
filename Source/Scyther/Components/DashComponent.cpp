@@ -106,9 +106,8 @@ bool UDashComponent::CheckDashInputSaved()
 	{
 		isDashSaved = false;
 
-		bool const canDash = hasDashFinished && ( dashTimer <= 0 || player->isGodMode ) && player->state != MovementState::KNOCKBACK;
 
-		if( canDash )
+		if(checkDashAvailable())
 		{
 			StartDash();
 		}
@@ -208,4 +207,9 @@ void UDashComponent::OnVFXDashFinish()
 void UDashComponent::PlayDashAvailableVFX()
 {
 	player->dashAvailableNiagaraSystem->Activate();
+}
+
+bool UDashComponent::checkDashAvailable()
+{
+	return hasDashFinished && (dashTimer <= 0 || player->isGodMode) && player->state != MovementState::KNOCKBACK;;
 }

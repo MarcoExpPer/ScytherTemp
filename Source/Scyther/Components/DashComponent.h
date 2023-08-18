@@ -107,4 +107,7 @@ public:
 	void OnVFXDashFinish();
 	void PlayDashAvailableVFX();
 
+	UFUNCTION(BlueprintCallable)
+	bool checkDashAvailable();
+
 };

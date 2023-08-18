@@ -431,6 +431,8 @@ void UAttackComponent::OnAttackEnded()
 	{
 		character->ChangeMovementState( MovementState::WALKING );
 	}
+
+	attackFinishedEvent.Broadcast();
 }
 
 /// <summary>

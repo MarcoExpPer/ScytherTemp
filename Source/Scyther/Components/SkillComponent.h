@@ -259,6 +259,7 @@ public:
 	/// <summary>
 	/// Activates the light skill and sets the timer
 	/// </summary>
+	UFUNCTION( BlueprintCallable, Category = "Skill" )
 	void EnableLightSkill();
 
 
