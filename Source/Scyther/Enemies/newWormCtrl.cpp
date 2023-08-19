@@ -11,6 +11,8 @@
 #include <Scyther/Player/ScytherPlayerPawn.h>
 #include "NiagaraFunctionLibrary.h"
 #include "NiagaraComponent.h"
+#include "EnvironmentQuery/EnvQueryManager.h"
+#include <DrawDebugHelpers.h>
 
 AnewWormCtrl::AnewWormCtrl(){}
 
@@ -48,7 +50,53 @@ void AnewWormCtrl::Tick( float DeltaTime )
 				{
 					isPreparingAttack = false;
 				}
+				break; 
+			}
+			case WormStates::horizontalAttack: {
+				//Fail safe in case worm cant get to player
+				if (currentPreparationTimer >= maxHAttackPreparationTimer)
+				{
+					isPreparingAttack = false;
+				}
+
+				APawn* targetPawn = Cast<APawn>(UGameplayStatics::GetActorOfClass(GetWorld(), gm->aiPlayerBPClass));
+				if (targetPawn == nullptr)
+				{
+					targetPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+				}
+
+				FVector playerLocation = targetPawn->GetActorLocation();
+				playerLocation.Z = 0;
+				FVector wormLocation = wormPawn->GetActorLocation();
+				wormLocation.Z = 0;
+
+				float distanceBetweenBoth = FMath::Abs((wormLocation - playerLocation).Size());
+				if (distanceBetweenBoth <= distanceToStartHorizontalAttackMontage) {
+					isPreparingAttack = false;
+				}
+
 				break;
+			}
+			case WormStates::movingToLocation:
+			{
+				SavedLocation.Z = wormPawn->GetActorLocation().Z;
+
+				if( SavedLocation.Equals( wormPawn->GetActorLocation(), 350 ))
+				{
+					wormPawn->SetActorLocation( SavedLocation );
+					changeState( WormStates::underGround );
+
+					if( currentCombatState == combatState::goingToIdle )
+					{
+						changeCombatState( combatState::idle );
+					}
+					else if( currentCombatState == combatState::goingToCombat )
+					{
+						changeCombatState( combatState::inCombat );
+					}
+
+					
+				}
 			}
 		}
 	}
@@ -58,8 +106,12 @@ void AnewWormCtrl::PickNewWormAttack()
 {
 	if( currentUndergroundTimer >= timeUnderground )
 	{
-		//changeState( wormPawn->isLightMode ? WormStates::horizontalAttack : WormStates::verticalAttack );
-		changeState( WormStates::verticalAttack );
+		changeState( !wormPawn->isLightMode ? WormStates::horizontalAttack : WormStates::verticalAttack );
+
+		if( currentCombatState != combatState::inCombat )
+		{
+			changeCombatState( combatState::inCombat );
+		}
 	}
 }
 
@@ -69,24 +121,54 @@ void AnewWormCtrl::changeState( WormStates newState )
 	{
 		wormPawn->toUndergroundMode();
 	}
-	else
+	else if( newState  != WormStates::movingToLocation && currentCombatState == combatState::inCombat)
 	{
 		currentUndergroundTimer = 0;
 		currentPreparationTimer = 0;
 		isPreparingAttack = true;
+
+		//Set worm location to player, so the vertical attack always starts close to player
+		if (newState == WormStates::verticalAttack) {
+			APawn* targetPawn = Cast<APawn>(UGameplayStatics::GetActorOfClass(GetWorld(), gm->aiPlayerBPClass));
+			if (targetPawn == nullptr)
+			{
+				targetPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+			}
+			wormPawn->SetActorLocation(FVector(targetPawn->GetActorLocation().X, targetPawn->GetActorLocation().Y, wormPawn->GetActorLocation().Z));
+		}
+		//Find the location close to the player that is available
+		else {
+			FEnvQueryRequest EQS_Request = FEnvQueryRequest(getStartHorizontalAttackLocation_Path, GetPawn());
+			EQS_Request.SetFloatParam("Distance.FloatValueMin", distanceToStartHorizontalAttack);
+
+			EQS_Request.Execute(EEnvQueryRunMode::RandomBest25Pct, this, &AnewWormCtrl::CheckHStartPositionEQSResult);
+
+		}
+		
 	}
 
 	currentState = newState;
 }
 
-void AnewWormCtrl::toggleGoToPlayer( bool active, float speed)
+void AnewWormCtrl::CheckHStartPositionEQSResult(TSharedPtr<FEnvQueryResult> result)
+{
+	if (result->IsSuccsessful()) {
+		wormPawn->SetActorLocation(FVector(result->GetItemAsLocation(0).X, result->GetItemAsLocation(0).Y, wormPawn->GetActorLocation().Z));
+	}
+	else {
+		GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red, FString("COUDNT START HORIZONTAL ATTACK"));
+		changeState(WormStates::verticalAttack);
+	}
+}
+
+void AnewWormCtrl::toggleGoToPlayer( bool active)
 {
 	if( active )
 	{
 		if( !wormPawn->movementComp->IsActive() )
 		{
 			wormPawn->movementComp->Activate();
-			wormPawn->movementComp->MaxSpeed = speed;
+			wormPawn->movementComp->MaxSpeed = currentState == WormStates::verticalAttack ? VAttackMovSpeed : HAttackMovSpeed;
 		}
 
 		APawn* targetPawn = Cast<APawn>( UGameplayStatics::GetActorOfClass( GetWorld(), gm->aiPlayerBPClass ) );
@@ -94,7 +176,7 @@ void AnewWormCtrl::toggleGoToPlayer( bool active, float speed)
 		{
 			targetPawn = UGameplayStatics::GetPlayerPawn( GetWorld(), 0 );
 		}
-
+		
 		MoveToActor( targetPawn, 0, false );
 	}
 	else
@@ -122,10 +204,16 @@ void AnewWormCtrl::toggleParticles( bool active )
 				FMath::Lerp( FVector( 0.1, 0.1, 0.1 ), FVector( 1, 1, 1 ), currentPreparationTimer / verticalAttackPreparationTimer )
 			);
 		}
+		else if( currentState == WormStates::horizontalAttack )
+		{
+			stonesVFXcomp->SetWorldScale3D(
+				FVector( 0.6, 0.6, 0.6)
+			);
+		}
 		else
 		{
 			stonesVFXcomp->SetWorldScale3D(
-				FVector( 1, 1, 1 )
+				FVector( 0.2, 0.2, 0.2 )
 			);
 		}
 	}
@@ -140,32 +228,98 @@ void AnewWormCtrl::toggleParticles( bool active )
 	
 }
 
-float AnewWormCtrl::DoAttack()
-{
-	APawn* targetPawn = Cast<APawn>(UGameplayStatics::GetActorOfClass(GetWorld(), gm->aiPlayerBPClass));
-	if (targetPawn == nullptr)
+void AnewWormCtrl::DoAttack( bool aimToPlayer )
+{	
+	if( aimToPlayer )
 	{
-		targetPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+		APawn* targetPawn = Cast<APawn>( UGameplayStatics::GetActorOfClass( GetWorld(), gm->aiPlayerBPClass ) );
+		if( targetPawn == nullptr )
+		{
+			targetPawn = UGameplayStatics::GetPlayerPawn( GetWorld(), 0 );
+		}
+
+		FVector playerLocation = targetPawn->GetActorLocation();
+		playerLocation.Z = 0;
+		FVector wormLocation = wormPawn->GetActorLocation();
+		wormLocation.Z = 0;
+
+		FVector traceVector = playerLocation - wormLocation;
+		wormPawn->SetActorRotation( traceVector.Rotation() );
+		wormPawn->AddActorWorldRotation( FRotator( 0, -90, 0 ) );
+
+		if( currentState == WormStates::verticalAttack )
+		{
+			wormPawn->doVerticalAttack();
+		}
+		else
+		{
+			wormPawn->doHorizontalAttack();
+		}
+
+		wormPawn->enableDamageArea();
+	}
+	else
+	{
+		if( currentState == WormStates::verticalAttack )
+		{
+			wormPawn->doVerticalAttack();
+		}
+		else
+		{
+			wormPawn->doHorizontalAttack();
+		}
 	}
 
-	wormPawn->SetActorRotation(targetPawn->GetActorRotation());
-	wormPawn->AddActorWorldRotation(FRotator(0, -90, 0));
-
-	if (currentState == WormStates::verticalAttack) {
-		return wormPawn->doVerticalAttack();
-	}
-	else {
-		return wormPawn->doHorizontalAttack();
-	}
-
-	wormPawn->enableDamageArea();
 }
 
 
-void AnewWormCtrl::finishVerticalPreparation()
+void AnewWormCtrl::FinishAttackPreparation()
 {
+
 	toggleParticles( false );
 	toggleGoToPlayer( false );
-	wormPawn->toOverworldMode();
 
+
+	wormPawn->toOverworldMode();
+}
+
+void AnewWormCtrl::AttackFinished()
+{
+	changeState( WormStates::underGround );
+
+	if( currentCombatState == combatState::inCombat )
+	{
+		increaseAttackCounter();
+	}
+	else if( currentCombatState == combatState::idle )
+	{
+		changeCombatState( combatState::goingToIdle );
+	}
+}
+
+void AnewWormCtrl::findIdleLocation()
+{
+	FEnvQueryRequest EQS_Request = FEnvQueryRequest( getStartHorizontalAttackLocation_Path, GetPawn() );
+	EQS_Request.SetFloatParam( "Distance.FloatValueMin", distanceToStartHorizontalAttack*1.5 );
+
+	EQS_Request.Execute( EEnvQueryRunMode::RandomBest25Pct, this, &AnewWormCtrl::CheckIdleLocation );
+}
+
+void AnewWormCtrl::CheckIdleLocation( TSharedPtr<FEnvQueryResult> result )
+{
+	if( result->IsSuccsessful() )
+	{
+		SavedLocation = result->GetItemAsLocation( 0 );
+		changeState( WormStates::movingToLocation );
+	}
+}
+
+void AnewWormCtrl::moveToSavedLocation()
+{
+	if( !wormPawn->movementComp->IsActive() )
+	{
+		wormPawn->movementComp->Activate();
+		wormPawn->movementComp->MaxSpeed = VAttackMovSpeed * 2;
+	}
+	MoveToLocation( SavedLocation, 1, false );
 }

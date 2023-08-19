@@ -397,3 +397,15 @@ bool ABaseEnemy::GetIsInCombatZone()
 {
 	return isInCombatZone;
 }
+
+float ABaseEnemy::getSqrDistanceToLocation(FVector location, bool ignoreZ) const
+{
+	FVector selfLocation = GetActorLocation();
+
+	if (ignoreZ) {
+		selfLocation.Z = 0;
+	}
+
+
+	return FVector::DistSquared(selfLocation, location);
+}

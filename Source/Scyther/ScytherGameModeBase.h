@@ -20,6 +20,9 @@ public:
 	UPROPERTY( EditAnywhere, BlueprintReadWrite)
 	class ARespawnManager *respawnMan;
 
+	UPROPERTY( EditAnywhere, BlueprintReadWrite )
+	class ACombatManager* combatMan;
+
 	//-- Class Tags--//
 	UPROPERTY( EditAnywhere, BlueprintReadWrite, Category = "Class tags, dont touch")
 	TSubclassOf<class ALootableItem> manaLooteableBPClass;

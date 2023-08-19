@@ -7,6 +7,7 @@
 #include "Items/LootableItem.h"
 #include "Items/ManadropPool.h"
 #include <Scyther/Player/ScytherPlayerPawn.h>
+#include <Scyther/CombatManager.h>
 
 void AScytherGameModeBase::BeginPlay()
 {
@@ -14,6 +15,7 @@ void AScytherGameModeBase::BeginPlay()
 
 	FActorSpawnParameters spawn;
 	respawnMan = GetWorld()->SpawnActor<ARespawnManager>( spawn );
+	combatMan = GetWorld()->SpawnActor<ACombatManager>( spawn );
 
 	respawnMan->SpawnPoints.Add( UGameplayStatics::GetPlayerPawn( GetWorld(), 0 )->GetTransform() );
 }

@@ -15,24 +15,25 @@ AnewWorm::AnewWorm()
 	wormMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Worm Mesh"));
 	wormMesh->SetupAttachment( RootComponent );
 
+	wormMeshLocation = CreateDefaultSubobject<USceneComponent>( TEXT( "worm Mesh Location" ) );
+	wormMeshLocation->SetupAttachment( wormMesh, "Bone007");
+
 	movementComp = CreateDefaultSubobject<UFloatingPawnMovement>( TEXT( "Floating Movement Comp" ) );
 }
 
 void AnewWorm::BeginPlay()
 {
 	Super::BeginPlay();
-	//Fill all maps to make the code clearer and remove possible switches
 	animInstance = wormMesh->GetAnimInstance();
 
 	wormMesh->OnComponentBeginOverlap.AddDynamic( this, &AnewWorm::OnMeshOverlap );
-	
-	initialTransform.SetLocation( GetActorLocation() );
 }
 
 void AnewWorm::toUndergroundMode()
 {
 	wormMesh->SetVisibility( false, false );
 	disableDamageArea();
+	isAttacking = false;
 }
 
 void AnewWorm::toOverworldMode()
@@ -52,6 +53,8 @@ void AnewWorm::enableDamageArea()
 	{
 		checkComponent( comp );
 	}
+
+	isAttacking = true;
 }
 
 void AnewWorm::disableDamageArea()
@@ -59,17 +62,14 @@ void AnewWorm::disableDamageArea()
 	isDamageAreaActive = false;
 }
 
-float AnewWorm::doVerticalAttack()
+void AnewWorm::doVerticalAttack()
 {
 	animInstance->Montage_Play( verticalAttackMontage );
-	
-	return verticalAttackMontage->SequenceLength;
 }
 
-float AnewWorm::doHorizontalAttack()
+void AnewWorm::doHorizontalAttack()
 {
 	animInstance->Montage_Play( horizontalAttackMontage );
-	return verticalAttackMontage->GetPlayLength();
 }
 
 void AnewWorm::OnMeshOverlap( UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult )

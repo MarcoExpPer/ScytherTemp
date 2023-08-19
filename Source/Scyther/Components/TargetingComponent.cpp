@@ -2,6 +2,7 @@
 
 
 #include "TargetingComponent.h"
+#include <Scyther/Enemies/newWorm.h>
 
 // Sets default values for this component's properties
 UTargetingComponent::UTargetingComponent()
@@ -306,6 +307,12 @@ bool UTargetingComponent::IsVisible( AActor* target )
 	{
 		end = target->GetRootComponent()->GetChildComponent( 0 )->GetComponentLocation() + FVector(0, 0, 120);
 	}
+	else if( target->GetClass()->IsChildOf( AnewWorm::StaticClass() ) )
+	{
+		end = target->GetRootComponent()->GetChildComponent( 0 )->GetComponentLocation() + FVector( 0, 0, 120 );
+	}
+
+
 	FHitResult hit;
 	ECollisionChannel CollisionChannel = ECC_GameTraceChannel1;
 	FCollisionQueryParams CollisionParams;
@@ -461,7 +468,9 @@ AActor* UTargetingComponent::GetClosest( TArray<AActor*>& list)
 	for( AActor* enemy : list )
 	{
 		AWormPawn* wormPawn = Cast<AWormPawn>( enemy );
-		if( (wormPawn && wormPawn->isAttacking) || !wormPawn )
+		AnewWorm* newWorm = Cast<AnewWorm>( enemy );
+
+		if( wormPawn && wormPawn->isAttacking || newWorm && newWorm->isAttacking || ( !newWorm && !wormPawn ) )
 		{
 			float dist = FVector::Distance( enemy->GetActorLocation(), GetOwner()->GetActorLocation() );
 			if( dist < closestDistance )

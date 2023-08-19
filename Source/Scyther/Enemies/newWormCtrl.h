@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "./BaseEnemyCtrl.h"
+#include "EnvironmentQuery/EnvQueryTypes.h"
 #include "newWormCtrl.generated.h"
 
 UENUM( BlueprintType )
@@ -11,7 +12,8 @@ enum class WormStates: uint8
 {
 	underGround,
 	verticalAttack,
-	horizontalAttack
+	horizontalAttack,
+	movingToLocation
 };
 
 UCLASS()
@@ -32,11 +34,31 @@ public:
 	UPROPERTY( EditAnywhere, BlueprintReadWrite )
 		float verticalAttackPreparationTimer = 3.f;
 
+	UPROPERTY( EditAnywhere, BlueprintReadWrite )
+		float maxHAttackPreparationTimer = 5.f;
 
+	UPROPERTY( EditAnywhere, BlueprintReadWrite )
+		float VAttackMovSpeed = 400;
+	UPROPERTY( EditAnywhere, BlueprintReadWrite )
+		float HAttackMovSpeed = 450;
+
+	UPROPERTY( EditAnywhere, BlueprintReadWrite )
+	float distanceToStartHorizontalAttack = 850;
+	UPROPERTY( EditAnywhere, BlueprintReadWrite )
+	float distanceToStartHorizontalAttackMontage = 450;
+
+
+	UPROPERTY( EditAnywhere, BlueprintReadWrite )
+		UEnvQuery* getStartHorizontalAttackLocation_Path;
+
+	UPROPERTY( EditAnywhere, BlueprintReadWrite )
+		FVector SavedLocation;
 private:
 	float currentUndergroundTimer = 0.f;
 	float currentPreparationTimer = 0;
 	bool isPreparingAttack = false;
+
+	
 
 	class AScytherGameModeBase* gm;
 
@@ -50,6 +72,11 @@ protected:
 public:
 	virtual void Tick( float DeltaTime ) override;
 
+	UFUNCTION( Blueprintcallable )
+	void AttackFinished();
+
+	void CheckHStartPositionEQSResult( TSharedPtr<FEnvQueryResult> result );
+
 	UFUNCTION(Blueprintcallable)
 	void PickNewWormAttack();
 
@@ -60,17 +87,22 @@ public:
 	bool getIsPreparingAttack(){ return isPreparingAttack; }
 
 	UFUNCTION( Blueprintcallable )
-	void toggleGoToPlayer( bool active, float speed = 0);
+	void toggleGoToPlayer( bool active);
 
 	UFUNCTION( Blueprintcallable )
 	void toggleParticles( bool active);
 
 	UFUNCTION( Blueprintcallable )
-	float DoAttack();
+	void DoAttack(bool aimToPlayer = true);
+
 	UFUNCTION( Blueprintcallable )
-	void finishVerticalPreparation();
+	void FinishAttackPreparation();
 
-	
+	UFUNCTION( Blueprintcallable )
+	void findIdleLocation();
 
-	
+	void CheckIdleLocation( TSharedPtr<FEnvQueryResult> result );
+	UFUNCTION( Blueprintcallable )
+	void moveToSavedLocation();
+
 };

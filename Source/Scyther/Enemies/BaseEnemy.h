@@ -57,6 +57,15 @@ UDELEGATE( BlueprintAuthorityOnly )
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam( FTurningDarkEvent, float, timeToTurn );
 
 
+UENUM( BlueprintType )
+enum class combatState: uint8
+{
+	idle,
+	goingToCombat,
+	inCombat,
+	goingToIdle
+};
+
 UCLASS()
 class SCYTHER_API ABaseEnemy: public APawn, public ICanBeHit, public ICanEnterDarkLightAreas, public ICanBeZtargeted
 {
@@ -297,4 +306,8 @@ public:
 	//GETTERS
 	bool GetIsDead();
 	bool GetIsInCombatZone();
+
+	UFUNCTION()
+	float getSqrDistanceToLocation( FVector location, bool ignoreZ = true ) const;
+
 };

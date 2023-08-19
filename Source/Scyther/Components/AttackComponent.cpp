@@ -26,6 +26,7 @@
 #include "CollisionQueryParams.h"
 #include <DrawDebugHelpers.h>
 #include "Scyther/Enemies/Worm/WormPawn.h"
+#include <Scyther/Enemies/newWorm.h>
 
 // Sets default values for this component's properties
 UAttackComponent::UAttackComponent()
@@ -167,7 +168,15 @@ void UAttackComponent::TickComponent( float DeltaTime, ELevelTick TickType, FAct
 			}
 			else
 			{
-				targetLocation = enemyToShiftTo->GetActorLocation();
+				AnewWorm* newWorm = Cast<AnewWorm>( enemyToShiftTo );
+				if( newWorm )
+				{
+					targetLocation = FVector( newWorm->wormMeshLocation->GetComponentLocation().X, newWorm->wormMeshLocation->GetComponentLocation().Y, character->GetActorLocation().Z );
+				}
+				else
+				{
+					targetLocation = enemyToShiftTo->GetActorLocation();
+				}
 			}
 
 			ShiftAndRotateToTarget( DeltaTime, targetLocation );
@@ -253,7 +262,15 @@ void UAttackComponent::ShiftAndMoveToTarget( float DeltaTime )
 	}
 	else
 	{
-		targetLocation = enemyToShiftTo->GetActorLocation();
+		AnewWorm* newWorm = Cast<AnewWorm>( enemyToShiftTo );
+		if( newWorm )
+		{
+			targetLocation = FVector( newWorm->wormMeshLocation->GetComponentLocation().X, newWorm->wormMeshLocation->GetComponentLocation().Y, character->GetActorLocation().Z );
+		}
+		else
+		{
+			targetLocation = enemyToShiftTo->GetActorLocation();
+		}
 	}
 
 

@@ -1,11 +1,19 @@
 
 
 #include "BaseEnemyCtrl.h"
+#include <Scyther/ScytherGameModeBase.h>
+#include <Scyther/CombatManager.h>
+#include <Scyther/Components/HealthComponent.h>
+#include <Kismet/GameplayStatics.h>
 
 void ABaseEnemyCtrl::BeginPlay()
 {
 	Super::BeginPlay();
 	enemyPawn = Cast<ABaseEnemy>( GetPawn() );
+
+	gm = Cast<AScytherGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
+
+	enemyPawn->healthComp->zerohealthEvent.AddDynamic( this, &ABaseEnemyCtrl::whenHpGoesTo0 );
 }
 
 void ABaseEnemyCtrl::rotatePawnTowardsTargetXY( FVector targetPosition )
@@ -49,4 +57,37 @@ void ABaseEnemyCtrl::die()
 #endif
 }
 
+
+void ABaseEnemyCtrl::increaseAttackCounter()
+{
+	currentAttacksLeftToidle++;
+	if (currentAttacksLeftToidle >= attacksToidle)
+	{
+		gm->combatMan->MaxNumberOfAttacksCompleted(this);
+	}
+}
+
+void ABaseEnemyCtrl::changeCombatState( combatState newState )
+{
+	currentCombatState = newState;
+
+	if( newState == combatState::idle )
+	{
+		gm->combatMan->addEnemyToIdleList( enemyPawn );
+		gm->combatMan->refreshInCombatList();
+	}
+
+	if( newState == combatState::inCombat )
+	{
+		currentAttacksLeftToidle = 0;
+	}
+
+	
+}
+
+void ABaseEnemyCtrl::whenHpGoesTo0( DamageModes type )
+{
+	gm->combatMan->RemoveFromAllLists(this);
+	gm->combatMan->refreshInCombatList();
+}
 

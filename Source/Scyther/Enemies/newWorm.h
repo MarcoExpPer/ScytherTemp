@@ -22,6 +22,9 @@ public:
 	UPROPERTY( EditAnywhere, BlueprintReadWrite )
 		class USkeletalMeshComponent* wormMesh;
 
+	UPROPERTY( EditAnywhere, BlueprintReadWrite )
+		class USceneComponent* wormMeshLocation;
+
 	UPROPERTY( EditAnywhere, BlueprintReadWrite)
 		class UFloatingPawnMovement* movementComp;
 
@@ -33,8 +36,10 @@ public:
 	UPROPERTY( EditAnywhere, BlueprintReadWrite, Category = "ANIMS" )
 		class UAnimMontage* horizontalAttackMontage;
 
+	bool isAttacking = false;
 private:
 	bool isDamageAreaActive = false;
+
 	UAnimInstance* animInstance;
 
 protected:
@@ -54,9 +59,9 @@ public:
 	void disableDamageArea();
 
 	UFUNCTION( Blueprintcallable )
-	float doVerticalAttack();
+	void doVerticalAttack();
 	UFUNCTION( Blueprintcallable )
-		float doHorizontalAttack();
+	void doHorizontalAttack();
 
 	UFUNCTION()
 	void OnMeshOverlap( UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult );

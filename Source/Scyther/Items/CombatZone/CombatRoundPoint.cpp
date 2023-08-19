@@ -5,6 +5,8 @@
 #include <Scyther/Enemies/BaseEnemy.h>
 #include <Scyther/Components/HealthComponent.h>
 #include <AIController.h>
+#include <Scyther/ScytherGameModeBase.h>
+#include <Scyther/CombatManager.h>
 
 // Sets default values
 ACombatRoundPoint::ACombatRoundPoint()
@@ -19,6 +21,8 @@ ACombatRoundPoint::ACombatRoundPoint()
 void ACombatRoundPoint::BeginPlay()
 {
 	Super::BeginPlay();
+
+	gm = Cast<AScytherGameModeBase>( UGameplayStatics::GetGameMode( GetWorld() ) );
 
 	for( ABaseEnemy* ePawn : enemiesPawns )
 	{
@@ -50,7 +54,10 @@ void ACombatRoundPoint::SpawnEnemies()
 	for( ABaseEnemy* e : enemiesPawns )
 	{
 		e->spawn( e->initialTransform );
+		gm->combatMan->addEnemyToIdleList(e, true);
 	}
+
+	gm->combatMan->refreshInCombatList();
 
 	enemyCount = enemiesPawns.Num();
 }

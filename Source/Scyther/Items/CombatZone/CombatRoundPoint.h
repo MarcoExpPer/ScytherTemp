@@ -31,6 +31,8 @@ public:
 	// Sets default values for this actor's properties
 	ACombatRoundPoint();
 
+	class AScytherGameModeBase* gm;
+
 	UPROPERTY( BlueprintAssignable )
 		FRoundActivated CombatRoundActivated;
 

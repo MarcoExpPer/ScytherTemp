@@ -38,13 +38,27 @@ public:
 	UPROPERTY( EditAnywhere, BlueprintReadOnly, Category = "BaseEnemy | Controller", meta = ( DisplayName = "EnemyBasePawn" ) )
 	ABaseEnemy *enemyPawn;
 
+	class AScytherGameModeBase* gm;
 
 	UPROPERTY( EditAnywhere, BlueprintReadWrite, Category = "BaseEnemy | Controller", meta = ( DisplayName = "EnemyBasePawn" ) )
 	FVector lootOnDeadSpread;
 
+	UPROPERTY( EditAnywhere, BlueprintReadWrite )
+		combatState currentCombatState = combatState::inCombat;
+
+	UPROPERTY( EditAnywhere, BlueprintReadWrite )
+		int attacksToidle = 2;
+
+	UPROPERTY( EditAnywhere, BlueprintReadWrite )
+		int currentAttacksLeftToidle = 0;
+
+	UPROPERTY( EditAnywhere, BlueprintReadWrite )
+		int combatPoolSize = 1;
+
 public:
 	virtual void BeginPlay() override;
 
+	//-- Family Combat --/
 
 
 	//Devuelve un booleano para poder indicar si el ataque se ha realizado o si por alguna razon, se ha tenido que cancelar.
@@ -60,4 +74,13 @@ public:
 
 	UFUNCTION( BlueprintCallable, Category = "BaseEnemy | Controller", meta = ( DisplayName = "Rotate towards target" ) )
 	void rotatePawnTowardsTargetXY( FVector targetPosition );
+
+
+	void increaseAttackCounter();
+
+	UFUNCTION( BlueprintCallable)
+	void changeCombatState( combatState newState );
+
+	UFUNCTION()
+		void whenHpGoesTo0( DamageModes type );
 };
