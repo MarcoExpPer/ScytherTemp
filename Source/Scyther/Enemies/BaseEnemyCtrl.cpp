@@ -26,6 +26,13 @@ void ABaseEnemyCtrl::rotatePawnTowardsTargetXY( FVector targetPosition )
 	}
 }
 
+void ABaseEnemyCtrl::combatStateChanged(){}
+
+void ABaseEnemyCtrl::makeNextAttack()
+{
+
+}
+
 bool ABaseEnemyCtrl::DoBasicAttack( FVector targetPosition )
 {
 #if WITH_EDITOR 
@@ -65,13 +72,22 @@ void ABaseEnemyCtrl::increaseAttackCounter()
 	{
 		gm->combatMan->MaxNumberOfAttacksCompleted(this);
 	}
+
+
+	isExecutingAttack = false;
+}
+
+void ABaseEnemyCtrl::removeCtrlFromAttackPool()
+{
+	gm->combatMan->AttackFinished( this );
 }
 
 void ABaseEnemyCtrl::changeCombatState( combatState newState )
 {
+	combatState previousState = currentCombatState;
 	currentCombatState = newState;
 
-	if( newState == combatState::idle )
+	if( newState == combatState::idle && previousState != newState )
 	{
 		gm->combatMan->addEnemyToIdleList( enemyPawn );
 		gm->combatMan->refreshInCombatList();
@@ -82,7 +98,7 @@ void ABaseEnemyCtrl::changeCombatState( combatState newState )
 		currentAttacksLeftToidle = 0;
 	}
 
-	
+	combatStateChanged();
 }
 
 void ABaseEnemyCtrl::whenHpGoesTo0( DamageModes type )

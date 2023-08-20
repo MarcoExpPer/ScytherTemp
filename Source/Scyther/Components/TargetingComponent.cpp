@@ -470,7 +470,7 @@ AActor* UTargetingComponent::GetClosest( TArray<AActor*>& list)
 		AWormPawn* wormPawn = Cast<AWormPawn>( enemy );
 		AnewWorm* newWorm = Cast<AnewWorm>( enemy );
 
-		if( wormPawn && wormPawn->isAttacking || newWorm && newWorm->isAttacking || ( !newWorm && !wormPawn ) )
+		if( wormPawn && wormPawn->isAttacking || newWorm && newWorm->isInAttackAnimation || ( !newWorm && !wormPawn ) )
 		{
 			float dist = FVector::Distance( enemy->GetActorLocation(), GetOwner()->GetActorLocation() );
 			if( dist < closestDistance )

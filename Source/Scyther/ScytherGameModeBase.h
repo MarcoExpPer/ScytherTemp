@@ -58,5 +58,8 @@ public:
 		UFUNCTION( BlueprintCallable, Category = "Respawn", meta = (
 			ToolTip = "Vuelve a spawnear todos los enemigos guardados en la lista" ) )
 			void addEnemyToTheList( ABaseEnemyCtrl* enemyToAdd );
-	
+		
+		//Returns an AI player pawn if active, otherwise returs the normal getPlayerPawn result
+		UFUNCTION( BlueprintCallable)
+		AScytherPlayerPawn* getCorrectPlayerPawn();
 };

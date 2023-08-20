@@ -20,6 +20,9 @@ private:
 	int inCombatMaxPoolSize = 4; 
 	int currentCombatPoolSize = 0;
 
+	int currentAttackPoolSIze = 0;
+	int attackPoolSize = 2;
+
 	TArray<ABaseEnemyCtrl*> inCombatEnemies;
 	TArray<ABaseEnemyCtrl*> idleEnemies;
 	TArray<ABaseEnemyCtrl*> goingToIdleEnemies;
@@ -38,11 +41,16 @@ public:
 
 	void addEnemyToIdleList( class ABaseEnemy* enemyToAdd, bool addToGoingToIdle = false );
 
-	void refreshInCombatList();
+	void refreshInCombatList(bool useGoingToIdleList = false);
 
 	void SortIdleByDistance();
 
 	void MaxNumberOfAttacksCompleted( ABaseEnemyCtrl* ctrlToIdle );
 
 	void RemoveFromAllLists( ABaseEnemyCtrl* ctrlToRemove );
+
+	//Check if the attack pool has space to add any of the current active enemies
+	void DoAttacks();
+
+	void AttackFinished( ABaseEnemyCtrl* ctrlThatFinished );
 };

@@ -33,7 +33,7 @@ void AnewWorm::toUndergroundMode()
 {
 	wormMesh->SetVisibility( false, false );
 	disableDamageArea();
-	isAttacking = false;
+	isInAttackAnimation = false;
 }
 
 void AnewWorm::toOverworldMode()
@@ -53,8 +53,6 @@ void AnewWorm::enableDamageArea()
 	{
 		checkComponent( comp );
 	}
-
-	isAttacking = true;
 }
 
 void AnewWorm::disableDamageArea()
@@ -64,12 +62,20 @@ void AnewWorm::disableDamageArea()
 
 void AnewWorm::doVerticalAttack()
 {
-	animInstance->Montage_Play( verticalAttackMontage );
+	if( !isInAttackAnimation )
+	{
+		isInAttackAnimation = true;
+		animInstance->Montage_Play( verticalAttackMontage );
+	}
 }
 
 void AnewWorm::doHorizontalAttack()
 {
-	animInstance->Montage_Play( horizontalAttackMontage );
+	if( !isInAttackAnimation )
+	{
+		isInAttackAnimation = true;
+		animInstance->Montage_Play( horizontalAttackMontage );
+	}
 }
 
 void AnewWorm::OnMeshOverlap( UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult )

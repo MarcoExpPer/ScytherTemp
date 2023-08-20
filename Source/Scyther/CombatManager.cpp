@@ -28,11 +28,13 @@ void ACombatManager::BeginPlay()
 void ACombatManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	GEngine->AddOnScreenDebugMessage( -1, 0, FColor::Blue, FString::Printf( TEXT( "Attack pool size: %d / %d" ), currentAttackPoolSIze, attackPoolSize ) );
+	GEngine->AddOnScreenDebugMessage( -1, 0, FColor::Blue, FString::Printf( TEXT( "Combat pool size: %d / %d" ), currentCombatPoolSize, inCombatMaxPoolSize )); 
 	GEngine->AddOnScreenDebugMessage( -1, 0, FColor::Blue, FString( "COMBAT" ) );
 	for( ABaseEnemyCtrl* ene : inCombatEnemies )
 	{
-		GEngine->AddOnScreenDebugMessage( -1, 0, FColor::Blue, ene->GetName() );
+		GEngine->AddOnScreenDebugMessage( -1, 0, ene->isExecutingAttack ? FColor::Green :
+													ene->canStartAttack ? FColor::Purple : FColor::Red, ene->GetName() );
 	}
 	GEngine->AddOnScreenDebugMessage( -1, 0, FColor::Blue, FString("COMBAT"));
 
@@ -58,11 +60,17 @@ void ACombatManager::addEnemyToIdleList( ABaseEnemy* enemyToAdd, bool addToGoing
 
 	if( addToGoingToIdle )
 	{
+		if( idleEnemies.Contains( ctrl ) )
+		{
+			idleEnemies.Remove( ctrl );
+		}
+
 		if( !goingToIdleEnemies.Contains( ctrl ) )
 		{
-			goingToIdleEnemies.Add( ctrl );
-			ctrl->changeCombatState( combatState::goingToIdle );
+			goingToIdleEnemies.Push( ctrl );
 		}
+		
+		ctrl->changeCombatState( combatState::goingToIdle );
 	}
 	else
 	{
@@ -73,14 +81,19 @@ void ACombatManager::addEnemyToIdleList( ABaseEnemy* enemyToAdd, bool addToGoing
 
 		if( !idleEnemies.Contains( ctrl ) )
 		{
-			idleEnemies.Add( ctrl );
-			ctrl->changeCombatState( combatState::idle );
+			idleEnemies.Push( ctrl );
 		}
+	}
+
+	if( inCombatEnemies.Contains( ctrl ) )
+	{
+		currentCombatPoolSize -= ctrl->combatPoolSize;
+		inCombatEnemies.Remove( ctrl );
 	}
 	
 }
 
-void ACombatManager::refreshInCombatList()
+void ACombatManager::refreshInCombatList(bool useGoingToIdleList)
 {
 	SortIdleByDistance();
 	TArray<ABaseEnemyCtrl*> toRemove;
@@ -96,12 +109,33 @@ void ACombatManager::refreshInCombatList()
 			enemy->changeCombatState( combatState::goingToCombat );
 		}
 	}
-
 	for( ABaseEnemyCtrl* enemy : toRemove )
 	{
 		idleEnemies.Remove( enemy );
 	}
-	
+
+	if( useGoingToIdleList ){ 
+
+		for( ABaseEnemyCtrl* enemy : goingToIdleEnemies )
+		{
+			if( enemy->combatPoolSize + currentCombatPoolSize <= inCombatMaxPoolSize )
+			{
+				inCombatEnemies.Push( enemy );
+				toRemove.Push( enemy );
+
+				currentCombatPoolSize += enemy->combatPoolSize;
+				enemy->changeCombatState( combatState::goingToCombat );
+			}
+		}
+
+		for( ABaseEnemyCtrl* enemy : toRemove )
+		{
+			goingToIdleEnemies.Remove( enemy );
+		}
+	}
+
+
+	DoAttacks();
 }
 
 void ACombatManager::SortIdleByDistance()
@@ -128,18 +162,28 @@ void ACombatManager::MaxNumberOfAttacksCompleted( ABaseEnemyCtrl* ctrlToIdle)
 	if( idleEnemies.Num() == 0 )
 	{
 		ctrlToIdle->changeCombatState( combatState::inCombat );
+
+		if( !inCombatEnemies.Contains( ctrlToIdle ))
+		{
+			inCombatEnemies.Push( ctrlToIdle );
+		}
 	}
 	else
 	{
-		currentCombatPoolSize -= ctrlToIdle->combatPoolSize;
+		if( inCombatEnemies.Contains( ctrlToIdle ) )
+		{
+			currentCombatPoolSize -= ctrlToIdle->combatPoolSize;
+			inCombatEnemies.Remove( ctrlToIdle );
+		}
+		
+		
 
-		inCombatEnemies.Remove( ctrlToIdle );
-		ctrlToIdle->changeCombatState( combatState::goingToIdle );
-		goingToIdleEnemies.Add( ctrlToIdle );
+		goingToIdleEnemies.Push( ctrlToIdle );
 
 		refreshInCombatList();
-	}
-	
+
+		ctrlToIdle->changeCombatState( combatState::goingToIdle );
+	}	
 }
 
 void ACombatManager::RemoveFromAllLists( ABaseEnemyCtrl* ctrlToRemove )
@@ -154,6 +198,27 @@ void ACombatManager::RemoveFromAllLists( ABaseEnemyCtrl* ctrlToRemove )
 	}
 	if( inCombatEnemies.Contains( ctrlToRemove ) )
 	{
+		currentCombatPoolSize -= ctrlToRemove->combatPoolSize;
+		currentAttackPoolSIze -= ctrlToRemove->combatPoolSize;
 		inCombatEnemies.Remove( ctrlToRemove );
 	}
+}
+
+void ACombatManager::DoAttacks()
+{
+	for( ABaseEnemyCtrl* enemy : inCombatEnemies )
+	{
+		if( !enemy->isExecutingAttack &&
+			enemy->combatPoolSize + currentAttackPoolSIze <= attackPoolSize )
+		{
+			enemy->canStartAttack = true;
+			currentAttackPoolSIze += enemy->combatPoolSize;
+		}
+	}
+}
+
+void ACombatManager::AttackFinished( ABaseEnemyCtrl* ctrlThatFinished )
+{
+	currentAttackPoolSIze -= ctrlThatFinished->combatPoolSize;
+	DoAttacks();
 }

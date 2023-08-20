@@ -17,52 +17,73 @@ enum class WormStates: uint8
 };
 
 UCLASS()
-class SCYTHER_API AnewWormCtrl : public ABaseEnemyCtrl
+class SCYTHER_API AnewWormCtrl: public ABaseEnemyCtrl
 {
 	GENERATED_BODY()
-	
+
 public:
+	//Pawn
 	UPROPERTY( VisibleAnywhere, BlueprintReadOnly )
 		class AnewWorm* wormPawn;
 
+	//State
 	UPROPERTY( VisibleAnywhere, BlueprintReadOnly )
 		WormStates currentState = WormStates::underGround;
 
+	//Timers
 	UPROPERTY( EditAnywhere, BlueprintReadWrite )
-		float timeUnderground = 1.f;
+		float undergroundTimer = 2.f;
+	UPROPERTY( EditAnywhere, BlueprintReadWrite )
+		float vAttackPrepTimer = 3.f;
+	UPROPERTY( EditAnywhere, BlueprintReadWrite )
+		float hAttackMaxPrepTimer = 5.f;
 
+	//Speed
 	UPROPERTY( EditAnywhere, BlueprintReadWrite )
-		float verticalAttackPreparationTimer = 3.f;
+		float vAttackSpeed = 400;
+	UPROPERTY( EditAnywhere, BlueprintReadWrite )
+		float hAttackSpeed = 450;
+	UPROPERTY( EditAnywhere, BlueprintReadWrite )
+		float goingToIdleSpeed = 600;
 
+	//Vertical attack
 	UPROPERTY( EditAnywhere, BlueprintReadWrite )
-		float maxHAttackPreparationTimer = 5.f;
+		FVector vAttackMinVFXsize = FVector( 0.1, 0.1, 0.1 );
+	UPROPERTY( EditAnywhere, BlueprintReadWrite )
+		FVector vAttackMaxVFXsize = FVector( 0.9, 0.9, 0.9 );
 
+	//Horizontal Attack
 	UPROPERTY( EditAnywhere, BlueprintReadWrite )
-		float VAttackMovSpeed = 400;
+		float hAttackStartDistance = 850;
 	UPROPERTY( EditAnywhere, BlueprintReadWrite )
-		float HAttackMovSpeed = 450;
+		float hAttackPlayMontageDistance = 450;
+	UPROPERTY( EditAnywhere, BlueprintReadWrite )
+		FVector hAttackVFXsize = FVector( 0.5, 0.5, 0.5 );
 
+	//MoveToIdle
 	UPROPERTY( EditAnywhere, BlueprintReadWrite )
-	float distanceToStartHorizontalAttack = 850;
+		FVector toIdleVFXsize = FVector( 0.25, 0.25, 0.25 );
+
+	//EQS
 	UPROPERTY( EditAnywhere, BlueprintReadWrite )
-	float distanceToStartHorizontalAttackMontage = 450;
+		UEnvQuery* EQS_ObtainNavigableLocationAtDistance;
+	UPROPERTY( EditAnywhere, BlueprintReadWrite )
+		FVector EQS_locationContext;
+	UPROPERTY( EditAnywhere, BlueprintReadWrite )
+		FVector EQS_resultLocation;
 
 
-	UPROPERTY( EditAnywhere, BlueprintReadWrite )
-		UEnvQuery* getStartHorizontalAttackLocation_Path;
 
-	UPROPERTY( EditAnywhere, BlueprintReadWrite )
-		FVector SavedLocation;
 private:
-	float currentUndergroundTimer = 0.f;
-	float currentPreparationTimer = 0;
-	bool isPreparingAttack = false;
-
-	
-
 	class AScytherGameModeBase* gm;
-
 	UNiagaraComponent* stonesVFXcomp;
+
+	bool isVFXactive = true;
+
+	float currentTimer = 0.f;
+	//To know if the attack the worm is finishing is a dummy attack that started before being in combate
+	bool isDoingDummyAttack = false;
+	bool isPreparingAttack = false;
 
 	AnewWormCtrl();
 
@@ -72,37 +93,63 @@ protected:
 public:
 	virtual void Tick( float DeltaTime ) override;
 
-	UFUNCTION( Blueprintcallable )
-	void AttackFinished();
+	//General functions
 
-	void CheckHStartPositionEQSResult( TSharedPtr<FEnvQueryResult> result );
-
-	UFUNCTION(Blueprintcallable)
-	void PickNewWormAttack();
 
 	UFUNCTION( Blueprintcallable )
-	void changeState( WormStates newState);
+		void changeWormState( WormStates newState );
+
 
 	UFUNCTION( Blueprintcallable )
-	bool getIsPreparingAttack(){ return isPreparingAttack; }
+		bool getIsPreparingAttack() { return isPreparingAttack; }
+
 
 	UFUNCTION( Blueprintcallable )
-	void toggleGoToPlayer( bool active);
+		void stopWormMovement();
 
 	UFUNCTION( Blueprintcallable )
-	void toggleParticles( bool active);
+		void ShowParticles( bool activate );
+
+	//AttackGeneral
+	virtual void combatStateChanged() override;
 
 	UFUNCTION( Blueprintcallable )
-	void DoAttack(bool aimToPlayer = true);
+		void AttackPreparationFinished();
 
 	UFUNCTION( Blueprintcallable )
-	void FinishAttackPreparation();
+		void AttackFinished();
 
 	UFUNCTION( Blueprintcallable )
-	void findIdleLocation();
+		void ChangeToAttackState(bool ignoreTimer = false);
 
-	void CheckIdleLocation( TSharedPtr<FEnvQueryResult> result );
 	UFUNCTION( Blueprintcallable )
-	void moveToSavedLocation();
+		void DoAttack();
 
+	//Vertical Attack
+	UFUNCTION( Blueprintcallable )
+		void moveToPlayer();
+
+	UFUNCTION( Blueprintcallable )
+		void doVerticalAttack( FVector rotateToLocation );
+
+	//Horizontal Attack
+	UFUNCTION( Blueprintcallable )
+		void doHorizontalAttack( FVector targetLocation );
+
+	void getHorizontalAttackStartLocation();
+	//GoingToCombate
+		//Nothing, just wait a second and change to combat
+
+
+	//Going to Idle
+	UFUNCTION( Blueprintcallable )
+		void obtainIdleLocation();
+
+		void moveToIdleLocation( TSharedPtr<FEnvQueryResult> result );
+
+	//Idle do an attack on the air
+
+private:
+	void copyPlayerRotation();
+	//void CheckHStartPositionEQSResult( TSharedPtr<FEnvQueryResult> result );
 };

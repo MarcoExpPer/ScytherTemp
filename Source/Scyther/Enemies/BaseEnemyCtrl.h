@@ -55,6 +55,10 @@ public:
 	UPROPERTY( EditAnywhere, BlueprintReadWrite )
 		int combatPoolSize = 1;
 
+
+	bool canStartAttack = false;
+	bool isExecutingAttack = false;
+
 public:
 	virtual void BeginPlay() override;
 
@@ -75,12 +79,20 @@ public:
 	UFUNCTION( BlueprintCallable, Category = "BaseEnemy | Controller", meta = ( DisplayName = "Rotate towards target" ) )
 	void rotatePawnTowardsTargetXY( FVector targetPosition );
 
+	virtual void combatStateChanged();
+
+	void makeNextAttack();
 
 	void increaseAttackCounter();
+
+	void removeCtrlFromAttackPool();
 
 	UFUNCTION( BlueprintCallable)
 	void changeCombatState( combatState newState );
 
 	UFUNCTION()
 		void whenHpGoesTo0( DamageModes type );
+
+
+
 };

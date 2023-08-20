@@ -48,3 +48,14 @@ void AScytherGameModeBase::addEnemyToTheList( ABaseEnemyCtrl* enemyToAdd )
 {
 	enemyList.Add( enemyToAdd );
 }
+
+AScytherPlayerPawn* AScytherGameModeBase::getCorrectPlayerPawn()
+{
+	AScytherPlayerPawn* correctPlayerPawn = Cast<AScytherPlayerPawn>(UGameplayStatics::GetActorOfClass(GetWorld(), aiPlayerBPClass));
+	if (correctPlayerPawn == nullptr)
+	{
+		correctPlayerPawn = Cast<AScytherPlayerPawn>(UGameplayStatics::GetPlayerPawn(GetWorld(), 0));
+	}
+
+	return correctPlayerPawn;
+}

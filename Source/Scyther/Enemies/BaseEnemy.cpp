@@ -309,16 +309,8 @@ void ABaseEnemy::toggleAI(bool activate)
 	ABaseEnemyCtrl* baseCtrl = Cast<ABaseEnemyCtrl>( GetController() );
 	if( baseCtrl != nullptr && baseCtrl->BrainComponent != nullptr )
 	{
-		if( activate )
+		if( !activate )
 		{
-			baseCtrl->BrainComponent->Activate();
-			baseCtrl->BrainComponent->StartLogic();
-		}
-		else
-		{
-			baseCtrl->BrainComponent->Deactivate();
-			baseCtrl->BrainComponent->StopLogic("BehaviorTreeStopped");
-
 			if( UWorld* World = GetWorld() )
 			{
 				auto respawnerClass = UGameplayStatics::GetActorOfClass( World, ARespawnManager::StaticClass() );

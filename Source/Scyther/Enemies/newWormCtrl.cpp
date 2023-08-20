@@ -14,21 +14,118 @@
 #include "EnvironmentQuery/EnvQueryManager.h"
 #include <DrawDebugHelpers.h>
 
-AnewWormCtrl::AnewWormCtrl(){}
+AnewWormCtrl::AnewWormCtrl()
+{}
 
 void AnewWormCtrl::BeginPlay()
 {
 	Super::BeginPlay();
 
-	wormPawn = Cast<AnewWorm>( this->GetPawn() );
-	toggleGoToPlayer( false );
+	wormPawn = Cast<AnewWorm>(this->GetPawn());
+	gm = Cast<AScytherGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
+	stonesVFXcomp = UNiagaraFunctionLibrary::SpawnSystemAttached(wormPawn->stonesVFX, wormPawn->GetRootComponent(), NAME_None, FVector(0.f), FRotator(0.f), EAttachLocation::Type::KeepRelativeOffset, true);
+	ShowParticles(false);
 
-	gm = Cast<AScytherGameModeBase>( UGameplayStatics::GetGameMode( GetWorld() ) );
+	changeWormState(WormStates::underGround);
+}
 
-	changeState( WormStates::underGround );
+void AnewWormCtrl::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	if (wormPawn->is_AI_Active)
+	{
+		currentTimer += DeltaTime;
+
+		switch (currentState)
+		{
+		case WormStates::underGround:
+		{
+
+			break;
+		}
+		case WormStates::verticalAttack:
+		{
+			if (currentCombatState == combatState::inCombat && !wormPawn->isInAttackAnimation)
+			{
+				copyPlayerRotation();
+			}
+			else if (currentCombatState != combatState::goingToCombat && !wormPawn->isInAttackAnimation)
+			{
+				rotatePawnTowardsTargetXY(EQS_resultLocation);
+			}
+
+			if (currentTimer > vAttackPrepTimer && isPreparingAttack)
+			{
+				AttackPreparationFinished();
+			}
+			break;
+		}
+		case WormStates::horizontalAttack:
+		{
+
+			break;
+		}
+		case WormStates::movingToLocation:
+		{
+			if (wormPawn->GetActorLocation().Equals(EQS_resultLocation, 100))
+			{
+				wormPawn->SetActorLocation(EQS_resultLocation);
+				changeWormState(WormStates::underGround);
+				changeCombatState(combatState::idle);
+			}
+			break;
+		}
+		}
+	}
+}
+
+void AnewWormCtrl::changeWormState(WormStates newState)
+{
+	WormStates previousState = currentState;
+	currentState = newState;
+
+	switch (newState)
+	{
+	case WormStates::underGround:
+	{
+		wormPawn->toUndergroundMode();
+		stopWormMovement();
+		currentTimer = 0;
+		break;
+	}
+	case WormStates::verticalAttack:
+	{
+		isPreparingAttack = true;
+		currentTimer = 0;
+
+		if (currentCombatState == combatState::inCombat || currentCombatState == combatState::goingToCombat)
+		{
+			AScytherPlayerPawn* playerPawn = gm->getCorrectPlayerPawn();
+
+			FVector locationToTp = playerPawn->GetActorLocation();
+			locationToTp.Z = wormPawn->GetActorLocation().Z;
+
+			wormPawn->SetActorLocation(locationToTp);
+		}
+		else if (currentCombatState != combatState::goingToCombat)
+		{
+			EQS_resultLocation.Z = wormPawn->GetActorLocation().Z;
+			wormPawn->SetActorLocation(EQS_resultLocation);
+		}
+		break;
+	}
+	case WormStates::movingToLocation:
+	{
+		wormPawn->toUndergroundMode();
+		break;
+	}
+
+	}
 
 }
 
+/*
 void AnewWormCtrl::Tick( float DeltaTime )
 {
 	Super::Tick( DeltaTime );
@@ -37,21 +134,6 @@ void AnewWormCtrl::Tick( float DeltaTime )
 	{
 		switch( currentState )
 		{
-			case WormStates::underGround:
-			{
-				currentUndergroundTimer += DeltaTime;
-				break;
-			}
-			case WormStates::verticalAttack:
-			{
-				currentPreparationTimer += DeltaTime;
-
-				if( currentPreparationTimer >= verticalAttackPreparationTimer )
-				{
-					isPreparingAttack = false;
-				}
-				break; 
-			}
 			case WormStates::horizontalAttack: {
 				//Fail safe in case worm cant get to player
 				if (currentPreparationTimer >= maxHAttackPreparationTimer)
@@ -77,50 +159,13 @@ void AnewWormCtrl::Tick( float DeltaTime )
 
 				break;
 			}
-			case WormStates::movingToLocation:
-			{
-				SavedLocation.Z = wormPawn->GetActorLocation().Z;
-
-				if( SavedLocation.Equals( wormPawn->GetActorLocation(), 350 ))
-				{
-					wormPawn->SetActorLocation( SavedLocation );
-					changeState( WormStates::underGround );
-
-					if( currentCombatState == combatState::goingToIdle )
-					{
-						changeCombatState( combatState::idle );
-					}
-					else if( currentCombatState == combatState::goingToCombat )
-					{
-						changeCombatState( combatState::inCombat );
-					}
-
-					
-				}
-			}
 		}
 	}
 }
 
-void AnewWormCtrl::PickNewWormAttack()
-{
-	if( currentUndergroundTimer >= timeUnderground )
-	{
-		changeState( !wormPawn->isLightMode ? WormStates::horizontalAttack : WormStates::verticalAttack );
-
-		if( currentCombatState != combatState::inCombat )
-		{
-			changeCombatState( combatState::inCombat );
-		}
-	}
-}
 
 void AnewWormCtrl::changeState( WormStates newState )
 {
-	if( newState == WormStates::underGround )
-	{
-		wormPawn->toUndergroundMode();
-	}
 	else if( newState  != WormStates::movingToLocation && currentCombatState == combatState::inCombat)
 	{
 		currentUndergroundTimer = 0;
@@ -144,182 +189,216 @@ void AnewWormCtrl::changeState( WormStates newState )
 			EQS_Request.Execute(EEnvQueryRunMode::RandomBest25Pct, this, &AnewWormCtrl::CheckHStartPositionEQSResult);
 
 		}
-		
+
 	}
 
 	currentState = newState;
 }
+*/
 
-void AnewWormCtrl::CheckHStartPositionEQSResult(TSharedPtr<FEnvQueryResult> result)
+void AnewWormCtrl::stopWormMovement()
 {
-	if (result->IsSuccsessful()) {
-		wormPawn->SetActorLocation(FVector(result->GetItemAsLocation(0).X, result->GetItemAsLocation(0).Y, wormPawn->GetActorLocation().Z));
-	}
-	else {
-		GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red, FString("COUDNT START HORIZONTAL ATTACK"));
-		changeState(WormStates::verticalAttack);
-	}
+	wormPawn->movementComp->MaxSpeed = 0;
+	wormPawn->movementComp->StopMovementImmediately();
+	wormPawn->movementComp->Deactivate();
 }
 
-void AnewWormCtrl::toggleGoToPlayer( bool active)
+void AnewWormCtrl::ShowParticles(bool activate)
 {
-	if( active )
+	if (!isVFXactive && !activate)
 	{
-		if( !wormPawn->movementComp->IsActive() )
-		{
-			wormPawn->movementComp->Activate();
-			wormPawn->movementComp->MaxSpeed = currentState == WormStates::verticalAttack ? VAttackMovSpeed : HAttackMovSpeed;
-		}
-
-		APawn* targetPawn = Cast<APawn>( UGameplayStatics::GetActorOfClass( GetWorld(), gm->aiPlayerBPClass ) );
-		if( targetPawn == nullptr )
-		{
-			targetPawn = UGameplayStatics::GetPlayerPawn( GetWorld(), 0 );
-		}
-		
-		MoveToActor( targetPawn, 0, false );
+		return;
 	}
 	else
 	{
-		wormPawn->movementComp->Deactivate();
-		wormPawn->movementComp->MaxSpeed = 0;
+		isVFXactive = activate;
+		stonesVFXcomp->SetVisibility(activate, false);
+
+		if (activate)
+		{
+			switch (currentState)
+			{
+			case WormStates::verticalAttack:
+			{
+				stonesVFXcomp->SetWorldScale3D(
+					FMath::Lerp(vAttackMinVFXsize, vAttackMaxVFXsize, currentTimer / vAttackPrepTimer)
+				);
+				break;
+			}
+			case WormStates::horizontalAttack:
+			{
+				stonesVFXcomp->SetWorldScale3D(
+					hAttackVFXsize
+				);
+				break;
+			}
+			default:
+			{
+				stonesVFXcomp->SetWorldScale3D(
+					toIdleVFXsize
+				);
+
+				break;
+			}
+			}
+		}
 	}
 }
 
-void AnewWormCtrl::toggleParticles( bool active )
+void AnewWormCtrl::combatStateChanged()
 {
-	if( active )
-	{
-		if( stonesVFXcomp == nullptr || !stonesVFXcomp->IsActive() )
-		{
-			stonesVFXcomp = UNiagaraFunctionLibrary::SpawnSystemAttached( wormPawn->stonesVFX, wormPawn->GetRootComponent(), NAME_None, FVector( 0.f ), FRotator( 0.f ), EAttachLocation::Type::KeepRelativeOffset, true );
-			stonesVFXcomp->Activate();
-			stonesVFXcomp->SetVisibility( true, false );
+	switch (currentCombatState) {
+	case combatState::inCombat: {
+		if (currentState == WormStates::verticalAttack) {
+			//If its currently doing an attack, it must be in an idle position doing an idle attack. We are going to wait for this attack to finish.
+			//When this attack animations ends, it will count as one attack under inCombat state, so we reduce the current count to not reduce the 
+			//number of real attacks during in Combat
+			if (wormPawn->isInAttackAnimation) {
+				isDoingDummyAttack = true;
+			}
+			//If its already preparing for an attack, it must stop the preparation and start the attack from 0 from player location
+			else if (isPreparingAttack) {
+				changeWormState(WormStates::underGround);
+			}
 		}
-
-		if( currentState == WormStates::verticalAttack )
-		{
-			
-			stonesVFXcomp->SetWorldScale3D(
-				FMath::Lerp( FVector( 0.1, 0.1, 0.1 ), FVector( 1, 1, 1 ), currentPreparationTimer / verticalAttackPreparationTimer )
-			);
-		}
-		else if( currentState == WormStates::horizontalAttack )
-		{
-			stonesVFXcomp->SetWorldScale3D(
-				FVector( 0.6, 0.6, 0.6)
-			);
-		}
-		else
-		{
-			stonesVFXcomp->SetWorldScale3D(
-				FVector( 0.2, 0.2, 0.2 )
-			);
-		}
+		break;
 	}
-	else
-	{
-		if( stonesVFXcomp != nullptr )
-		{
-			stonesVFXcomp->SetVisibility(false, false);
-			stonesVFXcomp->Deactivate();
-		}
 	}
-	
 }
 
-void AnewWormCtrl::DoAttack( bool aimToPlayer )
-{	
-	if( aimToPlayer )
-	{
-		APawn* targetPawn = Cast<APawn>( UGameplayStatics::GetActorOfClass( GetWorld(), gm->aiPlayerBPClass ) );
-		if( targetPawn == nullptr )
-		{
-			targetPawn = UGameplayStatics::GetPlayerPawn( GetWorld(), 0 );
-		}
-
-		FVector playerLocation = targetPawn->GetActorLocation();
-		playerLocation.Z = 0;
-		FVector wormLocation = wormPawn->GetActorLocation();
-		wormLocation.Z = 0;
-
-		FVector traceVector = playerLocation - wormLocation;
-		wormPawn->SetActorRotation( traceVector.Rotation() );
-		wormPawn->AddActorWorldRotation( FRotator( 0, -90, 0 ) );
-
-		if( currentState == WormStates::verticalAttack )
-		{
-			wormPawn->doVerticalAttack();
-		}
-		else
-		{
-			wormPawn->doHorizontalAttack();
-		}
-
-		wormPawn->enableDamageArea();
-	}
-	else
-	{
-		if( currentState == WormStates::verticalAttack )
-		{
-			wormPawn->doVerticalAttack();
-		}
-		else
-		{
-			wormPawn->doHorizontalAttack();
-		}
-	}
-
-}
-
-
-void AnewWormCtrl::FinishAttackPreparation()
+void AnewWormCtrl::AttackPreparationFinished()
 {
-
-	toggleParticles( false );
-	toggleGoToPlayer( false );
-
-
 	wormPawn->toOverworldMode();
+	isPreparingAttack = false;
+	ShowParticles(false);
+	stopWormMovement();
 }
 
 void AnewWormCtrl::AttackFinished()
 {
-	changeState( WormStates::underGround );
+	changeWormState(WormStates::underGround);
 
-	if( currentCombatState == combatState::inCombat )
+	if (isDoingDummyAttack) {
+		isDoingDummyAttack = false;
+		return;
+	}
+	if (currentCombatState == combatState::idle)
+	{
+		changeCombatState(combatState::goingToIdle);
+	}
+	else
 	{
 		increaseAttackCounter();
 	}
-	else if( currentCombatState == combatState::idle )
+}
+
+void AnewWormCtrl::ChangeToAttackState(bool ignoreTimer)
+{
+	//Ignore timer is true when the worm is trying to attack "outside of the arena"
+	if (ignoreTimer)
 	{
-		changeCombatState( combatState::goingToIdle );
+		changeWormState(!wormPawn->isLightMode ? WormStates::horizontalAttack : WormStates::verticalAttack);
+	}
+	else {
+		if (currentTimer >= undergroundTimer)
+		{
+			//The attack only starts when the combatManager updates canStartAttack bool
+			if (canStartAttack) {
+				canStartAttack = false;
+				isExecutingAttack = true;
+				changeWormState(!wormPawn->isLightMode ? WormStates::horizontalAttack : WormStates::verticalAttack);
+			}
+		}
+	}
+		
+}
+
+void AnewWormCtrl::DoAttack()
+{
+	if (currentState == WormStates::verticalAttack) {
+		wormPawn->doVerticalAttack();
+	}
+	else
+	{
+
+	}
+	wormPawn->enableDamageArea();
+
+	removeCtrlFromAttackPool();
+}
+
+void AnewWormCtrl::moveToPlayer()
+{
+	if (currentCombatState == combatState::inCombat)
+	{
+		if (!wormPawn->movementComp->IsActive())
+		{
+			wormPawn->movementComp->Activate();
+
+			wormPawn->movementComp->MaxSpeed = currentState == WormStates::verticalAttack ? vAttackSpeed : hAttackSpeed;
+		}
+
+		APawn* targetPawn = Cast<APawn>(UGameplayStatics::GetActorOfClass(GetWorld(), gm->aiPlayerBPClass));
+		if (targetPawn == nullptr)
+		{
+			targetPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+		}
+		FVector targetLocation = targetPawn->GetActorLocation();
+		targetLocation.Z = wormPawn->GetActorLocation().Z;
+
+		MoveToLocation(targetLocation, 1, false);
 	}
 }
 
-void AnewWormCtrl::findIdleLocation()
+void AnewWormCtrl::doVerticalAttack(FVector rotateToLocation)
 {
-	FEnvQueryRequest EQS_Request = FEnvQueryRequest( getStartHorizontalAttackLocation_Path, GetPawn() );
-	EQS_Request.SetFloatParam( "Distance.FloatValueMin", distanceToStartHorizontalAttack*1.5 );
-
-	EQS_Request.Execute( EEnvQueryRunMode::RandomBest25Pct, this, &AnewWormCtrl::CheckIdleLocation );
+	wormPawn->doVerticalAttack();
 }
 
-void AnewWormCtrl::CheckIdleLocation( TSharedPtr<FEnvQueryResult> result )
+void AnewWormCtrl::doHorizontalAttack(FVector targetLocation)
+{}
+
+void AnewWormCtrl::getHorizontalAttackStartLocation()
+{}
+
+void AnewWormCtrl::obtainIdleLocation()
 {
-	if( result->IsSuccsessful() )
+	FVector loc = gm->getCorrectPlayerPawn()->GetActorLocation();
+	loc.Z = wormPawn->GetActorLocation().Z;
+
+	EQS_locationContext = loc;
+	FEnvQueryRequest EQS_Request = FEnvQueryRequest(EQS_ObtainNavigableLocationAtDistance, GetPawn());
+	EQS_Request.SetFloatParam("Distance.FloatValueMin", hAttackStartDistance * 1.5);
+
+	EQS_Request.Execute(EEnvQueryRunMode::RandomBest25Pct, this, &AnewWormCtrl::moveToIdleLocation);
+}
+
+void AnewWormCtrl::moveToIdleLocation(TSharedPtr<FEnvQueryResult> result)
+{
+	if (result->IsSuccsessful())
 	{
-		SavedLocation = result->GetItemAsLocation( 0 );
-		changeState( WormStates::movingToLocation );
+		EQS_resultLocation = result->GetItemAsLocation(0);
+		EQS_resultLocation.Z = wormPawn->GetActorLocation().Z;
 	}
-}
+	else
+	{
+		EQS_resultLocation = wormPawn->GetActorLocation();
+		GEngine->AddOnScreenDebugMessage(-1, 20, FColor::Red, FString("MoveToIdleLocation unsuccsessful result"));
+	}
 
-void AnewWormCtrl::moveToSavedLocation()
-{
-	if( !wormPawn->movementComp->IsActive() )
+	if (!wormPawn->movementComp->IsActive())
 	{
 		wormPawn->movementComp->Activate();
-		wormPawn->movementComp->MaxSpeed = VAttackMovSpeed * 2;
+		wormPawn->movementComp->MaxSpeed = goingToIdleSpeed;
 	}
-	MoveToLocation( SavedLocation, 1, false );
+
+	MoveToLocation(EQS_resultLocation, 1, false);
+	changeWormState(WormStates::movingToLocation);
+}
+
+void AnewWormCtrl::copyPlayerRotation()
+{
+	AScytherPlayerPawn* playerPawn = gm->getCorrectPlayerPawn();
+	wormPawn->SetActorRotation(playerPawn->GetActorRotation());
+	wormPawn->AddActorWorldRotation(FRotator(0, -90, 0));
 }

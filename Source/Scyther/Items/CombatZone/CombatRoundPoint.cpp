@@ -57,7 +57,7 @@ void ACombatRoundPoint::SpawnEnemies()
 		gm->combatMan->addEnemyToIdleList(e, true);
 	}
 
-	gm->combatMan->refreshInCombatList();
+	gm->combatMan->refreshInCombatList(true);
 
 	enemyCount = enemiesPawns.Num();
 }

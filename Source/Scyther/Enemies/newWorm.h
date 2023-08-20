@@ -36,7 +36,7 @@ public:
 	UPROPERTY( EditAnywhere, BlueprintReadWrite, Category = "ANIMS" )
 		class UAnimMontage* horizontalAttackMontage;
 
-	bool isAttacking = false;
+	bool isInAttackAnimation = false;
 private:
 	bool isDamageAreaActive = false;
 
