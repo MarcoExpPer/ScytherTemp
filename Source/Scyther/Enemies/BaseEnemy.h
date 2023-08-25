@@ -159,6 +159,8 @@ public:
 		UNiagaraSystem* LightSpawnVFX;
 	UPROPERTY( EditAnywhere, BlueprintReadOnly, Category = "VFX" )
 		UNiagaraSystem* DarkSpawnVFX;
+	UPROPERTY( EditAnywhere, BlueprintReadOnly, Category = "VFX" )
+		UNiagaraSystem* ChangeToDarkVFX;
 
 	class ACombatRoundPoint* ThisRound;
 

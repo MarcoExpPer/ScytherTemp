@@ -12,8 +12,8 @@
 #include "TargetingComponent.h"
 #include "SkillComponent.h"
 #include "3D_MovementComponent.h"
-#include "../Player/Habilidades/LightSkillAttack.h"
-#include "../Enemies/BaseEnemy.h"
+#include <Scyther/Player/Habilidades/LightSkillAttack.h>
+#include <Scyther/Enemies/BaseEnemy.h>
 #include "Animation/AnimInstance.h"
 #include "Animation/AnimMontage.h"
 #include "GameFramework/Actor.h"
@@ -26,7 +26,7 @@
 #include "CollisionQueryParams.h"
 #include <DrawDebugHelpers.h>
 #include "Scyther/Enemies/Worm/WormPawn.h"
-#include <Scyther/Enemies/newWorm.h>
+#include <Scyther/Enemies/ImprovedEnemies/Worm/newWorm.h>
 
 // Sets default values for this component's properties
 UAttackComponent::UAttackComponent()

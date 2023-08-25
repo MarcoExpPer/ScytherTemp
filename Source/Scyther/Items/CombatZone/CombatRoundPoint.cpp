@@ -6,7 +6,7 @@
 #include <Scyther/Components/HealthComponent.h>
 #include <AIController.h>
 #include <Scyther/ScytherGameModeBase.h>
-#include <Scyther/CombatManager.h>
+#include <Scyther/Managers/CombatManager.h>
 
 // Sets default values
 ACombatRoundPoint::ACombatRoundPoint()

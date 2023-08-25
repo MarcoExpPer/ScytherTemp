@@ -7,7 +7,7 @@
 #include "Items/LootableItem.h"
 #include "Items/ManadropPool.h"
 #include <Scyther/Player/ScytherPlayerPawn.h>
-#include <Scyther/CombatManager.h>
+#include <Scyther/Managers/CombatManager.h>
 
 void AScytherGameModeBase::BeginPlay()
 {

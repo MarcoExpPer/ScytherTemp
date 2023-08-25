@@ -2,7 +2,7 @@
 
 
 #include "TargetingComponent.h"
-#include <Scyther/Enemies/newWorm.h>
+#include <Scyther/Enemies/ImprovedEnemies/Worm/newWorm.h>
 
 // Sets default values for this component's properties
 UTargetingComponent::UTargetingComponent()

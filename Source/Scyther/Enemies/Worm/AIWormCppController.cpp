@@ -4,7 +4,6 @@
 #include "AIWormCppController.h"
 #include "BrainComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
-#include "../AIWaypointGeneral.h"
 //#include "NavigationSystem.h"
 #include "DrawDebugHelpers.h"
 #include "NavigationSystem.h"
@@ -26,7 +25,7 @@ void AAIWormCppController::BeginPlay()
 }
 void AAIWormCppController::UpdateNextTargetPoint()
 {
-	//
+	/*
 	TArray<AAIWaypointGeneral*> aLista = wormPawn->TargetPoints;
 	//Se obtiene la referencia que va desde el Controlador de IA al BlackBoardComponent
 	UBlackboardComponent* pBlackBoardComponent = BrainComponent->GetBlackboardComponent();
@@ -43,7 +42,7 @@ void AAIWormCppController::UpdateNextTargetPoint()
 	//Setteamos el TargetPointPosition con la posicion de ese TargetPoint en el nivel y detenemos el ciclo con el break;
 	pBlackBoardComponent->SetValueAsVector( "TargetPointPosition", aLista[iTargetPointOrder]->GetActorLocation() );
 	// Por último, incrementamso el valor de TargetPointOrder del Blackboard
-	pBlackBoardComponent->SetValueAsInt( "TargetPointOrder", ( iTargetPointOrder + 1 ) );
+	pBlackBoardComponent->SetValueAsInt( "TargetPointOrder", ( iTargetPointOrder + 1 ) );*/
 }
 
 float AAIWormCppController::GetTimeDelay()

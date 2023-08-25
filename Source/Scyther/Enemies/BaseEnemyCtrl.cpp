@@ -2,7 +2,7 @@
 
 #include "BaseEnemyCtrl.h"
 #include <Scyther/ScytherGameModeBase.h>
-#include <Scyther/CombatManager.h>
+#include <Scyther/Managers/CombatManager.h>
 #include <Scyther/Components/HealthComponent.h>
 #include <Kismet/GameplayStatics.h>
 
@@ -27,11 +27,6 @@ void ABaseEnemyCtrl::rotatePawnTowardsTargetXY( FVector targetPosition )
 }
 
 void ABaseEnemyCtrl::combatStateChanged(){}
-
-void ABaseEnemyCtrl::makeNextAttack()
-{
-
-}
 
 bool ABaseEnemyCtrl::DoBasicAttack( FVector targetPosition )
 {
@@ -73,8 +68,8 @@ void ABaseEnemyCtrl::increaseAttackCounter()
 		gm->combatMan->MaxNumberOfAttacksCompleted(this);
 	}
 
-
 	isExecutingAttack = false;
+	gm->combatMan->refreshInCombatList();
 }
 
 void ABaseEnemyCtrl::removeCtrlFromAttackPool()
@@ -95,7 +90,7 @@ void ABaseEnemyCtrl::changeCombatState( combatState newState )
 
 	if( newState == combatState::inCombat )
 	{
-		currentAttacksLeftToidle = 0;
+		gm->combatMan->DoAttacks();
 	}
 
 	combatStateChanged();
@@ -105,5 +100,20 @@ void ABaseEnemyCtrl::whenHpGoesTo0( DamageModes type )
 {
 	gm->combatMan->RemoveFromAllLists(this);
 	gm->combatMan->refreshInCombatList();
+}
+
+void ABaseEnemyCtrl::updateIsPermanentIdle(bool newValue)
+{
+	if( newValue == isPermanentIdle )
+	{
+		return;
+	}
+
+	isPermanentIdle = newValue;
+
+	if (!isPermanentIdle) {
+		gm->combatMan->addEnemyToIdleList(enemyPawn);
+		gm->combatMan->refreshInCombatList();
+	}
 }
 

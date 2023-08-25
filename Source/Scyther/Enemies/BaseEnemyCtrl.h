@@ -55,9 +55,11 @@ public:
 	UPROPERTY( EditAnywhere, BlueprintReadWrite )
 		int combatPoolSize = 1;
 
+	UPROPERTY( EditAnywhere, BlueprintReadWrite )
+		bool canStartAttack = false;
 
-	bool canStartAttack = false;
 	bool isExecutingAttack = false;
+	bool isPermanentIdle = false;
 
 public:
 	virtual void BeginPlay() override;
@@ -81,8 +83,6 @@ public:
 
 	virtual void combatStateChanged();
 
-	void makeNextAttack();
-
 	void increaseAttackCounter();
 
 	void removeCtrlFromAttackPool();
@@ -93,6 +93,6 @@ public:
 	UFUNCTION()
 		void whenHpGoesTo0( DamageModes type );
 
-
+	void updateIsPermanentIdle( bool newValue );
 
 };

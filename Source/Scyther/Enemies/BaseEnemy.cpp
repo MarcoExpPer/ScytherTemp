@@ -13,6 +13,7 @@
 #include "Scyther/Player/ScytherPlayerPawn.h"
 #include "Scyther/Player/RespawnManager.h"
 #include "Scyther/Items/CombatZone/CombatRoundPoint.h"
+#include <Scyther/Enemies/ImprovedEnemies/Worm/newWorm.h>
 #include "Worm/WormPawn.h"
 
 // Sets default values
@@ -93,6 +94,7 @@ void ABaseEnemy::turnDarkMode()
 	isLightMode = false;
 	isTransforming = false;
 	turnDarkEvent.Broadcast();
+	UNiagaraFunctionLibrary::SpawnSystemAtLocation( this, ChangeToDarkVFX, this->GetActorLocation(), FRotator::ZeroRotator, FVector( 1.f ) );
 }
 
 
@@ -163,7 +165,7 @@ void ABaseEnemy::spawn( FTransform spawnTransform )
 {
 	SetActorTransform( spawnTransform );
 
-	if(this->GetOwner()->GetClass() != AWormPawn::StaticClass())
+	if(this->GetOwner()->GetClass() != AWormPawn::StaticClass() && this->GetOwner()->GetClass() != AnewWorm::StaticClass() )
 	{
 		UNiagaraFunctionLibrary::SpawnSystemAtLocation( this, isLightMode ? LightSpawnVFX : DarkSpawnVFX, this->GetActorLocation(), FRotator::ZeroRotator, FVector( 1.f ) );
 

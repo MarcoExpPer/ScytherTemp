@@ -8,7 +8,6 @@
 #include <FMODAudioComponent.h>
 #include "CoreMinimal.h"
 #include "../BaseEnemy.h"
-#include "../AIWaypointGeneral.h"
 #include "../../Components/TargetMarkComponent.h"
 #include "GameFramework/FloatingPawnMovement.h"
 #include "Components/CapsuleComponent.h"
@@ -61,9 +60,6 @@ public:
 	UPROPERTY( EditAnywhere, Category = "Audio | FMOD", meta = ( DisplayName = "Cracking Ground Sounds",
 		ToolTip = "Sonidos de la tierra desquebrajandose cuando el gusano ataca" ) )
 		UFMODEvent* CrackingWormAttack;
-
-	UPROPERTY( EditAnywhere, BlueprintReadWrite, Category = "Orden" )
-		TArray<AAIWaypointGeneral*> TargetPoints;
 
 	UPROPERTY( EditAnywhere, BlueprintReadWrite, Category = "Design | Components", meta = ( DisplayName = "Worm Body",
 		ToolTip = "Cuerpo gusano." ) )
